@@ -19,33 +19,19 @@ function muRts(ip){
 	}, 2000);
 }
 
-const App = (props) =>(
-		<div>
-		<h4>hello blank es6 react</h4>
-		<Wel name='fred'/>
-		<Welc name='dirt'/>
-		<Welco name='funcy'/>
-		<Welcom name='Nancy'/>
-		{showRt(El1)}
-		{El2}
-		{El3(vprops)}
-		<div id="rte"></div>
-		</div>
-)
 class App2 extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
     	el3: {name: "mcmurry"},
     	we: {name: "curtis"},
-
     	otherwise: "dogshit"
   	};
   	this.pros=this.state.el3
   }	
   componentDidMount= ()=>{
   	setTimeout(this.ch, 2000)	
-  	//setTimeout(()=>this.setState({we: {name: "dermit"}}),3000)	
+  	setTimeout(()=>this.setState({we: {name: "dermit"}}),3000)	
   }
   ch =()=>{
   	console.log('in ch')

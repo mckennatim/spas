@@ -6,6 +6,8 @@ React UI only rerenders whenever you call setState() or ReactDOM.render().The pr
 Then any async happening must eventually affect the setState of the container.
 
 The downside is that every component inside the container gets rerendered even if it only takes a small portion of the state that hasn't mutated.
+
+
 ### 01-initial-c0mmit
 All the ways you can have react render you a ui. as simple functions, classes, or components in es6, with or without a return.
 

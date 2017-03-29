@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom';
+
 function el(id){
 	return document.getElementById(id)
 }
@@ -30,4 +33,8 @@ var templatize = (function(){
 return generateTemplate;
 })();
 
-export {dog, setContent, templatize}
+const render = (pg, para)=>{
+  ReactDOM.render(React.createElement(pg, para), document.getElementById('rt')) 
+}
+
+export {dog, setContent, templatize, render}

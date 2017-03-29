@@ -113,26 +113,6 @@ function muRts(ip) {
 	}, 2000);
 }
 
-var App = function App(props) {
-	return _react2.default.createElement(
-		'div',
-		null,
-		_react2.default.createElement(
-			'h4',
-			null,
-			'hello blank es6 react'
-		),
-		_react2.default.createElement(_components.Wel, { name: 'fred' }),
-		_react2.default.createElement(_components.Welc, { name: 'dirt' }),
-		_react2.default.createElement(_components.Welco, { name: 'funcy' }),
-		_react2.default.createElement(_components.Welcom, { name: 'Nancy' }),
-		(0, _funcs.showRt)(_components.El1),
-		_components.El2,
-		(0, _components.El3)(vprops),
-		_react2.default.createElement('div', { id: 'rte' })
-	);
-};
-
 var App2 = function (_React$Component) {
 	_inherits(App2, _React$Component);
 
@@ -143,7 +123,9 @@ var App2 = function (_React$Component) {
 
 		_this.componentDidMount = function () {
 			setTimeout(_this.ch, 2000);
-			//setTimeout(()=>this.setState({we: {name: "dermit"}}),3000)	
+			setTimeout(function () {
+				return _this.setState({ we: { name: "dermit" } });
+			}, 3000);
 		};
 
 		_this.ch = function () {
@@ -155,7 +137,6 @@ var App2 = function (_React$Component) {
 		_this.state = {
 			el3: { name: "mcmurry" },
 			we: { name: "curtis" },
-
 			otherwise: "dogshit"
 		};
 		_this.pros = _this.state.el3;
