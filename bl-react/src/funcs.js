@@ -1,4 +1,8 @@
 import React from 'react';
+import { Observable } from 'rxjs/Observable';
+
+const isObservable = obs => obs instanceof Observable;
+const log = console.log.bind(console);
 
 const dog = (cat)=>{
 	console.log(cat)
@@ -17,4 +21,4 @@ function showRt(el){
 	return el
 }
 
-export {dog, mapPropsToElement, showRt}
+export {isObservable, log,dog, mapPropsToElement, showRt}
