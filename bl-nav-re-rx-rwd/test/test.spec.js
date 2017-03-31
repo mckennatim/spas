@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {dog, get} from '../src/funcs';
+import {dog, get} from '../src/utilities';
 
 describe("a dog is a duck",()=>{
 	it('tries dog badly ok', ()=> {

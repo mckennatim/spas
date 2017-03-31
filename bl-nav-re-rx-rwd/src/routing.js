@@ -1,5 +1,4 @@
 import Navigo from 'navigo'
-import {render} from './funcs'
 import {About, Products, Home, Dog} from './components'
 import { changePage, switchPage} from './actions';
 
@@ -10,12 +9,12 @@ const routing = ()=>{
 	router = new Navigo(cfg.root, cfg.useHash);
 	router
 	  .on({
-	    'products': ()=> {switchPage({name: 'Products', params: {}});} ,
+	    'products': ()=> {switchPage({name: 'Products', params: null});} ,
 	    'products/:id': (params)=>{switchPage({name: 'Products', params: params});},
 	    'products/:id/:inv': (params)=>{switchPage({name: 'Products', params: params});},
-	    'about': ()=>{switchPage({name: 'About', params: {}});},
-	    'dog': ()=>{switchPage({name: 'Dog', params: {}});},
-	    '*': ()=>{switchPage({name: 'Home', params: {}});}
+	    'about': ()=>{switchPage({name: 'About', params: null});},
+	    'dog': ()=>{switchPage({name: 'Dog', params: null});},
+	    '*': ()=>{switchPage({name: 'Home', params: null});}
 	  })
 	  .resolve();
 	return router  

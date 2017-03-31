@@ -1,5 +1,5 @@
 import React from	'react'
-import {get} from '../funcs'
+import {get} from '../utilities'
 import {pStyle} from '../styles'
 const style = {
 	...pStyle, outer: {...pStyle.outer, background: '#99FF99'}
@@ -8,11 +8,11 @@ const style = {
 const Products = (props) =>{
 
 	const renderProducts=()=> {
-		if(hayParams()){
+		if(get('props.responsive.page.params', props)){
 			return(
 				<div>
 				<h3> Product</h3>
-				<h4>pruduct ID: {props.id} description: {props.inv}</h4>
+				<h4>pruduct ID: {props.responsive.page.params.id} description: {props.responsive.page.params.inv}</h4>
 		    </div>
 		  ); 
 		} else {
@@ -25,14 +25,6 @@ const Products = (props) =>{
 		}
 	}
 
-	const hayParams=()=>{
-		if(get('props.id', props)){
-			return true
-		}else {
-			return false
-		}
-	}
-	hayParams()
 	return(
 		<div style={style.outer}>
 			{renderProducts()}

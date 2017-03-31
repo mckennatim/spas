@@ -5,7 +5,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/startWith';
 import {rootReducer} from './reducers';
-import { isObservable } from './funcs';
+import { isObservable } from './utilities';
 
 const action$ = new Subject();
 

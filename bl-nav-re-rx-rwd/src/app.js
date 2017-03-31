@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import {routing} from './routing'
 import {App, Dog} from './components'
 import { createStore } from './rxred';
-import { log } from './funcs';
+import { log } from './utilities';
 import {initState} from './store'
 import {setDeviceType} from './actions'
 

@@ -1,4 +1,3 @@
-// import{combineReducers, actionCreator}from '../rxred'
 import{responsive}from './responsive'
 
 function test(state, action) {
