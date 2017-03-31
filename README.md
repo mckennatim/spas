@@ -3,6 +3,8 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 05-bl-navigo-react-rxjs-resp
+bl-navigo-react-rxjs-responsive
 ### 04-bl-navigate-react-rxjs
 current page kept in state.rtpg
 ### 03-bl-navigo-react
