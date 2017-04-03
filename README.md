@@ -3,6 +3,8 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 06-bl-navigo-react-rxjs-rwd_rxtry
+get a grip on the foibles of rxjs in preparation for using it for async api access. Next up is take this template and connect it to a authentication backend
 ### 05-bl-navigo-react-rxjs-resp
 bl-navigo-react-rxjs-responsive
 ### 04-bl-navigate-react-rxjs

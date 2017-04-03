@@ -1,6 +1,17 @@
 
 const responsive=(state, action) =>{
   switch (action.type) {
+    case 'GITHUB_FOLLOWERS_LOADING':
+      return {
+        ...state,
+        isLoading: true
+      };
+    case 'GITHUB_FOLLOWERS_LOADED':
+      return {
+        ...state,
+        isLoading: false,
+        followers: action.payload,
+      };  
     case 'PAGE_SWITCHED':
       return {
         ...state,

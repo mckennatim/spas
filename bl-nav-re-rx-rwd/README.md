@@ -1,4 +1,6 @@
 # bl-navigo-react-rxjs-responsive
+TODO ajax error handling is non-existent
+
 Move from a working navigo react rxjs version to a version that allows for programmable responsive webpages. In the process correct the fault that has store storing the current page as a react function. In this version the switchPage action takes and object like `{name: 'Products', params: params}` or with an empty {} if there are no params. 
 
 * handle multiple reducers using `rxred/combineReducers`

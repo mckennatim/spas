@@ -26,7 +26,6 @@ class App extends React.Component{
   	  return rtpg(this.props)
   }	
   showPage=()=>{
-    console.log(this.props)
     return responsivePage(this.props)
   }
 	

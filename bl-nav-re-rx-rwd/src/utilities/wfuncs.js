@@ -23,7 +23,6 @@ const responsivePage=(state)=>{
       elArr = elList
     }
   }
-  console.log(elArr)
   return elArr   
 }
 

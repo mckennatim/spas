@@ -1,0 +1,13 @@
+{
+  "name": "rxtry",
+  "version": "1.0.0",
+  "description": "Ok so it should edit and replace, add only for new but...",
+  "main": "webpack.config.js",
+  "scripts": {
+    "wpw": "node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
+    "wpp": "node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js"
+  },
+  "keywords": [],
+  "author": "Timothy S. McKenna <mckenna.tim@gmail.com> (http://mckennatim.github.io/mckennatim/)",
+  "license": "MIT"
+}

@@ -5,14 +5,32 @@ import {Nav} from './Nav'
 import {Dog} from './Dog'
 import {Products} from './Products'
 import {pStyle} from '../styles'
+import {loadGithubFollowers} from '../actions';
+
 
 const About = (props) =>{
+	const { isLoading, followers} = props.responsive;
 	const style = {
 		...pStyle, outer: {...pStyle.outer, background: '#99CCCC'}
 	}
+	function handleGetFollowers(){
+		console.log("in get github followers")
+		loadGithubFollowers('mckennatim')
+	}
+	function renderFollowers(followers) {  
+	  if (!followers) return;
+	  return (
+	    <ul>{ followers.map((follower, index) => <li key={index}>{follower}</li>) }</ul>
+	  );
+	}	
 	return(
 		<div style={style.outer}>
 			<h3> About</h3>
+			<button id="but" onClick={handleGetFollowers}>get github followers</button>
+      { isLoading ?
+        <p>Loading...</p> :
+        "dog" }
+      { renderFollowers(followers) } 			
 		</div>
 	)
 }
@@ -32,6 +50,7 @@ const Home = (props) =>{
 		</div>
 	)
 }	
+//const multi=[] multi delared but empty defaults to single pane
 
 const multi =[{pri:'About', mul:[
 								['About', 'Products'],

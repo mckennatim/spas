@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "wpw": "node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
-    "wpp": "node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js"
+    "wpp": "node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js",
+    "te": "node test/tests" 
   },
   "author": "Timothy S. McKenna <mckenna.tim@gmail.com> (http://mckennatim.github.io/mckennatim/)",
   "license": "MIT",
