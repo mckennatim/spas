@@ -1,6 +1,6 @@
 import {Home} from './components'
 
-const initState = {
+const initState = { 
 	test: {
 		name: 'Harry', 
 		rtpg: Home,

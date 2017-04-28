@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 # auth
 http://www.gistia.com/talk-backend-services-angular-2s-http-client/ brilliant on showing how a csrf attack would work. It also ids pretty clear on using angular's http +headers
 

@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';
 import { map } from 'lodash';
 import { setDeviceType, switchPage, loadGithubFollowers} from './Responsive'
-import {getUrApps} from './geniot'
 
 const changeName = actionCreator((payload) => ({
   type: 'NAME_CHANGED',
@@ -14,4 +13,4 @@ const changePage = actionCreator((payload) => ({
   payload
 }));
 
-export {setDeviceType, changePage, changeName, switchPage, loadGithubFollowers, getUrApps}
+export {setDeviceType, changePage, changeName, switchPage, loadGithubFollowers}

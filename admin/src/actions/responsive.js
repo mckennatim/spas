@@ -23,7 +23,7 @@ const loadGithubFollowers = actionCreator((payload) => {
     type: 'GITHUB_FOLLOWERS_LOADING',
     payload: Observable.ajax(url)
       .map((xhr) => {
-      	console.log(xhr.response)
+      	console.log(xhr)
       	return map(xhr.response, 'login')
       })
       .map((followers) => {

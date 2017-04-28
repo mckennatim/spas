@@ -6842,7 +6842,7 @@ module.exports = g;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getUrApps = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.changePage = exports.setDeviceType = undefined;
+exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.changePage = exports.setDeviceType = undefined;
 
 var _rxred = __webpack_require__(65);
 
@@ -6853,8 +6853,6 @@ __webpack_require__(89);
 var _lodash = __webpack_require__(102);
 
 var _Responsive = __webpack_require__(165);
-
-var _geniot = __webpack_require__(542);
 
 var changeName = (0, _rxred.actionCreator)(function (payload) {
   return {
@@ -6874,7 +6872,6 @@ exports.changePage = changePage;
 exports.changeName = changeName;
 exports.switchPage = _Responsive.switchPage;
 exports.loadGithubFollowers = _Responsive.loadGithubFollowers;
-exports.getUrApps = _geniot.getUrApps;
 
 /***/ }),
 /* 65 */
@@ -33046,15 +33043,15 @@ exports.initState = initState;
 
 module.exports = {
 	"development": {
-		"auth": {
-			"url": "http://127.0.0.1",
-			"port": "7080"
-		},
 		"appid": "tauth",
-		"service": {
-			"url": "http://10.0.1.101",
-			"port": "3332",
-			"path": "/api"
+		"url": {
+			"soauth": "http://127.0.0.1",
+			"server": "http://127.0.0.1",
+			"app": "http://127.0.0.1"
+		},
+		"port": {
+			"soauth": 7080,
+			"api": 7070
 		}
 	},
 	"production": {
@@ -33128,7 +33125,7 @@ var loadGithubFollowers = (0, _rxred.actionCreator)(function (payload) {
   return {
     type: 'GITHUB_FOLLOWERS_LOADING',
     payload: _Rx.Observable.ajax(url).map(function (xhr) {
-      console.log(xhr.response);
+      console.log(xhr);
       return (0, _lodash.map)(xhr.response, 'login');
     }).map(function (followers) {
       console.log(followers);
@@ -33307,7 +33304,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var cfg = _env2.default[process.env.NODE_ENV || 'development'];
 
-var url = cfg.auth.url + ":" + cfg.auth.port + "/spa/" + cfg.appid + "/" + encodeURIComponent(cfg.service.url + ":" + cfg.service.port + cfg.service.path + "/reg/auth");
+var url = cfg.url.soauth + ":" + cfg.port.soauth + "/spa/" + cfg.appid + "/" + encodeURIComponent(cfg.url.server + ":" + cfg.port.api);
 console.log(url);
 
 var style = {
@@ -33501,8 +33498,6 @@ var _react = __webpack_require__(26);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _actions = __webpack_require__(64);
-
 var _styles = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -33511,14 +33506,10 @@ var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.ou
 });
 //pStyle.outer.background='#C4A265'
 
-var Registered = function Registered(props) {
+function Registered(props) {
   console.log('in Registe5red');
   console.log(props);
   var email = props.responsive.page.params.email;
-  function handleGetUrApps() {
-    console.log("in get ur apps");
-    (0, _actions.getUrApps)(email);
-  }
   return _react2.default.createElement(
     'div',
     { style: style.outer },
@@ -33528,14 +33519,9 @@ var Registered = function Registered(props) {
       'You Be Registered ',
       email,
       ' '
-    ),
-    _react2.default.createElement(
-      'button',
-      { id: 'but', onClick: handleGetUrApps },
-      'get your apps'
     )
   );
-};
+}
 
 exports.Registered = Registered;
 
@@ -33554,8 +33540,6 @@ exports.rootReducer = undefined;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _responsive = __webpack_require__(172);
-
-var _geniot = __webpack_require__(543);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -33597,7 +33581,7 @@ function combineReducers(reducersObject) {
   };
 }
 
-var reducersObj = { responsive: _responsive.responsive, test: test, geniot: _geniot.geniot };
+var reducersObj = { responsive: _responsive.responsive, test: test };
 var rootReducer = combineReducers(reducersObj);
 exports.rootReducer = rootReducer;
 
@@ -60055,84 +60039,6 @@ module.exports = function(module) {
 	return module;
 };
 
-
-/***/ }),
-/* 542 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-Object.defineProperty(exports, "__esModule", {
-			value: true
-});
-exports.getUrApps = undefined;
-
-var _rxred = __webpack_require__(65);
-
-var _Rx = __webpack_require__(129);
-
-__webpack_require__(89);
-
-var _lodash = __webpack_require__(102);
-
-var _env = __webpack_require__(164);
-
-var _env2 = _interopRequireDefault(_env);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var cfg = _env2.default[process.env.NODE_ENV || 'development'];
-
-var getUrApps = (0, _rxred.actionCreator)(function (payload) {
-			console.log(payload);
-			var url = cfg.service.url + ':' + cfg.service.port + cfg.service.path + '/reg/postauth/' + payload;
-			console.log(url);
-			return {
-						type: 'UR_APPS_LOADING',
-						payload: _Rx.Observable.ajax(url).map(function (xhr) {
-									console.log(xhr.response);
-									return {
-												type: 'UR_APPS_LOADED',
-												payload: xhr.response
-									};
-						})
-			};
-});
-
-exports.getUrApps = getUrApps;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 543 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var geniot = function geniot(state, action) {
-  switch (action.type) {
-    case 'UR_APPS_LOADING':
-      return _extends({}, state, {
-        isLoading: true
-      });
-    case "UR_APPS_LOADED":
-      return _extends({}, state, {
-        isLoading: false,
-        devices: action.payload
-      });
-    default:
-      return state;
-  }
-};
-
-exports.geniot = geniot;
 
 /***/ })
 /******/ ]);

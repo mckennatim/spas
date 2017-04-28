@@ -3,8 +3,8 @@ import {mStyle} from '../styles'
 import env from '../../env.json'
 var cfg= env[process.env.NODE_ENV||'development']
 
-const url = cfg.auth.url+":"+cfg.auth.port+"/spa/"+cfg.appid+"/"+
-encodeURIComponent(cfg.service.url+":"+cfg.service.port+cfg.service.path+"/reg/auth")
+const url = cfg.url.soauth+":"+cfg.port.soauth+"/spa/"+cfg.appid+"/"+
+encodeURIComponent(cfg.url.server+":"+cfg.port.api)
 console.log(url)
 
 

@@ -1,5 +1,4 @@
 import{responsive}from './responsive'
-import{geniot}from './geniot'
 
 function test(state, action) {
   switch (action.type) {
@@ -42,7 +41,7 @@ function combineReducers(reducersObject) {
   }, state);
 }
 
-var reducersObj={responsive, test, geniot}
+var reducersObj={responsive, test}
 const rootReducer = combineReducers(reducersObj)
 export {rootReducer}
 
