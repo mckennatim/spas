@@ -27,6 +27,7 @@
     "immutable": "3.8.1",
     "mqtt": "2.5.0",
     "navigo": "4.3.1",
+    "paho.mqtt.js": "2.0.4",
     "preact": "7.2.1",
     "preact-dom": "1.0.1",
     "react": "15.4.2",

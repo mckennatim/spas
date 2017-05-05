@@ -3,9 +3,29 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 08-paho-rxasred-vigo
+#### todo
+
+* be sure it works with iphone
+* move  to admin app
+
+Using `npm paho.mqtt.js` instead of `mqtt` since the latter doesn't work in ios.
+
+`fromMqtt` uses currying so that when you get an action like `changeDevInfo` it can connect to the new device as a `Subject.create(observer, observable)` stream ala `mqtt$ = fromMqtt$(devId)`. `mqtt$` acts as on observer of the whole paho thing, its job is to listen for (be subscribed to) obs.next() which gets it data mainly from paho.onMessageArrived(message) but also from paho.onConnect() and onConnectionLost() which casuse obs.next({topic" 'any/ready', payload: {ready: t/f}}). It is curried so you only need devId 
+
+    const fromMqtt$ = (devId)=>fromMqtt(Observer, url, port, devId)
+    mqtt$ = fromMqtt$(devId)
+
+So this mythic `subject` is listening to the frontend for actions that include mqtt$.next(xxx) and mqtt$ is also subscribed to `subject` and gets data from it. `subject` has its own obs.next which gets given shit whenever paho gets some data (or connects/disconnects). At the same time it is also getting stuff from the fronend via mqtt$.next() which it then publishes via paho
+
+* mqtt$ is an observable so whenever `mqtt$.next()` it gets observed
+* mqtt$ is an observer subscribed to obs.next(), the observable that gets paho's shit
+* paho is subscribed to and publishes to the device server
+* paho publishes mqtt$.next(req) 
+
 ### 07-auth-Nav
 ### 06-bl-navigo-react-rxjs-rwd_rxtry
-get a grip on the foibles of rxjs in preparation for using it for async api access. Next up is take this template and connect it to a authentication backend
+get a grip on the foibles of rxjs in preparation for using it for async api access. Next up is take this template and connect it to a authentication  backend
 ### 05-bl-navigo-react-rxjs-resp
 bl-navigo-react-rxjs-responsive
 ### 04-bl-navigate-react-rxjs

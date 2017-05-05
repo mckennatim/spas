@@ -1,3 +1,4 @@
+require('./mqttws31.js')
 import { actionCreator } from '../rxflux';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';

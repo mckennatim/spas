@@ -7,8 +7,10 @@ var cfg= env[process.env.NODE_ENV||'development']
 
 const getUrApps = actionCreator((payload) => {
 	console.log(payload)
-	const url = `${cfg.service.url}:${cfg.service.port}${cfg.service.path}/reg/postauth/${payload}`
+	const url = `${cfg.service.url}:${cfg.service.port}${cfg.service.path}/reg/postauth/${payload}/${cfg.appid}`
+	const token = localStorage.getItem(cfg.appid)
 	console.log(url)
+	console.log(token)
 	return{
     type: 'UR_APPS_LOADING',
     payload: Observable.ajax(url)
