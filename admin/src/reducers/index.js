@@ -1,4 +1,5 @@
 import{responsive}from './responsive'
+import{mqtt}from './mqtt'
 
 function test(state, action) {
   switch (action.type) {
@@ -41,7 +42,7 @@ function combineReducers(reducersObject) {
   }, state);
 }
 
-var reducersObj={responsive, test}
+var reducersObj={responsive, test, mqtt}
 const rootReducer = combineReducers(reducersObj)
 export {rootReducer}
 

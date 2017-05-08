@@ -2,7 +2,8 @@ import { actionCreator } from '../rxred';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';
 import { map } from 'lodash';
-import { setDeviceType, switchPage, loadGithubFollowers} from './Responsive'
+import { setDeviceType, switchPage, loadGithubFollowers} from './responsive'
+import { copyStore, disconnect} from './mqtt'
 
 const changeName = actionCreator((payload) => ({
   type: 'NAME_CHANGED',
@@ -13,4 +14,4 @@ const changePage = actionCreator((payload) => ({
   payload
 }));
 
-export {setDeviceType, changePage, changeName, switchPage, loadGithubFollowers}
+export {setDeviceType, changePage, changeName, switchPage, loadGithubFollowers, copyStore, disconnect}

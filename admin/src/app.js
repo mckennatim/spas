@@ -6,7 +6,12 @@ import {App, Dog} from './components'
 import { createStore } from './rxred';
 import { log } from './utilities';
 import {initState} from './store'
-import {setDeviceType} from './actions'
+import {setDeviceType, copyStore, disconnect} from './actions'
+
+window.onblur = ()=>{
+	console.log('in app disconnect')
+	disconnect()
+}
 
 Observable.fromEvent(window, 'resize')
   .debounceTime(300)
@@ -15,9 +20,10 @@ Observable.fromEvent(window, 'resize')
 const container = document.getElementById('app');
 createStore(initState)
   .do(log)
-  .subscribe((state) =>
-    ReactDOM.render(<App {...state} />, container)
-  );
+  .subscribe((state) =>{
+  	copyStore(state)
+    return ReactDOM.render(<App {...state} />, container)
+  });
 
 var router=routing()
 
