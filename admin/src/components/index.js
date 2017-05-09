@@ -3,6 +3,8 @@ import {router} from '../app'
 import {App} from './App'
 import {Nav} from './Nav'
 import {Dog} from './Dog'
+import {Devices} from './Devices'
+import {DevInf} from './DevInf'
 import {Registered} from './Registered'
 import {Products} from './Products'
 import {pStyle} from '../styles'
@@ -68,10 +70,18 @@ const multi =[{pri:'About', mul:[
 							{pri:'Home', mul:[
 								['Home', 'About'],
 								['Dog', 'About', 'Home']]
+							 },
+							{pri:'DevInf', mul:[
+								['DevInf', 'Devices'],
+								['DevInf', 'Devices', 'Home']]
+							 },
+							{pri:'Devices', mul:[
+								['Devices', 'DevInf'],
+								['Devices', 'DevInf', 'About']]
 							 }
 							]
 
 //['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
 const panes= [1,1,2,2,3,3]
 
-export {About, Products, Home, Dog, Registered, App, Nav, multi, panes}
+export {About, Products, Home, Dog, Registered, Devices, DevInf, App, Nav, multi, panes}

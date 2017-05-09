@@ -4199,7 +4199,7 @@ exports.MulticastOperator = MulticastOperator;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.panes = exports.multi = exports.Nav = exports.App = exports.Registered = exports.Dog = exports.Home = exports.Products = exports.About = undefined;
+exports.panes = exports.multi = exports.Nav = exports.App = exports.DevInf = exports.Devices = exports.Registered = exports.Dog = exports.Home = exports.Products = exports.About = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -4214,6 +4214,10 @@ var _App = __webpack_require__(166);
 var _Nav = __webpack_require__(168);
 
 var _Dog = __webpack_require__(167);
+
+var _Devices = __webpack_require__(547);
+
+var _DevInf = __webpack_require__(549);
 
 var _Registered = __webpack_require__(170);
 
@@ -4300,6 +4304,8 @@ var multi = [{ pri: 'About', mul: [['About', 'Products'], ['Products', 'About', 
 }, { pri: 'Products', mul: [['Products', 'About'], ['About', 'Products', 'Home']]
 }, { pri: 'Dog', mul: [['Dog', 'Home'], ['Dog', 'About', 'Home']]
 }, { pri: 'Home', mul: [['Home', 'About'], ['Dog', 'About', 'Home']]
+}, { pri: 'DevInf', mul: [['DevInf', 'Devices'], ['DevInf', 'Devices', 'Home']]
+}, { pri: 'Devices', mul: [['Devices', 'DevInf'], ['Devices', 'DevInf', 'About']]
 }];
 
 //['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
@@ -4310,6 +4316,8 @@ exports.Products = _Products.Products;
 exports.Home = Home;
 exports.Dog = _Dog.Dog;
 exports.Registered = _Registered.Registered;
+exports.Devices = _Devices.Devices;
+exports.DevInf = _DevInf.DevInf;
 exports.App = _App.App;
 exports.Nav = _Nav.Nav;
 exports.multi = multi;
@@ -4328,7 +4336,8 @@ Object.defineProperty(exports, "__esModule", {
 var mStyle = {
   li: {
     display: 'inline',
-    padding: '10px',
+    padding: '2px',
+    paddingRight: '4px',
     backgroundColor: '#FFFFCC'
   },
   ul: {},
@@ -6842,7 +6851,7 @@ module.exports = g;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.disconnect = exports.copyStore = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.changePage = exports.setDeviceType = undefined;
+exports.changeDevInfo = exports.reconnect = exports.disconnect = exports.copyStore = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.changePage = exports.setDeviceType = undefined;
 
 var _rxred = __webpack_require__(65);
 
@@ -6876,6 +6885,8 @@ exports.switchPage = _responsive.switchPage;
 exports.loadGithubFollowers = _responsive.loadGithubFollowers;
 exports.copyStore = _mqtt.copyStore;
 exports.disconnect = _mqtt.disconnect;
+exports.reconnect = _mqtt.reconnect;
+exports.changeDevInfo = _mqtt.changeDevInfo;
 
 /***/ }),
 /* 65 */
@@ -10292,6 +10303,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 window.onblur = function () {
   console.log('in app disconnect');
   (0, _actions.disconnect)();
+};
+
+window.onfocus = function () {
+  console.log('window on focus');
+  console.log(window.location.hash);
+  (0, _actions.reconnect)(window.location.hash);
 };
 
 _Observable.Observable.fromEvent(window, 'resize').debounceTime(300).subscribe(function (e) {
@@ -32955,7 +32972,7 @@ exports.clearImmediate = clearImmediate;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.routing = undefined;
+exports.router = exports.routing = undefined;
 
 var _navigo = __webpack_require__(188);
 
@@ -32971,8 +32988,18 @@ var router;
 
 var routing = function routing() {
 	var cfg = { root: null, useHash: true };
-	router = new _navigo2.default(cfg.root, cfg.useHash);
+	exports.router = router = new _navigo2.default(cfg.root, cfg.useHash);
 	router.on({
+		'devices': function devices() {
+			(0, _actions.switchPage)({ name: 'Devices', params: null });
+		},
+		'dev/:id': function devId(params) {
+			var pro = {};
+			pro.ht = 'DevInf';
+			pro.par = params;
+			(0, _actions.switchPage)({ name: 'DevInf', params: params });
+			(0, _actions.changeDevInfo)(pro);
+		},
 		'products': function products() {
 			(0, _actions.switchPage)({ name: 'Products', params: null });
 		},
@@ -33001,6 +33028,7 @@ var routing = function routing() {
 };
 
 exports.routing = routing;
+exports.router = router;
 
 /***/ }),
 /* 163 */
@@ -33017,6 +33045,50 @@ exports.initState = undefined;
 var _components = __webpack_require__(36);
 
 var initState = {
+  mqtt: {
+    currentDevId: '00002zzz',
+    currentDev: {
+      specs: {
+        notTimerTags: ["temp", "onoff", "hilimit", "lolimit"]
+      }
+    },
+    devices: [{
+      id: 'CYURD001',
+      name: 'geniot',
+      desc: '2 temps, 3 timers 1 relay demo board',
+      location: {
+        lat: 222,
+        lon: 333,
+        zip: '02130',
+        street: '12 Parley Vale',
+        city: 'Jamaica Plain',
+        state: 'MA'
+      },
+      specs: {
+        HAStIMER: 28,
+        notTimerTags: ["temp", "onoff", "hilimit", "lolimit"]
+      }
+    }, {
+      id: 'CYURD002',
+      name: 'cascada',
+      desc: '3 timers 2 relays for waterfall and garden',
+      location: {
+        lat: 222,
+        lon: 333,
+        zip: '02130',
+        street: '12 Parley Vale',
+        city: 'Jamaica Plain',
+        state: 'MA'
+      },
+      specs: {
+        HAStIMER: 28,
+        notTimerTags: ["temp", "onoff", "hilimit", "lolimit"]
+      }
+    }],
+    timr: { tIMElEFT: [0, 0, 0] },
+    flags: { HAStIMR: 28 },
+    srstate: []
+  },
   test: {
     name: 'Harry',
     rtpg: _components.Home,
@@ -33342,6 +33414,15 @@ var Nav = function Nav(props) {
 					{ style: _styles.mStyle.li },
 					_react2.default.createElement(
 						'a',
+						{ style: _styles.mStyle.a, href: 'devices', 'data-navigo': true },
+						'devices'
+					)
+				),
+				_react2.default.createElement(
+					'li',
+					{ style: _styles.mStyle.li },
+					_react2.default.createElement(
+						'a',
 						{ style: _styles.mStyle.a, href: 'registered', 'data-navigo': true },
 						'registered'
 					)
@@ -33627,8 +33708,13 @@ var responsivePage = function responsivePage(state) {
   });
   if (pageList.length == 0) {
     //if there is no multi array for the page
+    //try{
+    console.log(compoi[pageName](state));
     var singleElement = compoi[pageName](state);
     elArr.push(singleElement);
+    // }catch(err){
+    //   console.error('There is no page named '+pageName + err)
+    // }
   } else {
     var multiList = pageList[0].mul.filter(function (mu) {
       return mu.length == panesPerType;
@@ -60194,7 +60280,7 @@ exports.fromMqtt$ = fromMqtt$;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.disconnect = exports.grabTimrData = exports.grabSchedData = exports.grabSrstateData = exports.grabFlagData = exports.changeDevInfo = exports.copyStore = undefined;
+exports.reconnect = exports.disconnect = exports.grabTimrData = exports.grabSchedData = exports.grabSrstateData = exports.grabFlagData = exports.changeDevInfo = exports.copyStore = undefined;
 
 var _rxred = __webpack_require__(65);
 
@@ -60261,9 +60347,27 @@ var disconnect = (0, _rxred.actionCreator)(function (payload) {
     payload: { isConnected: false }
   };
 });
+var reconnect = (0, _rxred.actionCreator)(function (payload) {
+  var shouldConnect = false;
+  if (payload.includes('/dev/')) {
+    var ha = payload.split('/dev/');
+    var dev = ha[1];
+    if (dev.includes('/')) {
+      var dda = dev.split('/');
+      dev = dda[0];
+    }
+    console.log(dev);
+    shouldConnect = true;
+    connectAndSubscribe(dev);
+  }
+  return {
+    type: 'RECONNECT',
+    payload: shouldConnect
+  };
+});
 var changeDevInfo = (0, _rxred.actionCreator)(function (payload) {
-  console.log(storeCopy.route.currentDevId + ' != ' + payload.par.id);
-  if (storeCopy.route.currentDevId != payload.par.id) {
+  console.log(storeCopy.mqtt.currentDevId + ' != ' + payload.par.id);
+  if (storeCopy.mqtt.currentDevId != payload.par.id) {
     connectAndSubscribe(payload.par.id);
   }
   return {
@@ -60316,6 +60420,7 @@ exports.grabSrstateData = grabSrstateData;
 exports.grabSchedData = grabSchedData;
 exports.grabTimrData = grabTimrData;
 exports.disconnect = disconnect;
+exports.reconnect = reconnect;
 
 /***/ }),
 /* 545 */
@@ -62440,14 +62545,13 @@ var mqtt = function mqtt(state, action) {
       return _extends({}, state, {
         isConnected: false
       });
-    case 'DEVINFO_CHANGED':
+    case 'RECONNECT':
       return _extends({}, state, {
-        isLoading: true
+        shouldConnect: action.payload
       });
     case 'DEVINFO_CHANGED':
       // console.log(action.payload)
       return _extends({}, state, {
-        rtpg: action.payload.ht,
         currentDevId: action.payload.par.id,
         currentDev: state.devices[getIndex(state.devices, action.payload.par.id)]
       });
@@ -62485,6 +62589,396 @@ var mqtt = function mqtt(state, action) {
 };
 
 exports.mqtt = mqtt;
+
+/***/ }),
+/* 547 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Devices = undefined;
+
+var _react = __webpack_require__(26);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _DeviceList = __webpack_require__(548);
+
+var _DeviceList2 = _interopRequireDefault(_DeviceList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Devices(props) {
+  var devices = props.devices,
+      name = props.name;
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'div',
+      { style: styles.outer },
+      _react2.default.createElement(
+        'h4',
+        null,
+        'in Devices ',
+        name
+      ),
+      _react2.default.createElement(_DeviceList2.default, { name: name, devices: devices })
+    )
+  );
+}
+function mapStoreToProps(anElement) {
+  //returns a function called later with store as its arg and anElement from here
+  return function (store) {
+    var props = {
+      devices: store.mqtt.devices,
+      name: store.test.name
+    };
+    return _react2.default.createElement(anElement, props);
+  };
+}
+
+exports.Devices = Devices = mapStoreToProps(Devices);
+
+exports.Devices = Devices;
+
+var styles = {
+  outer: {
+    background: '#9338f4',
+    height: 400,
+    textAlign: 'center'
+  },
+  inner: {
+    margin: '0 auto',
+    background: '#FFF28E',
+    height: 340,
+    color: 'red',
+    textAlign: 'center',
+    fontSize: '300%'
+  }
+};
+
+/***/ }),
+/* 548 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = DevicesList;
+
+var _react = __webpack_require__(26);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _routing = __webpack_require__(162);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var handleNavigate = function handleNavigate(data) {
+  return function () {
+    return (
+      //console.log(params)
+      _routing.router.navigate(data)
+    );
+  };
+};
+
+function DevicesList(props) {
+  var devices = props.devices,
+      name = props.name;
+
+  devices.map(function (dev) {});
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h5',
+      null,
+      'in DeviceList for ',
+      name
+    ),
+    _react2.default.createElement(
+      'ul',
+      { style: styles.ul },
+      devices.map(function (dev) {
+        return _react2.default.createElement(
+          'li',
+          { key: dev.id, style: styles.li },
+          _react2.default.createElement(
+            'a',
+            { onClick: handleNavigate('/dev/' + dev.id) },
+            dev.name
+          )
+        );
+      })
+    ),
+    _react2.default.createElement(
+      'button',
+      { onClick: handleNavigate('/cat') },
+      'goto cat'
+    )
+  );
+}
+
+var styles = {
+  ul: {
+    listStyleType: 'none',
+    margin: 0,
+    padding: 0
+  },
+  li: {
+    height: 34,
+    background: '#d2ef8f',
+    borderBottom: '1px solid black',
+    paddiing: '5 5 5 5'
+  }
+};
+
+/***/ }),
+/* 549 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DevInf = undefined;
+
+var _react = __webpack_require__(26);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var DevInf = _react2.default.createClass({
+  displayName: "DevInf",
+
+
+  componentDidMount: function componentDidMount() {
+    // console.log('Devinf mounted')
+    // this.client = mqttCon(this.currentDev.id, this.props)
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    // console.log('Devinf unmountd')
+    // this.client.publish('presence', 'Help, wants to close! ');
+    // this.client.end();    
+  },
+  makeTimrMap: function makeTimrMap() {
+    var _this = this;
+
+    var timrRaw = this.props.timr.tIMElEFT;
+    var ISrELAYoN = this.props.timr.ISrELAYoN;
+    var timr = timrRaw.map(function (t, i) {
+      var relon = (Math.pow(2, i) & ISrELAYoN) > 0 ? "on" : "off";
+      return { id: i, sec: t, ison: relon };
+    }).filter(function (t, i) {
+      return (Math.pow(2, i) & _this.HAStIMR) > 0;
+    });
+    return timr;
+  },
+  generateHeaders: function generateHeaders() {
+    var tags = this.props.currentDev.specs.notTimerTags;
+    return tags.map(function (h, i) {
+      return _react2.default.createElement(
+        "th",
+        { key: i },
+        " ",
+        h,
+        " "
+      );
+    });
+  },
+  generateRows: function generateRows() {
+    var _this2 = this;
+
+    var dev = this.props.currentDev.id;
+    var rawState = this.props.rawState;
+    var notTimer = 31 - this.HAStIMR;
+    var srstate = rawState.filter(function (sens) {
+      return (Math.pow(2, sens.id) & notTimer) > 0;
+    }).map(function (sens) {
+      //console.log(sens.id)
+      var art = "#/dev/" + _this2.currentDev.id + "/" + sens.id;
+      var cells = sens.darr.map(function (d, i) {
+        return _react2.default.createElement(
+          "td",
+          { key: i },
+          " ",
+          d,
+          " "
+        );
+      });
+      return _react2.default.createElement(
+        "tr",
+        { key: sens.id },
+        _react2.default.createElement(
+          "td",
+          null,
+          _react2.default.createElement(
+            "a",
+            { href: art },
+            "temp",
+            sens.id
+          )
+        ),
+        cells
+      );
+    });
+    return srstate;
+  },
+  render: function render() {
+    var _this3 = this;
+
+    this.currentDev = this.props.currentDev;
+    this.HAStIMR = this.props.flags.HAStIMR;
+    var timr = this.makeTimrMap();
+    var name = this.props.name;
+
+    var headerComponents = this.generateHeaders();
+    var rowComponents = this.generateRows();
+
+    return _react2.default.createElement(
+      "div",
+      { style: styles.outer },
+      _react2.default.createElement(
+        "h4",
+        null,
+        "in doDevinfo ",
+        name
+      ),
+      this.currentDev.name,
+      " ",
+      _react2.default.createElement("br", null),
+      this.currentDev.id,
+      " ",
+      _react2.default.createElement("br", null),
+      this.currentDev.desc,
+      _react2.default.createElement("br", null),
+      _react2.default.createElement(
+        "ul",
+        { style: styles.ul },
+        timr.map(function (tmr, idx) {
+          var art = "#/dev/" + _this3.currentDev.id + "/" + tmr.id;
+          return _react2.default.createElement(
+            "li",
+            { key: idx, style: styles.inner },
+            _react2.default.createElement(
+              "a",
+              { href: art },
+              "relay",
+              tmr.id,
+              ":"
+            ),
+            _react2.default.createElement(
+              "span",
+              { style: styles.span },
+              " ",
+              tmr.ison
+            ),
+            _react2.default.createElement(
+              "span",
+              { style: styles.span },
+              " ",
+              tmr.sec
+            )
+          );
+        })
+      ),
+      _react2.default.createElement(
+        "div",
+        { style: styles.tablediv },
+        _react2.default.createElement(
+          "table",
+          { style: styles.table },
+          _react2.default.createElement("thead", null),
+          _react2.default.createElement(
+            "tbody",
+            null,
+            _react2.default.createElement(
+              "tr",
+              null,
+              _react2.default.createElement(
+                "th",
+                null,
+                "sensor"
+              ),
+              headerComponents
+            ),
+            rowComponents
+          )
+        )
+      )
+    );
+  }
+});
+function mapStoreToProps(anElement) {
+  //returns a function called later with store as its arg and anElement from here
+  return function (store) {
+    var props = {
+      currentDev: store.mqtt.currentDev,
+      timr: store.mqtt.timr,
+      flags: store.mqtt.flags,
+      rawState: store.mqtt.srstate,
+      name: store.test.name
+    };
+    return _react2.default.createElement(anElement, props);
+  };
+}
+
+exports.DevInf = DevInf = mapStoreToProps(DevInf);
+exports.DevInf = DevInf;
+
+
+var styles = {
+  outer: {
+    display: 'flex',
+    flexDirection: 'column',
+    background: '#C4A265',
+    height: 400,
+    textAlign: 'center'
+  },
+  inner: {
+    margin: '0 auto',
+    background: '#FFF28E',
+    color: 'green',
+    textAlign: 'left',
+    fontSize: '100%',
+    padding: 3,
+    border: '1px solid #dddddd'
+  },
+  tablediv: {
+    margin: '0 auto',
+    background: '#8fd3ba',
+    color: 'blue',
+    textAlign: 'left',
+    fontSize: '100%'
+  },
+  span: {
+    float: 'right',
+    paddingLeft: 15
+  },
+  ul: {
+    margin: '0 auto',
+    listStyleType: 'none',
+    width: 160,
+    padding: 35
+  },
+  table: {
+    borderCollapse: 'collapse'
+  }
+};
 
 /***/ })
 /******/ ]);

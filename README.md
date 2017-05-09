@@ -3,6 +3,8 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 10-admin_devices-devinf
+interesting: router calls multiple actions that direct to different reducers
 ### 09-paho-rxasred-vigo_onfocus-blur 
 on why actions should be devoupled from a page, you can use them anywhere
 ### 08-paho-rxasred-vigo

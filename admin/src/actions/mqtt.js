@@ -58,9 +58,27 @@ const disconnect = actionCreator((payload)=>{
     payload: {isConnected: false}
   }
 })
+const reconnect = actionCreator((payload)=>{
+  var shouldConnect = false
+  if(payload.includes('/dev/')){
+    var ha = payload.split('/dev/')
+    var dev= ha[1]
+    if (dev.includes('/')){
+      var dda = dev.split('/')
+      dev=dda[0]
+    }
+    console.log(dev)
+    shouldConnect = true
+    connectAndSubscribe(dev)
+  }
+  return {
+    type: 'RECONNECT',
+    payload: shouldConnect
+  }
+})
 const changeDevInfo = actionCreator((payload) => {
-  console.log(`${storeCopy.route.currentDevId} != ${payload.par.id}`)
-  if (storeCopy.route.currentDevId != payload.par.id){
+  console.log(`${storeCopy.mqtt.currentDevId} != ${payload.par.id}`)
+  if (storeCopy.mqtt.currentDevId != payload.par.id){
     connectAndSubscribe(payload.par.id)
   }  
   return {
@@ -106,4 +124,4 @@ const grabFlagData = actionCreator((payload) => {
   }
 });
 
-export {copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect}
+export {copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect}

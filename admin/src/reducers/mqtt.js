@@ -9,16 +9,15 @@ const mqtt=(state, action) =>{
         ...state,
         isConnected: false
       }
-    case 'DEVINFO_CHANGED':
+    case 'RECONNECT':
       return {
         ...state,
-        isLoading: true
-      };
+        shouldConnect: action.payload
+      }       
     case 'DEVINFO_CHANGED':
       // console.log(action.payload)
       return {
         ...state,
-        rtpg: action.payload.ht, 
         currentDevId: action.payload.par.id,
         currentDev: state.devices[getIndex(state.devices, action.payload.par.id )]
       };      

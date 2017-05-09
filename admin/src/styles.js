@@ -1,7 +1,8 @@
 var mStyle = {
 	li: {
 		display: 'inline',
-		padding: '10px',
+		padding: '2px',
+    paddingRight: '4px',
 		backgroundColor: '#FFFFCC'
 	},
 	ul: {

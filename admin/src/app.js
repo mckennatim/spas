@@ -6,11 +6,17 @@ import {App, Dog} from './components'
 import { createStore } from './rxred';
 import { log } from './utilities';
 import {initState} from './store'
-import {setDeviceType, copyStore, disconnect} from './actions'
+import {setDeviceType, copyStore, disconnect, reconnect} from './actions'
 
 window.onblur = ()=>{
 	console.log('in app disconnect')
 	disconnect()
+}
+
+window.onfocus = ()=>{
+	console.log('window on focus')
+	console.log(window.location.hash)
+	reconnect(window.location.hash)
 }
 
 Observable.fromEvent(window, 'resize')
