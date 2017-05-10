@@ -6851,7 +6851,7 @@ module.exports = g;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.changeDevInfo = exports.reconnect = exports.disconnect = exports.copyStore = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.changePage = exports.setDeviceType = undefined;
+exports.getApps = exports.changeDevInfo = exports.reconnect = exports.disconnect = exports.copyStore = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.changePage = exports.setDeviceType = undefined;
 
 var _rxred = __webpack_require__(65);
 
@@ -6887,6 +6887,7 @@ exports.copyStore = _mqtt.copyStore;
 exports.disconnect = _mqtt.disconnect;
 exports.reconnect = _mqtt.reconnect;
 exports.changeDevInfo = _mqtt.changeDevInfo;
+exports.getApps = _mqtt.getApps;
 
 /***/ }),
 /* 65 */
@@ -33018,7 +33019,7 @@ var routing = function routing() {
 		'registered': function registered(params, query) {
 			console.log(params);
 			console.log(query);
-			(0, _actions.switchPage)({ name: 'Registered', params: { email: query } });
+			(0, _actions.switchPage)({ name: 'Registered', params: { query: query } });
 		},
 		'*': function _() {
 			(0, _actions.switchPage)({ name: 'Home', params: null });
@@ -33133,7 +33134,7 @@ module.exports = {
 		},
 		"port": {
 			"soauth": 7080,
-			"api": 7070
+			"api": 3332
 		}
 	},
 	"production": {
@@ -33537,16 +33538,35 @@ var _react2 = _interopRequireDefault(_react);
 
 var _styles = __webpack_require__(37);
 
+var _actions = __webpack_require__(64);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#FF9966' })
 });
 //pStyle.outer.background='#C4A265'
 
+var parseQuery = function parseQuery(query) {
+  var obj = {};
+  query.split('&').map(function (term) {
+    var ar = term.split('=');
+    obj[ar[0]] = ar[1];
+  });
+  return obj;
+};
+
 function Registered(props) {
   console.log('in Registe5red');
   console.log(props);
-  var email = props.responsive.page.params.email;
+  var query = props.responsive.page.params.query;
+  var mobj = parseQuery(query);
+  console.log(mobj);
+
+  var handleGetApps = function handleGetApps() {
+    console.log('handling get apps');
+    (0, _actions.getApps)(mobj);
+  };
+
   return _react2.default.createElement(
     'div',
     { style: style.outer },
@@ -33554,8 +33574,13 @@ function Registered(props) {
       'h4',
       null,
       'You Be Registered ',
-      email,
+      mobj.email,
       ' '
+    ),
+    _react2.default.createElement(
+      'button',
+      { onClick: handleGetApps },
+      'get your apps and devices'
     )
   );
 }
@@ -60280,7 +60305,7 @@ exports.fromMqtt$ = fromMqtt$;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reconnect = exports.disconnect = exports.grabTimrData = exports.grabSchedData = exports.grabSrstateData = exports.grabFlagData = exports.changeDevInfo = exports.copyStore = undefined;
+exports.getApps = exports.reconnect = exports.disconnect = exports.grabTimrData = exports.grabSchedData = exports.grabSrstateData = exports.grabFlagData = exports.changeDevInfo = exports.copyStore = undefined;
 
 var _rxred = __webpack_require__(65);
 
@@ -60339,6 +60364,14 @@ var connectAndSubscribe = function connectAndSubscribe(devId) {
   });
 };
 /*-----------------actions---------------------------------------*/
+var getApps = (0, _rxred.actionCreator)(function (payload) {
+  console.log(payload);
+  return {
+    type: 'GET_APPS',
+    payload: payload
+  };
+});
+
 var disconnect = (0, _rxred.actionCreator)(function (payload) {
   console.log('disconnection');
   mqtt$.next('end');
@@ -60421,6 +60454,7 @@ exports.grabSchedData = grabSchedData;
 exports.grabTimrData = grabTimrData;
 exports.disconnect = disconnect;
 exports.reconnect = reconnect;
+exports.getApps = getApps;
 
 /***/ }),
 /* 545 */
@@ -62541,6 +62575,8 @@ function getIndex(d, c) {
 
 var mqtt = function mqtt(state, action) {
   switch (action.type) {
+    case 'GET_APPS':
+      return state;
     case 'DISCONNECT':
       return _extends({}, state, {
         isConnected: false

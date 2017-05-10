@@ -50,6 +50,14 @@ const connectAndSubscribe= (devId)=>{
   });  
 }
 /*-----------------actions---------------------------------------*/
+const getApps = actionCreator((payload)=>{
+  console.log(payload)
+  return {
+    type: 'GET_APPS',
+    payload
+  }
+})
+
 const disconnect = actionCreator((payload)=>{
   console.log('disconnection')
   mqtt$.next('end')
@@ -124,4 +132,4 @@ const grabFlagData = actionCreator((payload) => {
   }
 });
 
-export {copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect}
+export {copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps}

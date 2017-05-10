@@ -1,4 +1,6 @@
-# auth
+# admin
+https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md
+
 http://www.gistia.com/talk-backend-services-angular-2s-http-client/ brilliant on showing how a csrf attack would work. It also ids pretty clear on using angular's http +headers
 
 https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)

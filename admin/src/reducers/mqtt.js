@@ -4,6 +4,8 @@ function getIndex(d,c){
 
 const mqtt=(state, action) =>{
   switch (action.type) {
+    case 'GET_APPS':
+      return state
     case 'DISCONNECT':
       return {
         ...state,

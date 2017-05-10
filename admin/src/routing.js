@@ -25,7 +25,7 @@ const routing = ()=>{
 	    'registered': (params, query)=>{
 	    	console.log(params)
 	    	console.log(query)
-	    	switchPage({name: 'Registered', params: {email: query}});
+	    	switchPage({name: 'Registered', params: {query: query}});
 	    },
 	    '*': ()=>{switchPage({name: 'Home', params: null});}
 	  })
