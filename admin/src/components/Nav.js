@@ -1,5 +1,7 @@
 import React from 'react' 
 import {mStyle} from '../styles'
+// import {cfg} from '../app'
+// console.log(cfg)
 import env from '../../env.json'
 var cfg= env[process.env.NODE_ENV||'development']
 

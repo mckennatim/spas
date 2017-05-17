@@ -8,6 +8,7 @@ import { log } from './utilities';
 import {initState} from './store'
 import {setDeviceType, copyStore, disconnect, reconnect} from './actions'
 
+
 window.onblur = ()=>{
 	console.log('in app disconnect')
 	disconnect()

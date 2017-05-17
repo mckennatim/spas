@@ -11,6 +11,7 @@ import {pStyle} from '../styles'
 import {loadGithubFollowers} from '../actions';
 
 
+
 const About = (props) =>{
 	const { isLoading, followers} = props.responsive;
 	const style = {

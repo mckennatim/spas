@@ -1,6 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
+import {storageLocal} from './storageLocal'
 import { Observable } from 'rxjs/Observable';
+import env from '../../env.json'
+const cfg= env[process.env.NODE_ENV||'development']
+
+const ls = storageLocal(cfg.appid)
 
 const get=(path, props)=>{
   return path.split(".")
@@ -25,6 +30,19 @@ const render = (pg, para)=>{
   ReactDOM.render(React.createElement(pg, para), document.getElementById('rt')) 
 }
 
+const getCfg =()=>{
+	return cfg
+}
 
+const parseQuery = (query)=>{
+	var obj = {};
+	query.split('&')
+		.map((term)=>{
+			var ar = term.split('=')
+			obj[ar[0]]=ar[1]
+		}
+	)
+	return obj
+}
 
-export {get, dog, render, isObservable, log}
+export {get, dog, render, isObservable, log, getCfg, ls, parseQuery}

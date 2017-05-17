@@ -6,7 +6,6 @@ const style = {
 pStyle.outer.background='#C4A265'
 
 function Dog(props){
-  console.log('in do dog')
   const { name } = props;
   return(
     <div style={style.outer} ><h4>in doDog {name} </h4></div>

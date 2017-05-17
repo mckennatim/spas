@@ -23,8 +23,6 @@ const routing = ()=>{
 	    'about': ()=>{switchPage({name: 'About', params: null});},
 	    'dog': ()=>{switchPage({name: 'Dog', params: null});},
 	    'registered': (params, query)=>{
-	    	console.log(params)
-	    	console.log(query)
 	    	switchPage({name: 'Registered', params: {query: query}});
 	    },
 	    '*': ()=>{switchPage({name: 'Home', params: null});}

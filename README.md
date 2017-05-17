@@ -3,6 +3,37 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 11-localStorage_module
+a module file in utilities named  `storageLocal.js`
+
+        const storageLocal = (item)=>{
+            const setItem=(obj)=>{
+                localStorage.setItem(item, JSON.stringify(obj))
+            }
+            ...
+            return{ //public methods
+                itemStr: itemStr,
+                getItem: getItem,
+                getId: (em)=>{
+                    let x = getItem()
+                    ...
+                },
+                setItem: setItem,
+                addToSet: (ob)=>{
+                    console.log(ob)
+                    function isEmailIn(el,i,x){
+                    ...
+                }
+            }
+        }
+
+gets curried for the appId by `const ls = storageLocal(cfg.appid)` in `utilities/index.js`. `ls` is available for `Registered.js`
+
+    var mobj = parseQuery(query)
+    ls.addToSet(mobj)
+
+now curried module is available to use a set like operator on the array of objects for this appId in local storage.
+
 ### 10-admin_devices-devinf
 interesting: router calls multiple actions that direct to different reducers
 ### 09-paho-rxasred-vigo_onfocus-blur 
