@@ -1,3 +1,10 @@
+import {get, dog} from '../utilities/index.js'
+import {App} from '../components'
+
+var ana={type: {animal: {dog: 'Ulysses'}}}
+console.log(ana.type.animal.dog)
+// console.log(get('ana.type.animal.dog', ana))
+//console.log(App())
 
 const storageLocal = (item)=>{
 	var itemStr =  localStorage.getItem(item)
@@ -16,22 +23,37 @@ const storageLocal = (item)=>{
 		getItem: getItem,
 		setItem: setItem,
 		addToSet: (ob)=>{
-			function isEmailIn(el,i,x){
-				return (x[i].email==ob.email)
-			}
+			const isEmailIn=(el,i,x)=>(x[i].email==ob.email)
 			var x = getItem()
-			if (!x){
-				x=[]
-			}else{
-				var idx = x.findIndex(isEmailIn)
-				if (idx >-1){
-					console.log('already here')
-					x[idx]=ob
-				}else{
-					console.log('not here adding new email/key')
-					x.push(ob)
-				}
-			}
+			// if (!get('x.users', x)){
+			// 	x.users=[]
+			// }else{
+			// 	var idx = x.users.findIndex(isEmailIn)
+			// 	if (idx >-1){
+			// 		console.log('already here')
+			// 		x.users[idx]=ob
+			// 	}else{
+			// 		console.log('not here adding new email/key')
+			// 		x.users.push(ob)
+			// 	}
+			// }
+			setItem(x)
+		},
+		deleteToken: (em)=>{
+			const isEmailIn=(el,i,x)=>(x[i].email==em)
+			var x = getItem()
+			console.log(x)
+			//console.log(get('x.users', x))
+			// if (!get('x.users', x)){
+			// 	x.users=[]
+			// }else{
+			// 	var idx = x.users.findIndex(isEmailIn)
+			// 	if (idx >-1){
+			// 		console.log('found at '+idx+' and deleting')
+			// 		x.users.splice(idx, 1)
+			// 		console.log(x.users)
+			// 	}
+			// }
 			setItem(x)
 		}
 	}

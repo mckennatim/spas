@@ -6,7 +6,7 @@ const style = {
 }
 
 const Products = (props) =>{
-
+	console.log(get)
 	const renderProducts=()=> {
 		if(get('props.responsive.page.params', props)){
 			return(

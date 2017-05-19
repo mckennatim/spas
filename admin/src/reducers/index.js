@@ -20,11 +20,11 @@ function test(state, action) {
         isLoading: false,
         name: action.payload
       };
-    case 'PAGE_CHANGED':
-      return {
-        ...state,
-        rtpg: action.payload
-      };
+    // case 'PAGE_CHANGED':
+    //   return {
+    //     ...state,
+    //     rtpg: action.payload
+    //   };
     default:
       return state;
   }

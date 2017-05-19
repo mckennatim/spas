@@ -1,9 +1,12 @@
 import React from 'react'
 import {router} from '../app'
 import {App} from './App'
+import {Admin} from './Admin'
+import {Super} from './Super'
 import {Nav} from './Nav'
 import {Dog} from './Dog'
 import {Devices} from './Devices'
+import {DevicesApps} from './DevicesApps'
 import {DevInf} from './DevInf'
 import {Registered} from './Registered'
 import {Products} from './Products'
@@ -85,4 +88,4 @@ const multi =[{pri:'About', mul:[
 //['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
 const panes= [1,1,2,2,3,3]
 
-export {About, Products, Home, Dog, Registered, Devices, DevInf, App, Nav, multi, panes}
+export {Admin, Super, About, Products, Home, Dog, Registered, Devices, DevicesApps, DevInf, App, Nav, multi, panes}

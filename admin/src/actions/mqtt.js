@@ -3,7 +3,10 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';
 import { map } from 'lodash';
 import { fromMqtt$ } from './fromMqtt';
-
+import {getCfg} from '../utilities'
+import {router} from '../routing'
+var cfg = getCfg()
+var baseURL=cfg.url.server+":"+cfg.port.api+"/api"
 /* ----------------helper functions-----------------------------*/
 
 var mqtt$ = {
@@ -52,9 +55,28 @@ const connectAndSubscribe= (devId)=>{
 /*-----------------actions---------------------------------------*/
 const getApps = actionCreator((payload)=>{
   console.log(payload)
+  var url = baseURL+'/dedata/apps'
   return {
-    type: 'GET_APPS',
-    payload
+    type: 'APPS_LOADING',
+    payload: Observable.ajax({
+      url: url,
+      responseType: 'json',
+      headers: {
+        'Authorization': 'Bearer ' + payload.token
+      }
+    }).map((xhr)=>{
+      var res = {id: payload.email, 
+                apps: xhr.response.apps, 
+                status:{auth: xhr.response.auth,
+                    message:xhr.response.auth }
+                }
+      console.log(res) 
+      router.navigate('devapps')
+      return({
+        type: 'APPS_LOADED',
+        payload: res
+      })
+    })
   }
 })
 

@@ -8,6 +8,10 @@ const initState = {
         notTimerTags: ["temp", "onoff", "hilimit", "lolimit"]
       }      
     },
+    currentApps: {
+      apps: [{appid: 'none', devid: 'nothing'}],
+      id: 'no one'
+    },
     devices: [
       {
         id: 'CYURD001',

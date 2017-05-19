@@ -3,6 +3,43 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+###
+
+localStorage structure
+
+{
+    users: [
+        {
+            email: 'mck',
+            token: 'dddsfsfsf'
+        },
+        {
+            email: 'tim2mck',
+            token: 'dddsfsfsf'
+        }
+    ],
+    currentApps: {
+        apps: [
+            {
+                appid: 'dd'
+                devod: 'sss'
+            },
+            {
+                appid: 'dd'
+                devod: 'sss'
+            }
+        ],
+        id: 'mckenns.tim@gmail,
+    currentDev:{
+        devid:
+        location:
+        desc:
+} 
+
+
+}
+} 
+
 ### 11-localStorage_module
 a module file in utilities named  `storageLocal.js`
 

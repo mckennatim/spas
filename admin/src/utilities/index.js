@@ -6,6 +6,7 @@ import env from '../../env.json'
 const cfg= env[process.env.NODE_ENV||'development']
 
 const ls = storageLocal(cfg.appid)
+ls.deleteToken("tim2@sitebuilt.net")
 
 const get=(path, props)=>{
   return path.split(".")
