@@ -1736,7 +1736,7 @@ exports.tryCatch = tryCatch;
 "use strict";
 
 
-module.exports = __webpack_require__(36);
+module.exports = __webpack_require__(37);
 
 
 /***/ }),
@@ -2229,7 +2229,7 @@ var _prodInvariant = __webpack_require__(7),
 var CallbackQueue = __webpack_require__(106);
 var PooledClass = __webpack_require__(31);
 var ReactFeatureFlags = __webpack_require__(111);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var Transaction = __webpack_require__(55);
 
 var invariant = __webpack_require__(3);
@@ -3235,7 +3235,7 @@ exports.EmptyObservable = EmptyObservable;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.parseQuery = exports.ls = exports.getCfg = exports.log = exports.isObservable = exports.render = exports.dog = exports.get = undefined;
+exports.parseQuery = exports.ls = exports.getCfg = exports.log = exports.isObservable = exports.render = exports.dog = exports.geta = undefined;
 
 var _react = __webpack_require__(16);
 
@@ -3260,7 +3260,7 @@ var cfg = _env2.default[process.env.NODE_ENV || 'development'];
 var ls = (0, _storageLocal.storageLocal)(cfg.appid);
 ls.deleteToken("tim2@sitebuilt.net");
 
-var get = function get(path, props) {
+var geta = function geta(path, props) {
 	return path.split(".").slice(1).reduce(function (xs, x) {
 		return xs && xs[x] ? xs[x] : null;
 	}, props);
@@ -3298,7 +3298,7 @@ var parseQuery = function parseQuery(query) {
 	return obj;
 };
 
-exports.get = get;
+exports.geta = geta;
 exports.dog = dog;
 exports.render = render;
 exports.isObservable = isObservable;
@@ -3876,6 +3876,151 @@ module.exports = reactProdInvariant;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.panes = exports.multi = exports.Nav = exports.App = exports.DevInf = exports.DevicesApps = exports.Devices = exports.Registered = exports.Dog = exports.Home = exports.Products = exports.About = exports.Super = exports.Admin = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _app = __webpack_require__(101);
+
+var _App = __webpack_require__(169);
+
+var _Admin = __webpack_require__(168);
+
+var _Super = __webpack_require__(179);
+
+var _Nav = __webpack_require__(176);
+
+var _Dog = __webpack_require__(175);
+
+var _Devices = __webpack_require__(173);
+
+var _DevicesApps = __webpack_require__(174);
+
+var _DevInf = __webpack_require__(170);
+
+var _Registered = __webpack_require__(178);
+
+var _Products = __webpack_require__(177);
+
+var _styles = __webpack_require__(30);
+
+var _actions = __webpack_require__(49);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//console.log(App)
+
+var About = function About(props) {
+	var _props$responsive = props.responsive,
+	    isLoading = _props$responsive.isLoading,
+	    followers = _props$responsive.followers;
+
+	var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#99CCCC' })
+	});
+	function handleGetFollowers() {
+		console.log("in get github followers");
+		(0, _actions.loadGithubFollowers)('mckennatim');
+	}
+	function renderFollowers(followers) {
+		if (!followers) return;
+		return _react2.default.createElement(
+			'ul',
+			null,
+			followers.map(function (follower, index) {
+				return _react2.default.createElement(
+					'li',
+					{ key: index },
+					follower
+				);
+			})
+		);
+	}
+	return _react2.default.createElement(
+		'div',
+		{ style: style.outer },
+		_react2.default.createElement(
+			'h3',
+			null,
+			' About'
+		),
+		_react2.default.createElement(
+			'button',
+			{ id: 'but', onClick: handleGetFollowers },
+			'get github followers'
+		),
+		isLoading ? _react2.default.createElement(
+			'p',
+			null,
+			'Loading...'
+		) : "dog",
+		renderFollowers(followers)
+	);
+};
+
+var Home = function Home(props) {
+	function goprod() {
+		console.log("in home goprod");
+		_app.router.navigate('/about');
+	}
+	var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#CC66CC' })
+	});
+	return _react2.default.createElement(
+		'div',
+		{ style: style.outer },
+		_react2.default.createElement(
+			'h3',
+			null,
+			' Home '
+		),
+		_react2.default.createElement(
+			'button',
+			{ id: 'but', onClick: goprod },
+			'goto about'
+		)
+	);
+};
+//const multi=[] multi delared but empty defaults to single pane
+
+var multi = [{ pri: 'About', mul: [['About', 'Products'], ['Products', 'About', 'Home']]
+}, { pri: 'Products', mul: [['Products', 'About'], ['About', 'Products', 'Home']]
+}, { pri: 'Dog', mul: [['Dog', 'Home'], ['Dog', 'About', 'Home']]
+}, { pri: 'Home', mul: [['Home', 'About'], ['Dog', 'About', 'Home']]
+}, { pri: 'DevInf', mul: [['DevInf', 'Devices'], ['DevInf', 'Devices', 'Home']]
+}, { pri: 'Devices', mul: [['Devices', 'DevInf'], ['Devices', 'DevInf', 'About']]
+}];
+
+//['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
+var panes = [1, 1, 2, 2, 3, 3];
+
+exports.Admin = _Admin.Admin;
+exports.Super = _Super.Super;
+exports.About = About;
+exports.Products = _Products.Products;
+exports.Home = Home;
+exports.Dog = _Dog.Dog;
+exports.Registered = _Registered.Registered;
+exports.Devices = _Devices.Devices;
+exports.DevicesApps = _DevicesApps.DevicesApps;
+exports.DevInf = _DevInf.DevInf;
+exports.App = _App.App;
+exports.Nav = _Nav.Nav;
+exports.multi = multi;
+exports.panes = panes;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -3995,7 +4140,7 @@ DOMLazyTree.queueText = queueText;
 module.exports = DOMLazyTree;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4169,7 +4314,7 @@ module.exports = ReactReconciler;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4264,7 +4409,7 @@ module.exports = React;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4325,149 +4470,6 @@ var MulticastOperator = (function () {
 }());
 exports.MulticastOperator = MulticastOperator;
 //# sourceMappingURL=multicast.js.map
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.panes = exports.multi = exports.Nav = exports.App = exports.DevInf = exports.DevicesApps = exports.Devices = exports.Registered = exports.Dog = exports.Home = exports.Products = exports.About = exports.Super = exports.Admin = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(16);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _app = __webpack_require__(101);
-
-var _App = __webpack_require__(169);
-
-var _Admin = __webpack_require__(168);
-
-var _Super = __webpack_require__(179);
-
-var _Nav = __webpack_require__(176);
-
-var _Dog = __webpack_require__(175);
-
-var _Devices = __webpack_require__(173);
-
-var _DevicesApps = __webpack_require__(174);
-
-var _DevInf = __webpack_require__(170);
-
-var _Registered = __webpack_require__(178);
-
-var _Products = __webpack_require__(177);
-
-var _styles = __webpack_require__(30);
-
-var _actions = __webpack_require__(49);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var About = function About(props) {
-	var _props$responsive = props.responsive,
-	    isLoading = _props$responsive.isLoading,
-	    followers = _props$responsive.followers;
-
-	var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#99CCCC' })
-	});
-	function handleGetFollowers() {
-		console.log("in get github followers");
-		(0, _actions.loadGithubFollowers)('mckennatim');
-	}
-	function renderFollowers(followers) {
-		if (!followers) return;
-		return _react2.default.createElement(
-			'ul',
-			null,
-			followers.map(function (follower, index) {
-				return _react2.default.createElement(
-					'li',
-					{ key: index },
-					follower
-				);
-			})
-		);
-	}
-	return _react2.default.createElement(
-		'div',
-		{ style: style.outer },
-		_react2.default.createElement(
-			'h3',
-			null,
-			' About'
-		),
-		_react2.default.createElement(
-			'button',
-			{ id: 'but', onClick: handleGetFollowers },
-			'get github followers'
-		),
-		isLoading ? _react2.default.createElement(
-			'p',
-			null,
-			'Loading...'
-		) : "dog",
-		renderFollowers(followers)
-	);
-};
-
-var Home = function Home(props) {
-	function goprod() {
-		console.log("in home goprod");
-		_app.router.navigate('/about');
-	}
-	var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#CC66CC' })
-	});
-	return _react2.default.createElement(
-		'div',
-		{ style: style.outer },
-		_react2.default.createElement(
-			'h3',
-			null,
-			' Home '
-		),
-		_react2.default.createElement(
-			'button',
-			{ id: 'but', onClick: goprod },
-			'goto about'
-		)
-	);
-};
-//const multi=[] multi delared but empty defaults to single pane
-
-var multi = [{ pri: 'About', mul: [['About', 'Products'], ['Products', 'About', 'Home']]
-}, { pri: 'Products', mul: [['Products', 'About'], ['About', 'Products', 'Home']]
-}, { pri: 'Dog', mul: [['Dog', 'Home'], ['Dog', 'About', 'Home']]
-}, { pri: 'Home', mul: [['Home', 'About'], ['Dog', 'About', 'Home']]
-}, { pri: 'DevInf', mul: [['DevInf', 'Devices'], ['DevInf', 'Devices', 'Home']]
-}, { pri: 'Devices', mul: [['Devices', 'DevInf'], ['Devices', 'DevInf', 'About']]
-}];
-
-//['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
-var panes = [1, 1, 2, 2, 3, 3];
-
-exports.Admin = _Admin.Admin;
-exports.Super = _Super.Super;
-exports.About = About;
-exports.Products = _Products.Products;
-exports.Home = Home;
-exports.Dog = _Dog.Dog;
-exports.Registered = _Registered.Registered;
-exports.Devices = _Devices.Devices;
-exports.DevicesApps = _DevicesApps.DevicesApps;
-exports.DevInf = _DevInf.DevInf;
-exports.App = _App.App;
-exports.Nav = _Nav.Nav;
-exports.multi = multi;
-exports.panes = panes;
 
 /***/ }),
 /* 39 */
@@ -5451,7 +5453,7 @@ module.exports = g;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getApps = exports.changeDevInfo = exports.reconnect = exports.disconnect = exports.copyStore = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.setDeviceType = undefined;
+exports.getApps = exports.changeDevInfo = exports.reconnect = exports.disconnect = exports.copyStore = exports.loadGithubFollowers = exports.switchPage = exports.changeName = exports.setDeviceType = exports.LS2storeCurrentApps = undefined;
 
 var _rxred = __webpack_require__(51);
 
@@ -5476,6 +5478,7 @@ var changeName = (0, _rxred.actionCreator)(function (payload) {
 //   payload
 // }));
 
+exports.LS2storeCurrentApps = _mqtt.LS2storeCurrentApps;
 exports.setDeviceType = _responsive.setDeviceType;
 exports.changeName = changeName;
 exports.switchPage = _responsive.switchPage;
@@ -5502,7 +5505,7 @@ var _navigo = __webpack_require__(199);
 
 var _navigo2 = _interopRequireDefault(_navigo);
 
-var _components = __webpack_require__(38);
+var _components = __webpack_require__(34);
 
 var _actions = __webpack_require__(49);
 
@@ -24561,7 +24564,7 @@ module.exports = shallowEqual;
 
 
 
-var DOMLazyTree = __webpack_require__(34);
+var DOMLazyTree = __webpack_require__(35);
 var Danger = __webpack_require__(206);
 var ReactDOMComponentTree = __webpack_require__(9);
 var ReactInstrumentation = __webpack_require__(19);
@@ -25115,7 +25118,7 @@ module.exports = KeyEscapeUtils;
 
 var _prodInvariant = __webpack_require__(7);
 
-var React = __webpack_require__(36);
+var React = __webpack_require__(37);
 var ReactPropTypesSecret = __webpack_require__(116);
 
 var invariant = __webpack_require__(3);
@@ -27741,7 +27744,7 @@ var _Observable = __webpack_require__(0);
 
 var _routing = __webpack_require__(50);
 
-var _components = __webpack_require__(38);
+var _components = __webpack_require__(34);
 
 var _rxred = __webpack_require__(51);
 
@@ -28979,9 +28982,9 @@ module.exports = ReactInputSelection;
 
 var _prodInvariant = __webpack_require__(7);
 
-var DOMLazyTree = __webpack_require__(34);
+var DOMLazyTree = __webpack_require__(35);
 var DOMProperty = __webpack_require__(27);
-var React = __webpack_require__(36);
+var React = __webpack_require__(37);
 var ReactBrowserEventEmitter = __webpack_require__(53);
 var ReactCurrentOwner = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(9);
@@ -28991,7 +28994,7 @@ var ReactFeatureFlags = __webpack_require__(111);
 var ReactInstanceMap = __webpack_require__(42);
 var ReactInstrumentation = __webpack_require__(19);
 var ReactMarkupChecksum = __webpack_require__(238);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var ReactUpdateQueue = __webpack_require__(80);
 var ReactUpdates = __webpack_require__(21);
 
@@ -29524,7 +29527,7 @@ module.exports = ReactMount;
 
 var _prodInvariant = __webpack_require__(7);
 
-var React = __webpack_require__(36);
+var React = __webpack_require__(37);
 
 var invariant = __webpack_require__(3);
 
@@ -33092,7 +33095,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.initState = undefined;
 
-var _components = __webpack_require__(38);
+var _components = __webpack_require__(34);
 
 var initState = {
   mqtt: {
@@ -33363,7 +33366,7 @@ exports.fromMqtt$ = fromMqtt$;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getApps = exports.reconnect = exports.disconnect = exports.grabTimrData = exports.grabSchedData = exports.grabSrstateData = exports.grabFlagData = exports.changeDevInfo = exports.copyStore = undefined;
+exports.getApps = exports.reconnect = exports.disconnect = exports.grabTimrData = exports.grabSchedData = exports.grabSrstateData = exports.grabFlagData = exports.changeDevInfo = exports.copyStore = exports.LS2storeCurrentApps = undefined;
 
 var _rxred = __webpack_require__(51);
 
@@ -33428,8 +33431,19 @@ var connectAndSubscribe = function connectAndSubscribe(devId) {
   });
 };
 /*-----------------actions---------------------------------------*/
-var getApps = (0, _rxred.actionCreator)(function (payload) {
+
+var LS2storeCurrentApps = (0, _rxred.actionCreator)(function (payload) {
   console.log(payload);
+  return {
+    type: 'GET_LS_CURRENT_APPS',
+    payload: payload
+  };
+});
+var getApps = (0, _rxred.actionCreator)(function (payload) {
+  var capps = _utilities.ls.getApps();
+  if (capps) {
+    LS2storeCurrentApps(capps);
+  }
   var url = baseURL + '/dedata/apps';
   return {
     type: 'APPS_LOADING',
@@ -33446,6 +33460,7 @@ var getApps = (0, _rxred.actionCreator)(function (payload) {
           message: xhr.response.auth }
       };
       console.log(res);
+      _utilities.ls.setCurrentApps(res);
       _routing.router.navigate('devapps');
       return {
         type: 'APPS_LOADED',
@@ -33529,6 +33544,7 @@ var grabFlagData = (0, _rxred.actionCreator)(function (payload) {
   };
 });
 
+exports.LS2storeCurrentApps = LS2storeCurrentApps;
 exports.copyStore = copyStore;
 exports.changeDevInfo = changeDevInfo;
 exports.grabFlagData = grabFlagData;
@@ -33659,7 +33675,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _app = __webpack_require__(101);
 
-var _components = __webpack_require__(38);
+var _components = __webpack_require__(34);
 
 var _wfuncs = __webpack_require__(184);
 
@@ -34000,44 +34016,46 @@ function DevicesList(props) {
   var devices = props.devices,
       name = props.name;
 
-  devices.map(function (dev) {});
+  if (devices) {
+    devices.map(function (dev) {});
 
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h5',
+    return _react2.default.createElement(
+      'div',
       null,
-      'in DeviceAppList for ',
-      name
-    ),
-    _react2.default.createElement(
-      'ul',
-      { style: styles.ul },
-      devices.map(function (dev) {
-        return _react2.default.createElement(
-          'li',
-          { key: dev.appid, style: styles.li },
-          _react2.default.createElement(
-            'a',
-            { onClick: handleNavigate('/' + dev.appid + '/' + dev.devid) },
-            dev.appid,
+      _react2.default.createElement(
+        'h5',
+        null,
+        'in DeviceAppList for ',
+        name
+      ),
+      _react2.default.createElement(
+        'ul',
+        { style: styles.ul },
+        devices.map(function (dev) {
+          return _react2.default.createElement(
+            'li',
+            { key: dev.appid, style: styles.li },
             _react2.default.createElement(
-              'span',
-              null,
-              '  ',
-              dev.devid
+              'a',
+              { onClick: handleNavigate('/' + dev.appid + '/' + dev.devid) },
+              dev.appid,
+              _react2.default.createElement(
+                'span',
+                null,
+                '  ',
+                dev.devid
+              )
             )
-          )
-        );
-      })
-    ),
-    _react2.default.createElement(
-      'button',
-      { onClick: handleNavigate('/cat') },
-      'goto cat'
-    )
-  );
+          );
+        })
+      ),
+      _react2.default.createElement(
+        'button',
+        { onClick: handleNavigate('/cat') },
+        'goto cat'
+      )
+    );
+  } else return null;
 }
 
 var styles = {
@@ -34220,6 +34238,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DevicesApps = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(16);
 
 var _react2 = _interopRequireDefault(_react);
@@ -34228,28 +34248,70 @@ var _DeviceAppList = __webpack_require__(171);
 
 var _DeviceAppList2 = _interopRequireDefault(_DeviceAppList);
 
+var _actions = __webpack_require__(49);
+
+var _utilities = __webpack_require__(29);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function DevicesApps(props) {
-  var devices = props.devices,
-      name = props.name;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'div',
-      { style: styles.outer },
-      _react2.default.createElement(
-        'h4',
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DevicesApps = function (_React$Component) {
+  _inherits(DevicesApps, _React$Component);
+
+  function DevicesApps(props) {
+    _classCallCheck(this, DevicesApps);
+
+    var _this = _possibleConstructorReturn(this, (DevicesApps.__proto__ || Object.getPrototypeOf(DevicesApps)).call(this, props));
+
+    _this.componentDidMount = function () {
+      _this.handleGetApps();
+    };
+
+    _this.handleGetApps = function () {
+      var capps = _utilities.ls.getApps();
+      if (capps) {
+        (0, _actions.LS2storeCurrentApps)(capps);
+      }
+    };
+
+    console.log(props);
+    return _this;
+  }
+
+  _createClass(DevicesApps, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
         null,
-        'in Devices ',
-        name
-      ),
-      _react2.default.createElement(_DeviceAppList2.default, { name: name, devices: devices })
-    )
-  );
-}
+        _react2.default.createElement(
+          'div',
+          { style: styles.outer },
+          _react2.default.createElement(
+            'h4',
+            null,
+            'in Devices ',
+            this.props.name
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.handleGetApps },
+            'get apps'
+          ),
+          _react2.default.createElement(_DeviceAppList2.default, { name: this.props.name, devices: this.props.devices })
+        )
+      );
+    }
+  }]);
+
+  return DevicesApps;
+}(_react2.default.Component);
+
 function mapStoreToProps(anElement) {
   //returns a function called later with store as its arg and anElement from here
   return function (store) {
@@ -34258,7 +34320,7 @@ function mapStoreToProps(anElement) {
       devices: store.mqtt.currentApps.apps,
       name: store.mqtt.currentApps.id
     };
-    return _react2.default.createElement(anElement, props);
+    return _react2.default.createElement(anElement, props, null);
   };
 }
 
@@ -34484,9 +34546,9 @@ var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.ou
 });
 
 var Products = function Products(props) {
-	console.log(_utilities.get);
+	console.log(_utilities.geta);
 	var renderProducts = function renderProducts() {
-		if ((0, _utilities.get)('props.responsive.page.params', props)) {
+		if ((0, _utilities.geta)('props.responsive.page.params', props)) {
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -34587,7 +34649,7 @@ console.log('RUNNING FILE');
 
 function Registered(props) {
   //console.log('in Registe5red')
-  console.log(props);
+  // console.log(props)
 
   var query = props.responsive.page.params.query;
   var mobj = (0, _utilities.parseQuery)(query);
@@ -34760,6 +34822,17 @@ function getIndex(d, c) {
 
 var mqtt = function mqtt(state, action) {
   switch (action.type) {
+    case 'GET_LS_CURRENT_APPS':
+      console.log(state.currentApps.id);
+      if (state.currentApps.id != "no one") {
+        return state;
+      } else {
+        console.log(action.payload);
+        //return state
+        return _extends({}, state, {
+          currentApps: action.payload
+        });
+      }
     case 'APPS_LOADING':
       return _extends({}, state, {
         appsLoaded: false
@@ -34881,16 +34954,24 @@ exports.storageLocal = undefined;
 
 var _index = __webpack_require__(29);
 
-var _components = __webpack_require__(38);
+var _App = __webpack_require__(169);
+
+//WTF why cant I import this???????
+var get = function get(path, props) {
+	return path.split(".").slice(1).reduce(function (xs, x) {
+		return xs && xs[x] ? xs[x] : null;
+	}, props);
+};
 
 var ana = { type: { animal: { dog: 'Ulysses' } } };
-console.log(ana.type.animal.dog);
+// console.log(ana.type.animal.dog)
 // console.log(get('ana.type.animal.dog', ana))
-//console.log(App())
+//console.log(App)
 
 var storageLocal = function storageLocal(item) {
 	var itemStr = localStorage.getItem(item);
 	var getItem = function getItem() {
+		// console.log('in getItem')
 		if (!localStorage.getItem(item)) {
 			return null;
 		}
@@ -34909,18 +34990,18 @@ var storageLocal = function storageLocal(item) {
 				return x[i].email == ob.email;
 			};
 			var x = getItem();
-			// if (!get('x.users', x)){
-			// 	x.users=[]
-			// }else{
-			// 	var idx = x.users.findIndex(isEmailIn)
-			// 	if (idx >-1){
-			// 		console.log('already here')
-			// 		x.users[idx]=ob
-			// 	}else{
-			// 		console.log('not here adding new email/key')
-			// 		x.users.push(ob)
-			// 	}
-			// }
+			if (!x) x = {};
+			if (!get('x.users', x)) {
+				x.users = [];
+			} else {
+				var idx = x.users.findIndex(isEmailIn);
+				if (idx > -1) {
+					x.users[idx] = ob;
+				} else {
+					console.log('not here adding new email/key');
+					x.users.push(ob);
+				}
+			}
 			setItem(x);
 		},
 		deleteToken: function deleteToken(em) {
@@ -34928,19 +35009,48 @@ var storageLocal = function storageLocal(item) {
 				return x[i].email == em;
 			};
 			var x = getItem();
-			console.log(x);
-			//console.log(get('x.users', x))
-			// if (!get('x.users', x)){
-			// 	x.users=[]
-			// }else{
-			// 	var idx = x.users.findIndex(isEmailIn)
-			// 	if (idx >-1){
-			// 		console.log('found at '+idx+' and deleting')
-			// 		x.users.splice(idx, 1)
-			// 		console.log(x.users)
-			// 	}
-			// }
+			if (!x) x = {};
+			if (!get('x.users', x)) {
+				x.users = [];
+			} else {
+				var idx = x.users.findIndex(isEmailIn);
+				if (idx > -1) {
+					console.log('found at ' + idx + ' and deleting');
+					x.users.splice(idx, 1);
+				}
+			}
 			setItem(x);
+		},
+		getApps: function getApps() {
+			var x = getItem();
+			if (!x) x = {};
+			if (get('x.currentApps', x)) {
+				return x.currentApps;
+			} else return null;
+		},
+		setCurrentApps: function setCurrentApps(aps) {
+			console.log('setting current aps in sl');
+			console.log(aps);
+			var x = getItem();
+			if (!x) x = {};
+			x.currentApps = aps;
+			setItem(x);
+		},
+		getCurrentToken: function getCurrentToken() {
+			var x = getItem();
+			var eid = get('x.currentApps.id', x);
+			var isEmailIn = function isEmailIn(el, i, x) {
+				return x[i].email == eid;
+			};
+			if (eid) {
+				var users = get('x.users', x);
+				if (users) {
+					var idx = users.findIndex(isEmailIn);
+					if (idx > -1) {
+						return { email: eid, token: users[idx].token };
+					}
+				}
+			}
 		}
 	};
 };
@@ -34976,7 +35086,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.responsivePage = undefined;
 
-var _components = __webpack_require__(38);
+var _components = __webpack_require__(34);
 
 var compoi = _interopRequireWildcard(_components);
 
@@ -35000,8 +35110,8 @@ var responsivePage = function responsivePage(state) {
   if (pageList.length == 0) {
     //if there is no multi array for the page
     //try{
-    console.log(pageName);
-    console.log(compoi[pageName](state));
+    // console.log(pageName)
+    // console.log(compoi[pageName](state))
     var singleElement = compoi[pageName](state);
     elArr.push(singleElement);
     // }catch(err){
@@ -39379,7 +39489,7 @@ module.exports = ChangeEventPlugin;
 
 var _prodInvariant = __webpack_require__(7);
 
-var DOMLazyTree = __webpack_require__(34);
+var DOMLazyTree = __webpack_require__(35);
 var ExecutionEnvironment = __webpack_require__(12);
 
 var createNodesFromMarkup = __webpack_require__(189);
@@ -39884,7 +39994,7 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 
 var instantiateReactComponent = __webpack_require__(122);
 var KeyEscapeUtils = __webpack_require__(76);
@@ -40082,14 +40192,14 @@ module.exports = ReactComponentBrowserEnvironment;
 var _prodInvariant = __webpack_require__(7),
     _assign = __webpack_require__(8);
 
-var React = __webpack_require__(36);
+var React = __webpack_require__(37);
 var ReactComponentEnvironment = __webpack_require__(78);
 var ReactCurrentOwner = __webpack_require__(22);
 var ReactErrorUtils = __webpack_require__(79);
 var ReactInstanceMap = __webpack_require__(42);
 var ReactInstrumentation = __webpack_require__(19);
 var ReactNodeTypes = __webpack_require__(115);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 
 if (process.env.NODE_ENV !== 'production') {
   var checkReactTypeSpec = __webpack_require__(261);
@@ -40992,7 +41102,7 @@ module.exports = ReactCompositeComponent;
 var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDefaultInjection = __webpack_require__(231);
 var ReactMount = __webpack_require__(114);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var ReactUpdates = __webpack_require__(21);
 var ReactVersion = __webpack_require__(246);
 
@@ -41111,7 +41221,7 @@ var _prodInvariant = __webpack_require__(7),
 
 var AutoFocusUtils = __webpack_require__(202);
 var CSSPropertyOperations = __webpack_require__(204);
-var DOMLazyTree = __webpack_require__(34);
+var DOMLazyTree = __webpack_require__(35);
 var DOMNamespaces = __webpack_require__(74);
 var DOMProperty = __webpack_require__(27);
 var DOMPropertyOperations = __webpack_require__(107);
@@ -42152,7 +42262,7 @@ module.exports = ReactDOMContainerInfo;
 
 var _assign = __webpack_require__(8);
 
-var DOMLazyTree = __webpack_require__(34);
+var DOMLazyTree = __webpack_require__(35);
 var ReactDOMComponentTree = __webpack_require__(9);
 
 var ReactDOMEmptyComponent = function (instantiate) {
@@ -42712,7 +42822,7 @@ module.exports = ReactDOMNullInputValuePropHook;
 
 var _assign = __webpack_require__(8);
 
-var React = __webpack_require__(36);
+var React = __webpack_require__(37);
 var ReactDOMComponentTree = __webpack_require__(9);
 var ReactDOMSelect = __webpack_require__(109);
 
@@ -43060,7 +43170,7 @@ var _prodInvariant = __webpack_require__(7),
     _assign = __webpack_require__(8);
 
 var DOMChildrenOperations = __webpack_require__(73);
-var DOMLazyTree = __webpack_require__(34);
+var DOMLazyTree = __webpack_require__(35);
 var ReactDOMComponentTree = __webpack_require__(9);
 
 var escapeTextContentForBrowser = __webpack_require__(56);
@@ -44589,7 +44699,7 @@ var ReactInstanceMap = __webpack_require__(42);
 var ReactInstrumentation = __webpack_require__(19);
 
 var ReactCurrentOwner = __webpack_require__(22);
-var ReactReconciler = __webpack_require__(35);
+var ReactReconciler = __webpack_require__(36);
 var ReactChildReconciler = __webpack_require__(211);
 
 var emptyFunction = __webpack_require__(20);
@@ -50736,7 +50846,7 @@ Observable_1.Observable.prototype.min = min_1.min;
 "use strict";
 
 var Observable_1 = __webpack_require__(0);
-var multicast_1 = __webpack_require__(37);
+var multicast_1 = __webpack_require__(38);
 Observable_1.Observable.prototype.multicast = multicast_1.multicast;
 //# sourceMappingURL=multicast.js.map
 
@@ -58470,7 +58580,7 @@ function plucker(props, length) {
 "use strict";
 
 var Subject_1 = __webpack_require__(10);
-var multicast_1 = __webpack_require__(37);
+var multicast_1 = __webpack_require__(38);
 /* tslint:enable:max-line-length */
 /**
  * Returns a ConnectableObservable, which is a variety of Observable that waits until its connect method is called
@@ -58499,7 +58609,7 @@ exports.publish = publish;
 "use strict";
 
 var BehaviorSubject_1 = __webpack_require__(129);
-var multicast_1 = __webpack_require__(37);
+var multicast_1 = __webpack_require__(38);
 /**
  * @param value
  * @return {ConnectableObservable<T>}
@@ -58519,7 +58629,7 @@ exports.publishBehavior = publishBehavior;
 "use strict";
 
 var AsyncSubject_1 = __webpack_require__(58);
-var multicast_1 = __webpack_require__(37);
+var multicast_1 = __webpack_require__(38);
 /**
  * @return {ConnectableObservable<T>}
  * @method publishLast
@@ -58538,7 +58648,7 @@ exports.publishLast = publishLast;
 "use strict";
 
 var ReplaySubject_1 = __webpack_require__(93);
-var multicast_1 = __webpack_require__(37);
+var multicast_1 = __webpack_require__(38);
 /**
  * @param bufferSize
  * @param windowTime
@@ -59415,7 +59525,7 @@ var SequenceEqualCompareToSubscriber = (function (_super) {
 
 "use strict";
 
-var multicast_1 = __webpack_require__(37);
+var multicast_1 = __webpack_require__(38);
 var Subject_1 = __webpack_require__(10);
 function shareSubjectFactory() {
     return new Subject_1.Subject();

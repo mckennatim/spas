@@ -1,14 +1,14 @@
 import React from	'react'
-import {get} from '../utilities'
+import {geta} from '../utilities'
 import {pStyle} from '../styles'
 const style = {
 	...pStyle, outer: {...pStyle.outer, background: '#99FF99'}
 }
 
 const Products = (props) =>{
-	console.log(get)
+	console.log(geta)
 	const renderProducts=()=> {
-		if(get('props.responsive.page.params', props)){
+		if(geta('props.responsive.page.params', props)){
 			return(
 				<div>
 				<h3> Product</h3>

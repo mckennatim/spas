@@ -1,4 +1,6 @@
 # admin
+todo: race condition in devapps, fix in reducer. Whenever an action is called, state changes.
+
 https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md
 
 http://www.gistia.com/talk-backend-services-angular-2s-http-client/ brilliant on showing how a csrf attack would work. It also ids pretty clear on using angular's http +headers

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';
 import { map } from 'lodash';
 import { fromMqtt$ } from './fromMqtt';
-import {getCfg} from '../utilities'
+import {getCfg, ls} from '../utilities'
 import {router} from '../routing'
 var cfg = getCfg()
 var baseURL=cfg.url.server+":"+cfg.port.api+"/api"
@@ -53,8 +53,19 @@ const connectAndSubscribe= (devId)=>{
   });  
 }
 /*-----------------actions---------------------------------------*/
-const getApps = actionCreator((payload)=>{
+
+const LS2storeCurrentApps = actionCreator((payload) => {
   console.log(payload)
+  return {
+    type: 'GET_LS_CURRENT_APPS',
+    payload
+  }
+});
+const getApps = actionCreator((payload)=>{
+  var capps =ls.getApps()
+  if(capps){
+    LS2storeCurrentApps(capps)
+  }
   var url = baseURL+'/dedata/apps'
   return {
     type: 'APPS_LOADING',
@@ -71,6 +82,7 @@ const getApps = actionCreator((payload)=>{
                     message:xhr.response.auth }
                 }
       console.log(res) 
+      ls.setCurrentApps(res)
       router.navigate('devapps')
       return({
         type: 'APPS_LOADED',
@@ -154,4 +166,4 @@ const grabFlagData = actionCreator((payload) => {
   }
 });
 
-export {copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps}
+export {LS2storeCurrentApps, copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps}

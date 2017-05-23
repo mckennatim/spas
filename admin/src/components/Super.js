@@ -15,6 +15,7 @@ function Super(props){
     <div style={style.outer} >
     	<h4>in doSuper {name} </h4>
     	<button onClick={setupNewDevice}>setup new device</button>
+    	
     </div>
     )
 }

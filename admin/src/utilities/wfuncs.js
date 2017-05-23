@@ -9,8 +9,8 @@ const responsivePage=(state)=>{
   const pageList = compoi.multi.filter((amul,i)=>(amul.pri==pageName))
   if(pageList.length==0){ //if there is no multi array for the page
     //try{
-      console.log(pageName)
-      console.log(compoi[pageName](state))
+      // console.log(pageName)
+      // console.log(compoi[pageName](state))
       const singleElement = compoi[pageName](state)
       elArr.push(singleElement)    
     // }catch(err){

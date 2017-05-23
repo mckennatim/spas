@@ -25,7 +25,7 @@ console.log('RUNNING FILE')
 
 function Registered(props){
   //console.log('in Registe5red')
-  console.log(props)
+  // console.log(props)
 
   const query= props.responsive.page.params.query;
   var mobj = parseQuery(query)

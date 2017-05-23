@@ -1,16 +1,34 @@
 import React from 'react';
 import DeviceAppList from './DeviceAppList'
+import {LS2storeCurrentApps} from '../actions'
+import { ls} from '../utilities'
 
-function DevicesApps(props){
-  const {devices, name} = props
-  return(
-    <div>
-      <div style={styles.outer} >
-        <h4>in Devices {name}</h4>
-        <DeviceAppList name={name} devices={devices} />
+class DevicesApps extends React.Component{
+  constructor(props) {
+    super(props);
+    console.log(props)
+  } 
+  componentDidMount= ()=>{
+    this.handleGetApps()
+  }
+  handleGetApps=()=>{
+    var capps =ls.getApps()
+    if(capps){
+      LS2storeCurrentApps(capps)
+    }     
+  }
+
+  render(){
+    return(
+      <div>
+        <div style={styles.outer} >
+          <h4>in Devices {this.props.name}</h4>
+          <button onClick={this.handleGetApps}>get apps</button>
+          <DeviceAppList name={this.props.name} devices={this.props.devices} />
+        </div>
       </div>
-    </div>
-    )    
+      )   
+  } 
 }
 function mapStoreToProps(anElement){
   //returns a function called later with store as its arg and anElement from here
@@ -20,7 +38,7 @@ function mapStoreToProps(anElement){
         devices: store.mqtt.currentApps.apps,
         name: store.mqtt.currentApps.id
       }
-    return React.createElement(anElement, props)
+    return React.createElement(anElement, props, null)
   }
 }
 

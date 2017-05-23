@@ -13,7 +13,7 @@ import {Products} from './Products'
 import {pStyle} from '../styles'
 import {loadGithubFollowers} from '../actions';
 
-
+//console.log(App)
 
 const About = (props) =>{
 	const { isLoading, followers} = props.responsive;

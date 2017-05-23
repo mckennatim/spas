@@ -4,6 +4,18 @@ function getIndex(d,c){
 
 const mqtt=(state, action) =>{
   switch (action.type) {
+    case 'GET_LS_CURRENT_APPS':
+      console.log(state.currentApps.id)
+      if (state.currentApps.id != "no one"){
+        return state
+      }else {
+        console.log(action.payload)
+        //return state
+        return {
+          ...state, 
+          currentApps: action.payload
+        }
+      }
     case 'APPS_LOADING':
       return {
         ...state,

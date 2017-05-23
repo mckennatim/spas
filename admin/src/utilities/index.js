@@ -8,7 +8,7 @@ const cfg= env[process.env.NODE_ENV||'development']
 const ls = storageLocal(cfg.appid)
 ls.deleteToken("tim2@sitebuilt.net")
 
-const get=(path, props)=>{
+const geta=(path, props)=>{
   return path.split(".")
   	.slice(1)
   	.reduce((xs,x)=>(xs && xs[x]) ? xs[x] : null , props)
@@ -46,4 +46,4 @@ const parseQuery = (query)=>{
 	return obj
 }
 
-export {get, dog, render, isObservable, log, getCfg, ls, parseQuery}
+export {geta, dog, render, isObservable, log, getCfg, ls, parseQuery}

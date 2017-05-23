@@ -8,25 +8,27 @@ const handleNavigate = (data) => () =>
 
 export default function DevicesList(props){
   const { devices, name } = props;
-  devices.map((dev)=>{
-  })
+  if (devices){
+    devices.map((dev)=>{
+    })
 
-  return(
-    <div>
-    	<h5>in DeviceAppList for {name}</h5>
-    	<ul style={styles.ul}>
-        {devices.map(function(dev){
-          return <li key={dev.appid} style={styles.li}>
-              <a onClick={handleNavigate('/'+ dev.appid +'/'+dev.devid)}>
-                {dev.appid} 
-                <span>  {dev.devid}</span>
-              </a>
-          	</li>;
-        })}
-    	</ul>
-    	<button onClick={handleNavigate('/cat')}>goto cat</button>
-    </div> 
-    )
+    return(
+      <div>
+      	<h5>in DeviceAppList for {name}</h5>
+      	<ul style={styles.ul}>
+          {devices.map(function(dev){
+            return <li key={dev.appid} style={styles.li}>
+                <a onClick={handleNavigate('/'+ dev.appid +'/'+dev.devid)}>
+                  {dev.appid} 
+                  <span>  {dev.devid}</span>
+                </a>
+            	</li>;
+          })}
+      	</ul>
+      	<button onClick={handleNavigate('/cat')}>goto cat</button>
+      </div> 
+      )
+  }else return null
 }
 
 const styles = {
