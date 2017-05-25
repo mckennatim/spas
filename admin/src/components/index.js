@@ -8,12 +8,13 @@ import {Dog} from './Dog'
 import {Devices} from './Devices'
 import {DevicesApps} from './DevicesApps'
 import {DevInf} from './DevInf'
+//import {DeviceForm} from './DeviceForm'
 import {Registered} from './Registered'
 import {Products} from './Products'
 import {pStyle} from '../styles'
 import {loadGithubFollowers} from '../actions';
 
-//console.log(App)
+//console.log(DeviceForm)
 
 const About = (props) =>{
 	const { isLoading, followers} = props.responsive;

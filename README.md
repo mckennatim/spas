@@ -3,7 +3,26 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
-###
+### 13-device-form-2mochaproblem
+tests work in auth but not admin
+y['server']['url'] doesn't work
+
+Cannot call a class as a function???? unless is gets put through map store to props
+Super new device form
+
+### 12-admin-ls-componentDidMount-for_refresh
+
+Every time /devapss mounts it checks local storage for currentApps and ifso runs an (mqtt)action to place them in the store. it needs `class .. extends Component` to be able to use the lifecycle hook `componentDidMount` to prevent an infinite loop where a new copy is gotten on every render which causes a new copy to be gotten since a new copy has been put into the store
+
+      componentDidMount= ()=>{
+        this.handleGetApps()
+      }
+      handleGetApps=()=>{
+        var capps =ls.getApps()
+        if(capps){
+          LS2storeCurrentApps(capps)
+        }     
+      } 
 
 localStorage structure
 

@@ -9,4 +9,14 @@ const evenNumbers = Observable.from(array)
   	return x % 2===0
 	})
 
+
+
+strKey2obj= (strkey)=>{
+  item.key.split('.').map((k)=>{
+    console.log(k)
+  })
+}
+
+strKey2obj=('frog.man')
+
 export{evenNumbers}
