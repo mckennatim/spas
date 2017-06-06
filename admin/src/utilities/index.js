@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import {storageLocal} from './storageLocal'
+import {deepObjModify} from './ofuncs'
 import { Observable } from 'rxjs/Observable';
 import env from '../../env.json'
 const cfg= env[process.env.NODE_ENV||'development']
@@ -31,9 +32,9 @@ const render = (pg, para)=>{
   ReactDOM.render(React.createElement(pg, para), document.getElementById('rt')) 
 }
 
-const getCfg =()=>{
-	return cfg
-}
+// const getCfg =()=>{
+// 	return cfg
+// }
 
 const parseQuery = (query)=>{
 	var obj = {};
@@ -46,4 +47,4 @@ const parseQuery = (query)=>{
 	return obj
 }
 
-export {geta, dog, render, isObservable, log, getCfg, ls, parseQuery}
+export {geta, dog, render, isObservable, log, ls, parseQuery, deepObjModify}

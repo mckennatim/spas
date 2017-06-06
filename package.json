@@ -23,6 +23,7 @@
     "webpack": "2.2.1"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
     "html-loader": "0.4.5",
     "immutable": "3.8.1",
     "mqtt": "2.5.0",

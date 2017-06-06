@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {pStyle} from '../styles'
 import {getApps} from '../actions'
-import {getCfg, ls, parseQuery} from '../utilities'
+import {ls, parseQuery} from '../utilities'
+import {getCfg} from '../utilities/getCfg'
 
 const cfg = getCfg()
 

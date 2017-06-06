@@ -13,15 +13,10 @@ let device  =      {
       description: '2 temps, 3 timers 1 relay demo board',
       bizid: 'sbs',
       address: '12 Parley Vale, Jamaica Plain, MA 02130',
-      location: {lat: 222,lon: 333},
+      location: '{"lat":222.456,"lon":333.345}',
       timezone: 'America, East',
-      url: '127.0.0.1', 
-      mqtt:2345, 
-      express: 3332, 
-      specs: {
-        HAStIMER: 28,
-        notTimerTags: ["temp", "onoff", "hilimit", "lolimit"]
-      }
+      server:'{"url":"127.0.0.1","mqtt":2345,"express":3332}', 
+      specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}'
     }
 
 class Super extends React.Component{

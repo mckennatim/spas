@@ -3,7 +3,8 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';
 import { map } from 'lodash';
 import { fromMqtt$ } from './fromMqtt';
-import {getCfg, ls} from '../utilities'
+import {ls} from '../utilities'
+import {getCfg} from '../utilities/getCfg'
 import {router} from '../routing'
 var cfg = getCfg()
 var baseURL=cfg.url.server+":"+cfg.port.api+"/api"

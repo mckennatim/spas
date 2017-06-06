@@ -1,10 +1,10 @@
 import React from 'react' 
 import {mStyle} from '../styles'
-import {getCfg} from '../utilities'
+import {getCfg} from '../utilities/getCfg'
 var cfg = getCfg()
-// console.log(cfg)
-// import env from '../../env.json'
-// var cfg= env[process.env.NODE_ENV||'development']
+//console.log(cfg)
+//import env from '../../env.json'
+//var cfg= env[process.env.NODE_ENV||'development']
 
 const url = cfg.url.soauth+":"+cfg.port.soauth+"/spa/"+cfg.appid+"/"+
 encodeURIComponent(cfg.url.server+":"+cfg.port.api)
