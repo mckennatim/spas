@@ -18,6 +18,13 @@ const routing = ()=>{
       	switchPage({name: 'DevInf', params: params})
       	changeDevInfo(pro)
       },
+	  	'dev/:id/:tmr': (params)=>{
+      	var pro ={}
+      	pro.ht = 'SenRel';
+      	pro.par = params;
+      	switchPage({name: 'SenRel', params: params})
+      	changeDevInfo(pro)
+      },
 	  	'admin/:devid': (params)=>{
       	var pro ={}
       	pro.ht = 'Admin';

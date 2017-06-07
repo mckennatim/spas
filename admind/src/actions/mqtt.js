@@ -100,6 +100,7 @@ const getApps = actionCreator((payload)=>{
         'Authorization': 'Bearer ' + payload.token
       }
     }).map((xhr)=>{
+      console.log(xhr.response)
       var res = {id: payload.email, 
                 apps: xhr.response.apps, 
                 status:{auth: xhr.response.auth,
@@ -152,6 +153,13 @@ const changeDevInfo = actionCreator((payload) => {
     payload
   }
 });
+const changeSenRel = actionCreator((payload) => {
+  console.log(payload)
+  return{
+    type: 'SENREL_CHANGED',
+    payload
+  }
+})
 const grabTimrData = actionCreator((payload) => {
   return {
     type: 'TIMR_CHANGED',
@@ -190,4 +198,4 @@ const grabFlagData = actionCreator((payload) => {
   }
 });
 
-export {LS2storeCurrentApps, copyStore, changeDevInfo, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps, saveDevice}
+export {LS2storeCurrentApps, copyStore, changeDevInfo, changeSenRel, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps, saveDevice}

@@ -8,6 +8,7 @@ const handleNavigate = (data) => () =>
 
 export default function DevicesList(props){
   const { devices, name } = props;
+  console.log(devices)
   devices.map((dev)=>{
   })
 
@@ -18,6 +19,7 @@ export default function DevicesList(props){
         {devices.map(function(dev){
           return <li key={dev.id} style={styles.li}>
           		<a onClick={handleNavigate('/dev/'+dev.id)}>{dev.name}</a>
+
           	</li>;
         })}
     	</ul>

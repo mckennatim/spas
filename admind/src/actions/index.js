@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/dom/ajax';
 import { map } from 'lodash';
 import { setDeviceType, switchPage, loadGithubFollowers} from './responsive'
-import { copyStore, changeDevInfo, disconnect, reconnect, getApps, LS2storeCurrentApps, saveDevice} from './mqtt'
+import { copyStore, changeDevInfo, changeSenRel, disconnect, reconnect, getApps, LS2storeCurrentApps, saveDevice} from './mqtt'
 
 const changeName = actionCreator((payload) => ({
   type: 'NAME_CHANGED',
@@ -14,4 +14,4 @@ const changeName = actionCreator((payload) => ({
 //   payload
 // }));
 
-export {LS2storeCurrentApps, setDeviceType, changeName, switchPage, loadGithubFollowers, copyStore, disconnect, reconnect, changeDevInfo, getApps, saveDevice}
+export {LS2storeCurrentApps, setDeviceType, changeName, switchPage, loadGithubFollowers, copyStore, disconnect, reconnect, changeDevInfo, changeSenRel, getApps, saveDevice}

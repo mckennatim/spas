@@ -14,7 +14,7 @@ const initState = {
     },
     devices: [
       {
-        devid: 'CYURD001',
+        id: 'CYURD001',
         name: 'geniot',
         desc: '2 temps, 3 timers 1 relay demo board',
         location: {

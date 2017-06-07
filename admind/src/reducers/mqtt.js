@@ -47,7 +47,9 @@ const mqtt=(state, action) =>{
       return {
         ...state,
         shouldConnect: action.payload
-      }       
+      } 
+    case 'SENREL_CHANGED':
+      return state        
     case 'DEVINFO_CHANGED':
       // console.log(action.payload)
       return {

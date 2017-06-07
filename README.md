@@ -3,6 +3,8 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 15-admind-towardsaworking_senrel
+this wasn't actually implemented from paho-rxasred-vigo. problem is changeSenRel(params) needs to run on componentDidMount of SenRel
 ### 14-admind-super-deviceform
 ### 13-device-form-2mochaproblem
 tests work in auth but not admin

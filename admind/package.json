@@ -8,7 +8,7 @@
     "lo": "node setenv local&&node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
     "ht": "node setenv http&& node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
     "hs": "node setenv https&& node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
-    "pr": "node setenv production&& node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
+    "pr": "node setenv production&& node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js",
     "wpw": "node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
     "wpp": "node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js",
     "te": "node test/tests" 

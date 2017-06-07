@@ -8,6 +8,7 @@ import {Dog} from './Dog'
 import {Devices} from './Devices'
 import {DevicesApps} from './DevicesApps'
 import {DevInf} from './DevInf'
+import {SenRel} from './SenRel'
 //import {DeviceForm} from './DeviceForm'
 import {Registered} from './Registered'
 import {Products} from './Products'
@@ -89,4 +90,4 @@ const multi =[{pri:'About', mul:[
 //['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
 const panes= [1,1,2,2,3,3]
 
-export {Admin, Super, About, Products, Home, Dog, Registered, Devices, DevicesApps, DevInf, App, Nav, multi, panes}
+export {Admin, Super, About, Products, Home, Dog, Registered, Devices, DevicesApps, DevInf, SenRel, App, Nav, multi, panes}
