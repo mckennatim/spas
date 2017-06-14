@@ -3,6 +3,8 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 16-aapoj-pahoRaw
+have even poj apps have register and token so that they can work with IOTbroker dbAuth 
 ### 15-admind-towardsaworking_senrel
 this wasn't actually implemented from paho-rxasred-vigo. problem is changeSenRel(params) needs to run on componentDidMount of SenRel
 ### 14-admind-super-deviceform
