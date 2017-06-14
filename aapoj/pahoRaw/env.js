@@ -16,7 +16,7 @@ var env={
 			"mqtt_server": "10.0.1.102",
 			"mqtt_port": 3333,
 			"soauth": "http://10.0.1.102:7080",
-			"api": "http://10.0.1.102:3332/api",
+			"api": "http://10.0.1.102:3332",
 			"spa": "http://10.0.1.102/spWemosIOT/auth/aclient/pahoRaw.html",
 			"base": "http://10.0.1.102/spWemosIOT/auth/aclient/pahoRaw.html"
 		}
