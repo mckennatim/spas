@@ -3,6 +3,7 @@
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
 
 ## tags
+### 17-aapoj-pahoRaw-register-query-needs-tobe-cleared
 ### 16-aapoj-pahoRaw
 have even poj apps have register and token so that they can work with IOTbroker dbAuth 
 ### 15-admind-towardsaworking_senrel

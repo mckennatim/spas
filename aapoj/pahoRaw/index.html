@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 	<title>pahoRaw</title>
 	<script src="../mqttws31.js"></script>
+	<script src="../utility.js"></script>
 	<script src="./env.js"></script>
 	<style type="text/css" media="screen">
 	#temp1,
@@ -84,24 +85,34 @@
 
 	var query = window.location.search
 	console.log("query length= ",query.length)
-	const parseQuery = (query)=>{
-		var obj = {};
-		query.substr(1).split('&')
-			.map((term)=>{
-				var ar = term.split('=')
-				obj[ar[0]]=ar[1]
-			}
-		)
-		return obj
-	}
 
 	if(query.length>1){
 		var qobj = parseQuery(query)
 		console.log(qobj)
-		localStorage.setItem(cfg.appid, JSON.stringify(qobj))
+		if(get('qobj.token',qobj)){
+			localStorage.setItem(cfg.appid, JSON.stringify(qobj))
+		}else{
+			var mess = decodeURIComponent(qobj.message)
+			console.log(mess)
+			//alert(mess)
+		}
+	}
+
+	var emtok = getToken(cfg.appid)
+	var userEmail=''
+	var userToken=''
+
+	if(!get('emtok.token',emtok)){
+		var mess = "You need a token (and owner's OK) to access a device. Press Register to get a token "
+		alert(mess)
+	} else{
+		userEmail=emtok.email
+		userToken=emtok.token
 	}
 
 	const register=()=>{
+		console.log(stripQuery())
+		window.history.pushState("object or string", "Title", "/"+stripQuery() );
 		const url = cfg.url.soauth+"/spa/"+cfg.appid+"?apiURL="+encodeURIComponent(cfg.url.api)+"&cbPath="+encodeURIComponent(cfg.cbPath)
 		console.log(url)
 		window.location=url
@@ -154,8 +165,8 @@
 	function connect() {
 		client.connect({
 			onSuccess: onConnect,
-			userName: 'tim@sitebuilt.net',
-			password: 'freddy'
+			userName: userEmail,
+			password: userToken
 		});
 	}
 
