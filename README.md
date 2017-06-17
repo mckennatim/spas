@@ -4,6 +4,9 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 19-pahoRaw-admind
+both work. TODO in `admind/super/CYURD14I` make a config.json on save
+### 18-appoj-pahoRaw-subscribe
 ### 17-aapoj-pahoRaw-register-query-cleared
     client.connect sends username and token, simple is authenticate, harder is authorize.
 ### 16-aapoj-pahoRaw
