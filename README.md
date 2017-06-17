@@ -1,9 +1,11 @@
 # spas Single Page Apps
 - started 3/24/2017
 A shared node_moodules for SPA's. Requires webpack 2 due to the style of the config files and can be started with started with `wpw` webpack -w or `wpp` webpack production
-
+http://www.eclipse.org/paho/files/jsdoc/index.html
+https://github.com/eclipse/paho.mqtt.javascript
 ## tags
-### 17-aapoj-pahoRaw-register-query-needs-tobe-cleared
+### 17-aapoj-pahoRaw-register-query-cleared
+    client.connect sends username and token, simple is authenticate, harder is authorize.
 ### 16-aapoj-pahoRaw
 have even poj apps have register and token so that they can work with IOTbroker dbAuth 
 ### 15-admind-towardsaworking_senrel

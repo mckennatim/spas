@@ -22,7 +22,8 @@
 
 <body>
 	<h1>read and change devices</h1> 
-	<button onclick="register()">register</button><br>
+	<button onclick="register()">register</button>
+	<span id="message"></span><br>
 	device:
 	<input type="text" id="idev" value=CYURD0 size="12" onchange="devChanged()">
 	<br/>
@@ -82,9 +83,12 @@
 	<script>
 	var cfg=env.local
 	console.log(cfg)
+	var dmessage = document.getElementById("message")
 
+	var mess = "You need a token (and owner's OK) to access a device. Press Register to get a token "
 	var query = window.location.search
 	console.log("query length= ",query.length)
+	dmessage.innerHTML="doggy"
 
 	if(query.length>1){
 		var qobj = parseQuery(query)
@@ -92,8 +96,11 @@
 		if(get('qobj.token',qobj)){
 			localStorage.setItem(cfg.appid, JSON.stringify(qobj))
 		}else{
-			var mess = decodeURIComponent(qobj.message)
+			mess = decodeURIComponent(qobj.message)+' or register as a different user'
 			console.log(mess)
+			dmessage.innerHTML=mess
+			localStorage.removeItem(cfg.appid)
+			//delete token
 			//alert(mess)
 		}
 	}
@@ -103,7 +110,8 @@
 	var userToken=''
 
 	if(!get('emtok.token',emtok)){
-		var mess = "You need a token (and owner's OK) to access a device. Press Register to get a token "
+		console.log(mess)
+		dmessage.innerHTML=mess
 		alert(mess)
 	} else{
 		userEmail=emtok.email
@@ -144,7 +152,7 @@
 		connect()
 	}
 	window.onblur= ()=>{
-		console.log('unfociused')
+		console.log('unfocused')
 		try{
 			client.disconnect()
 		}catch(err){
@@ -165,26 +173,57 @@
 	function connect() {
 		client.connect({
 			onSuccess: onConnect,
+			onFailure: function (message) {
+		    console.log("Connection failed: " + message.errorMessage);
+		    dmessage.innerHTML= "Connection failed: " + message.errorMessage;
+		  },
 			userName: userEmail,
 			password: userToken
 		});
 	}
 
 	function subscribe() {
-		client.subscribe(devtime) //device time
-		client.subscribe(srstate)
-		client.subscribe(timr)
-		client.subscribe(sched)
-		client.subscribe(flags)
+		client.subscribe(devtime, {
+			onFailure: function (message) {
+				tmess = cfg.url.mqtt_server+" subsrciption failed: "
+		    dmessage.innerHTML= tmess;
+		  }
+		}) 
+		client.subscribe(srstate, {
+			onFailure: function (message) {
+				tmess = cfg.url.mqtt_server+" subsrciption failed: "
+		    dmessage.innerHTML= tmess;
+		  }
+		})
+		client.subscribe(timr, {
+			onFailure: function (message) {
+				tmess = cfg.url.mqtt_server+" subsrciption failed: "
+		    dmessage.innerHTML= tmess;
+		  }
+		})
+		client.subscribe(sched, {
+			onFailure: function (message) {
+				tmess = cfg.url.mqtt_server+" subsrciption failed: "
+		    dmessage.innerHTML= tmess;
+		  }
+		})
+		client.subscribe(flags, {
+			onFailure: function (message) {
+				tmess = cfg.url.mqtt_server+" subsrciption failed: "
+		    dmessage.innerHTML= tmess;
+		  }
+		})
 	}
 
 	//client = new Paho.MQTT.Client("services.sitebuilt.net/geniot/ws", 3333, "CLpahoSB" + Math.random() * 1000000);
-	client = new Paho.MQTT.Client(cfg.url.mqtt_server, cfg.url.mqtt_port, cfg.appid + Math.random());
+	client = new Paho.MQTT.Client(cfg.url.mqtt_server, cfg.url.mqtt_port, cfg.appid+Math.random());
 	client.onConnectionLost = onConnectionLost;
 	client.onMessageArrived = onMessageArrived;
 
 	function onConnect() {
-		console.log('Connected to Sitebuilt.net:3333!');
+		var lmess = 'Connected to '+cfg.url.mqtt_server
+		console.log(lmess);
+		dmessage.innerHTML=lmess
 		subscribe()
 		publish('presence', 'Web Client is alive.. Test Ping! ');
 		publish(req, '{"id":2,"req":"flags"}')
