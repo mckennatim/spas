@@ -4,6 +4,23 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 20-admind-verify
+note bind(this,i) to get index
+      const listItems= props.dlst.map((itt, i)=>{
+        console.log(geta('itt.geometry.location',itt))
+        return (<li key={i} onClick={handleChoice.bind(this,i)}>
+          {itt.formatted_address}
+          <span> {JSON.stringify(geta('itt.geometry.location',itt))}</span>
+        </li>)
+      },this)
+http://maps.googleapis.com/maps/api/geocode/json?address=12+Parley+Vale
+
+doesn't work
+https://maps.googleapis.com/maps/api/timezone/json?location=42.3150229,-71.111138
+
+https://maps.googleapis.com/maps/api/timezone/json?location=42.3150229,-71.111138&timestamp=1497887369&key=AIzaSyDtrJ6jnivCGm3koarovP2EJSnYdK-RpRM
+
+https://maps.googleapis.com/maps/api/timezone/json?location=38.908133,-77.047119&timestamp=1458000000&key=AIzaSyDtrJ6jnivCGm3koarovP2EJSnYdK-RpRM
 ### 19-pahoRaw-admind
 both work. TODO in `admind/super/CYURD14I` make a config.json on save
 ### 18-appoj-pahoRaw-subscribe

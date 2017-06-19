@@ -44,9 +44,12 @@ const routing = ()=>{
 	    'products/:id/:inv': (params)=>{switchPage({name: 'Products', params: params});},
 	    'about': ()=>{switchPage({name: 'About', params: null});},
 	    'dog': ()=>{switchPage({name: 'Dog', params: null});},
-	    'registered': (params, query)=>{
-	    	switchPage({name: 'Registered', params: {query: query}});
-	    },
+          'registered': (params, query)=>{
+            switchPage({name: 'Registered', params: {query: query}});
+          },
+          'verify': (params, query)=>{
+            switchPage({name: 'Verify', params: {query: query}});
+          },
 	    '*': ()=>{switchPage({name: 'Home', params: null});}
 	  })
 	  .resolve();

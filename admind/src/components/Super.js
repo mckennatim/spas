@@ -3,6 +3,7 @@ import {DeviceForm} from './DeviceForm.js'
 import {saveDevice} from '../actions'
 
 
+
 import {pStyle} from '../styles'
 const style = {
 	...pStyle, outer: {...pStyle.outer, background: '#C4A265'}

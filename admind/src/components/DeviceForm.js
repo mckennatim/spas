@@ -1,4 +1,5 @@
 import React from 'react';
+import {router} from '../app'
 
 import {pStyle} from '../styles'
 const style = {
@@ -18,6 +19,11 @@ function DeviceForm(props){
   const handleOnChange= (e)=>{
     devChanged({key: e.target.name, val:e.target.value})
   }
+  const verify=()=>{
+    var addr=device.address.split(' ').join('+')
+    console.log('in verify ',addr)
+    router.navigate('/verify?raw='+addr)
+  }
 
   return(
     <div>
@@ -35,7 +41,9 @@ function DeviceForm(props){
         <label htmlFor="description">description:</label>
         <input type="text" id="description" name="description" value={device.description} onChange={handleOnChange} size="54"/><br/>
         <label htmlFor="address">address:</label>
-        <input type="text" id="address" name="address" value={device.address} onChange={handleOnChange} size="54"/><br/>
+        <input type="text" id="address" name="address" value={device.address} onChange={handleOnChange} size="54"/>
+        <button onClick={verify}>verify</button>
+        <br/>
         <label htmlFor="location">location:</label>
         <input type="text" id="location" name="location" value={device.location} onChange={handleOnChange} size="48"/><br/>
         <label htmlFor="timezone">timezone:</label>

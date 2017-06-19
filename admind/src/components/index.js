@@ -12,6 +12,8 @@ import {SenRel} from './SenRel'
 //import {DeviceForm} from './DeviceForm'
 import {Registered} from './Registered'
 import {Products} from './Products'
+import {Verify} from './Verify'
+import {VerifyList} from './VerifyList'
 import {pStyle} from '../styles'
 import {loadGithubFollowers} from '../actions';
 
@@ -90,4 +92,4 @@ const multi =[{pri:'About', mul:[
 //['watch', 'phone', 'phoneL', 'tablet', 'tabletL', 'laptop']
 const panes= [1,1,2,2,3,3]
 
-export {Admin, Super, About, Products, Home, Dog, Registered, Devices, DevicesApps, DevInf, SenRel, App, Nav, multi, panes}
+export {Admin, Super, About, Products, Verify, VerifyList, Home, Dog, Registered, Devices, DevicesApps, DevInf, SenRel, App, Nav, multi, panes}
