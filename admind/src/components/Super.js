@@ -10,25 +10,35 @@ const style = {
 }
 pStyle.outer.background='#C4A265'
 
+
+
 let device  =      {
       devid: 'CYURD007',
       devpwd: 'geniot',
       description: '2 temps, 3 timers 1 relay demo board',
       bizid: 'sbs',
       address: '12 Parley Vale, Jamaica Plain, MA 02130',
-      location: '{"lat":222.456,"lon":333.345}',
-      timezone: 'America, East',
+      location: '{"lat":42.315,"lng":-71.111}',
+      timezone: 'America/New_York',
       server:'{"url":"10.0.1.102","mqtt":1883,"express":3332}', 
       specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}',
-      owner: 'mckenna.tim@gmail.com',
+      owner: 'tim@sitebuilt.net',
       apps: '["admin", "user"]'
     }
 
 class Super extends React.Component{
   constructor(props) {
     super(props);
-    console.log(props)
-    this.state = device
+    //console.log(props)
+    //console.log(props.responsive.page.params)
+    var equery = props.responsive.page.params.query
+    if(equery!=""){
+      var newDev = JSON.parse(decodeURIComponent(equery.split("=")[1]))
+      //console.log(newDev)
+      this.state = newDev
+    }else{
+      this.state = device
+    }
   }  
   setupNewDevice=()=>{
     console.log('setting up new device')

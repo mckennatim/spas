@@ -1,14 +1,21 @@
 import React from 'react';
+import {router} from '../app'
 import {geta} from '../utilities'
+var geocode = {}
 
 var key ="AIzaSyDtrJ6jnivCGm3koarovP2EJSnYdK-RpRM"
 var url="https://maps.googleapis.com/maps/api/timezone/json"
 var timestamp=Math.floor(Date.now()/1000)
 
 function VerifyList(props){
+  console.log(props)
+  const {dlst, appId, devId, dev} = props
   const handleChoice=(i)=>{
     console.log('handleing choice')
     console.log(i)
+    geocode.address=props.dlst[i].formatted_address
+    geocode.location=props.dlst[i].geometry.location
+
     var lat = props.dlst[i].geometry.location.lat;
     var lng = props.dlst[i].geometry.location.lng;
     var q = `${url}?location=${lat},${lng}&timestamp=${timestamp}&key=${key}`
@@ -17,7 +24,18 @@ function VerifyList(props){
       .then((response)=>response.json())
       .then((json)=>{
         console.log(json.timeZoneId)
+        console.log(dev)
+        var newDev = {
+          ...dev,
+          address: dlst[i].formatted_address,
+          location: JSON.stringify(dlst[i].geometry.location),
+          timezone: json.timeZoneId
+        }
+        console.log(newDev)
+        var egs = encodeURIComponent(JSON.stringify(newDev))
+        router.navigate(`/${appId}/${devId}?geo=${egs}`)
       })
+
   }
 
   const listItems= props.dlst.map((itt, i)=>{

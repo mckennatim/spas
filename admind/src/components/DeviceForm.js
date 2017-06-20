@@ -20,9 +20,10 @@ function DeviceForm(props){
     devChanged({key: e.target.name, val:e.target.value})
   }
   const verify=()=>{
-    var addr=device.address.split(' ').join('+')
-    console.log('in verify ',addr)
-    router.navigate('/verify?raw='+addr)
+    
+    var raw = encodeURIComponent(JSON.stringify(device))
+    //router.navigate('/verify?raw='+addr+'&appId=super&devId=CYURD14I')
+    router.navigate('/verify?raw='+raw+'&appId=super&devId=CYURD14I')
   }
 
   return(

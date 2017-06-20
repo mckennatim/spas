@@ -26,30 +26,24 @@ const routing = ()=>{
       	changeDevInfo(pro)
       },
 	  	'admin/:devid': (params)=>{
-      	var pro ={}
-      	pro.ht = 'Admin';
-      	pro.par = params;
       	switchPage({name: 'Admin', params: params})
       	//changeDevInfo(pro)
       },
-	  	'super/:devid': (params)=>{
-      	var pro ={}
-      	pro.ht = 'Admin';
-      	pro.par = params;
-      	switchPage({name: 'Super', params: params})
-      	//changeDevInfo(pro)
+      'super/:devid': (params, query)=>{
+        var params = {...params, query:query}
+        switchPage({name: 'Super', params: params})
       },
 	    'products': ()=> {switchPage({name: 'Products', params: null});} ,
 	    'products/:id': (params)=>{switchPage({name: 'Products', params: params});},
 	    'products/:id/:inv': (params)=>{switchPage({name: 'Products', params: params});},
 	    'about': ()=>{switchPage({name: 'About', params: null});},
 	    'dog': ()=>{switchPage({name: 'Dog', params: null});},
-          'registered': (params, query)=>{
-            switchPage({name: 'Registered', params: {query: query}});
-          },
-          'verify': (params, query)=>{
-            switchPage({name: 'Verify', params: {query: query}});
-          },
+      'registered': (params, query)=>{
+        switchPage({name: 'Registered', params: {query: query}});
+      },
+      'verify': (params, query)=>{
+        switchPage({name: 'Verify', params: {query: query}});
+      },
 	    '*': ()=>{switchPage({name: 'Home', params: null});}
 	  })
 	  .resolve();

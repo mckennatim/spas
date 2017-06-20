@@ -1,5 +1,6 @@
 import React from 'react';
 import {VerifyList} from './VerifyList.js'
+import {parseQuery} from '../utilities'
 
 class Verify extends React.Component{
   constructor(props) {
@@ -9,28 +10,20 @@ class Verify extends React.Component{
   }
 
   componentDidMount(){
-    var raw = this.props.responsive.page.params.query.split('=')[1]
-    var url = `http://maps.googleapis.com/maps/api/geocode/json?address=${raw}`
+    const q = parseQuery(this.props.responsive.page.params.query)
+    var dev = JSON.parse(decodeURIComponent(q.raw))
+    var addr=dev.address.split(' ').join('+')
+    var url = `http://maps.googleapis.com/maps/api/geocode/json?address=${addr}`
     console.log(url)
     fetch(url)
       .then((response)=>response.json())
       .then((json)=>{
         //console.log(json)
-        this.setState({res: json.results})
+        this.setState({res: json.results, appId:q.appId, devId:q.devId, dev:dev})
         console.log(this.state)
         console.log(json.results)
       })    
   }
-  //const {devices, name} = props
-  //raw = this.props.responsive.page.params.query.split('=')[1]
-  //console.log(props)
-  // var url = `http://maps.googleapis.com/maps/api/geocode/json?address=${raw}`
-  // fetch(url)
-  //   .then((response)=>response.json())
-  //   .then((json)=>{
-  //     this.setState({res: response.json()})
-  //     //console.log(res[0])
-  //   })
 
   render(){
     console.log(this.state)
@@ -38,7 +31,7 @@ class Verify extends React.Component{
       <div>
         <div style={styles.outer} >
           <h4>in Verify </h4>
-          <VerifyList dlst={this.state.res}/>
+          <VerifyList dev={this.state.dev} dlst={this.state.res} appId={this.state.appId} devId={this.state.devId}/>
         </div>
       </div>
       )

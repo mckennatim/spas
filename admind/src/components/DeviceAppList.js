@@ -2,7 +2,7 @@ import React from 'react';
 import {router} from '../routing'
 import { getCfg} from '../utilities/getCfg'
 
-console.log(getCfg())
+//console.log(getCfg())
 
 const handleNavigate = (dev) => () =>{
 	console.log(dev)

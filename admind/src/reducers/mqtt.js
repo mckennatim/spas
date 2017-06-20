@@ -3,7 +3,7 @@ function getIndex(d,c){
 }
 
 const mqtt=(state, action) =>{
-  console.log(action)
+  //console.log(action)
   switch (action.type) {
     case 'GET_LS_CURRENT_APPS':
       console.log(state.currentApps.id)

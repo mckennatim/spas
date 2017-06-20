@@ -13,18 +13,6 @@ const style = {
 }
 pStyle.outer.background='#C4A265'
 
-// const parseQuery = (query)=>{
-// 	var obj = {};
-// 	query.split('&')
-// 		.map((term)=>{
-// 			var ar = term.split('=')
-// 			obj[ar[0]]=ar[1]
-// 		}
-// 	)
-// 	return obj
-// }
-console.log('RUNNING FILE')
-
 function Registered(props){
   //console.log('in Registe5red')
   // console.log(props)

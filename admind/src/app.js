@@ -16,7 +16,7 @@ window.onblur = ()=>{
 
 window.onfocus = ()=>{
 	console.log('window on focus')
-	console.log(window.location.hash)
+	//console.log(window.location.hash)
 	reconnect(window.location.hash)
 }
 

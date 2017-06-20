@@ -5547,6 +5547,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.router = exports.routing = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _navigo = __webpack_require__(209);
 
 var _navigo2 = _interopRequireDefault(_navigo);
@@ -5584,18 +5586,12 @@ var routing = function routing() {
                (0, _actions.changeDevInfo)(pro);
           },
           'admin/:devid': function adminDevid(params) {
-               var pro = {};
-               pro.ht = 'Admin';
-               pro.par = params;
                (0, _actions.switchPage)({ name: 'Admin', params: params });
                //changeDevInfo(pro)
           },
-          'super/:devid': function superDevid(params) {
-               var pro = {};
-               pro.ht = 'Admin';
-               pro.par = params;
+          'super/:devid': function superDevid(params, query) {
+               var params = _extends({}, params, { query: query });
                (0, _actions.switchPage)({ name: 'Super', params: params });
-               //changeDevInfo(pro)
           },
           'products': function products() {
                (0, _actions.switchPage)({ name: 'Products', params: null });
@@ -7471,7 +7467,7 @@ window.onblur = function () {
 
 window.onfocus = function () {
   console.log('window on focus');
-  console.log(window.location.hash);
+  //console.log(window.location.hash)
   (0, _actions.reconnect)(window.location.hash);
 };
 
@@ -27941,13 +27937,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.VerifyList = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _app = __webpack_require__(71);
+
 var _utilities = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var geocode = {};
 
 var key = "AIzaSyDtrJ6jnivCGm3koarovP2EJSnYdK-RpRM";
 var url = "https://maps.googleapis.com/maps/api/timezone/json";
@@ -27956,9 +27958,18 @@ var timestamp = Math.floor(Date.now() / 1000);
 function VerifyList(props) {
   var _this = this;
 
+  console.log(props);
+  var dlst = props.dlst,
+      appId = props.appId,
+      devId = props.devId,
+      dev = props.dev;
+
   var handleChoice = function handleChoice(i) {
     console.log('handleing choice');
     console.log(i);
+    geocode.address = props.dlst[i].formatted_address;
+    geocode.location = props.dlst[i].geometry.location;
+
     var lat = props.dlst[i].geometry.location.lat;
     var lng = props.dlst[i].geometry.location.lng;
     var q = url + '?location=' + lat + ',' + lng + '&timestamp=' + timestamp + '&key=' + key;
@@ -27967,6 +27978,15 @@ function VerifyList(props) {
       return response.json();
     }).then(function (json) {
       console.log(json.timeZoneId);
+      console.log(dev);
+      var newDev = _extends({}, dev, {
+        address: dlst[i].formatted_address,
+        location: JSON.stringify(dlst[i].geometry.location),
+        timezone: json.timeZoneId
+      });
+      console.log(newDev);
+      var egs = encodeURIComponent(JSON.stringify(newDev));
+      _app.router.navigate('/' + appId + '/' + devId + '?geo=' + egs);
     });
   };
 
@@ -34381,7 +34401,7 @@ var _getCfg = __webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log((0, _getCfg.getCfg)());
+//console.log(getCfg())
 
 var handleNavigate = function handleNavigate(dev) {
   return function () {
@@ -34514,9 +34534,10 @@ function DeviceForm(props) {
     devChanged({ key: e.target.name, val: e.target.value });
   };
   var verify = function verify() {
-    var addr = device.address.split(' ').join('+');
-    console.log('in verify ', addr);
-    _app.router.navigate('/verify?raw=' + addr);
+
+    var raw = encodeURIComponent(JSON.stringify(device));
+    //router.navigate('/verify?raw='+addr+'&appId=super&devId=CYURD14I')
+    _app.router.navigate('/verify?raw=' + raw + '&appId=super&devId=CYURD14I');
   };
 
   return _react2.default.createElement(
@@ -35001,10 +35022,10 @@ var cfg = (0, _getCfg.getCfg)();
 //console.log(cfg)
 //import env from '../../env.json'
 //var cfg= env[process.env.NODE_ENV||'development']
-console.log(cfg);
+//console.log(cfg)
 
 var url = cfg.url.soauth + "/spa/" + cfg.appid + "?apiURL=" + encodeURIComponent(cfg.url.api) + "&cbPath=" + encodeURIComponent(cfg.cbPath);
-console.log(url);
+//console.log(url)
 
 var style = {
 	background: '#CCCCCC'
@@ -35224,18 +35245,6 @@ var cfg = (0, _getCfg.getCfg)();
 var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#FF9966' })
 });
 _styles.pStyle.outer.background = '#C4A265';
-
-// const parseQuery = (query)=>{
-// 	var obj = {};
-// 	query.split('&')
-// 		.map((term)=>{
-// 			var ar = term.split('=')
-// 			obj[ar[0]]=ar[1]
-// 		}
-// 	)
-// 	return obj
-// }
-console.log('RUNNING FILE');
 
 function Registered(props) {
   //console.log('in Registe5red')
@@ -35674,11 +35683,11 @@ var device = {
   description: '2 temps, 3 timers 1 relay demo board',
   bizid: 'sbs',
   address: '12 Parley Vale, Jamaica Plain, MA 02130',
-  location: '{"lat":222.456,"lon":333.345}',
-  timezone: 'America, East',
+  location: '{"lat":42.315,"lng":-71.111}',
+  timezone: 'America/New_York',
   server: '{"url":"10.0.1.102","mqtt":1883,"express":3332}',
   specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}',
-  owner: 'mckenna.tim@gmail.com',
+  owner: 'tim@sitebuilt.net',
   apps: '["admin", "user"]'
 };
 
@@ -35688,6 +35697,8 @@ var Super = function (_React$Component) {
   function Super(props) {
     _classCallCheck(this, Super);
 
+    //console.log(props)
+    //console.log(props.responsive.page.params)
     var _this = _possibleConstructorReturn(this, (Super.__proto__ || Object.getPrototypeOf(Super)).call(this, props));
 
     _this.setupNewDevice = function () {
@@ -35715,8 +35726,14 @@ var Super = function (_React$Component) {
       (0, _actions.saveDevice)(_this.state);
     };
 
-    console.log(props);
-    _this.state = device;
+    var equery = props.responsive.page.params.query;
+    if (equery != "") {
+      var newDev = JSON.parse(decodeURIComponent(equery.split("=")[1]));
+      //console.log(newDev)
+      _this.state = newDev;
+    } else {
+      _this.state = device;
+    }
     return _this;
   }
 
@@ -35801,6 +35818,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _VerifyList = __webpack_require__(104);
 
+var _utilities = __webpack_require__(39);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35827,29 +35846,20 @@ var Verify = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var raw = this.props.responsive.page.params.query.split('=')[1];
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + raw;
+      var q = (0, _utilities.parseQuery)(this.props.responsive.page.params.query);
+      var dev = JSON.parse(decodeURIComponent(q.raw));
+      var addr = dev.address.split(' ').join('+');
+      var url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + addr;
       console.log(url);
       fetch(url).then(function (response) {
         return response.json();
       }).then(function (json) {
         //console.log(json)
-        _this2.setState({ res: json.results });
+        _this2.setState({ res: json.results, appId: q.appId, devId: q.devId, dev: dev });
         console.log(_this2.state);
         console.log(json.results);
       });
     }
-    //const {devices, name} = props
-    //raw = this.props.responsive.page.params.query.split('=')[1]
-    //console.log(props)
-    // var url = `http://maps.googleapis.com/maps/api/geocode/json?address=${raw}`
-    // fetch(url)
-    //   .then((response)=>response.json())
-    //   .then((json)=>{
-    //     this.setState({res: response.json()})
-    //     //console.log(res[0])
-    //   })
-
   }, {
     key: 'render',
     value: function render() {
@@ -35865,7 +35875,7 @@ var Verify = function (_React$Component) {
             null,
             'in Verify '
           ),
-          _react2.default.createElement(_VerifyList.VerifyList, { dlst: this.state.res })
+          _react2.default.createElement(_VerifyList.VerifyList, { dev: this.state.dev, dlst: this.state.res, appId: this.state.appId, devId: this.state.devId })
         )
       );
     }
@@ -35985,7 +35995,7 @@ function getIndex(d, c) {
 }
 
 var mqtt = function mqtt(state, action) {
-  console.log(action);
+  //console.log(action)
   switch (action.type) {
     case 'GET_LS_CURRENT_APPS':
       console.log(state.currentApps.id);
