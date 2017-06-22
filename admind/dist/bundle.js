@@ -33919,6 +33919,7 @@ var saveDevice = (0, _rxred.actionCreator)(function (payload) {
 
 var getApps = (0, _rxred.actionCreator)(function (payload) {
   var capps = _getCfg.ls.getApps();
+  console.log(capps);
   if (capps) {
     LS2storeCurrentApps(capps);
   }
@@ -33932,6 +33933,7 @@ var getApps = (0, _rxred.actionCreator)(function (payload) {
         'Authorization': 'Bearer ' + payload.token
       }
     }).map(function (xhr) {
+      console.log(xhr);
       console.log(xhr.response);
       var res = { id: payload.email,
         apps: xhr.response.apps,
@@ -34441,7 +34443,7 @@ function DevicesList(props) {
         devices.map(function (dev) {
           return _react2.default.createElement(
             'li',
-            { key: dev.bizid + dev.appid, style: styles.li },
+            { key: dev.bizid + dev.appid + dev.devid, style: styles.li },
             _react2.default.createElement(
               'a',
               { onClick: handleNavigate(dev) },
@@ -35663,6 +35665,8 @@ var _DeviceForm = __webpack_require__(179);
 
 var _actions = __webpack_require__(30);
 
+var _getCfg = __webpack_require__(40);
+
 var _styles = __webpack_require__(27);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -35672,6 +35676,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var cfg = (0, _getCfg.getCfg)();
+var baseURL = cfg.url.api;
 
 var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.outer, { background: '#C4A265' })
 });
@@ -35703,14 +35710,28 @@ var Super = function (_React$Component) {
 
     _this.setupNewDevice = function () {
       console.log('setting up new device');
+      _this.setState(_extends({}, _this.state, { mode: 'new' }));
     };
 
     _this.searchDevices = function () {
       console.log('search devices');
+      var url = baseURL + '/dedata/dev';
+      fetch(url, {
+        headers: {
+          'Authorization': 'Bearer ' + _getCfg.ls.getCurrentToken().token
+        }
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        _this.setState(_extends({}, _this.state, { mode: 'search', devices: json }));
+        console.log(json);
+      });
     };
 
-    _this.editDevice = function () {
-      console.log('editing device');
+    _this.editDevice = function (i) {
+      console.log('editing device ', i);
+      console.log(_this.state);
+      _this.setState(_extends({}, _this.state, { adev: _this.state.devices[i], mode: 'new' }));
     };
 
     _this.onDevChange = function (item) {
@@ -35723,17 +35744,118 @@ var Super = function (_React$Component) {
 
     _this.onSaveDev = function () {
       console.log('in super onSaveDev');
-      (0, _actions.saveDevice)(_this.state);
+      console.log(_this.state.adev);
+      (0, _actions.saveDevice)(_this.state.adev);
+      // var url=baseURL+'/dedata/dev'
+      // fetch(url,{
+      //   method: 'POST',
+      //   body: this.state.adev,
+      //   responseType: 'json',
+      //   headers: {
+      //     'Authorization': 'Bearer ' + ls.getCurrentToken().token
+      //   }    
+      // })
+      //   .then((response)=>response.json())
+      //   .then((json)=>{
+      //     console.log(json)
+      //   })
+    };
+
+    _this.displayWhich = function (mode) {
+      console.log('IN dispalwhich ', mode);
+      switch (true) {
+        case mode == 'new':
+          return _react2.default.createElement(_DeviceForm.DeviceForm, { device: _this.state.adev,
+            devChanged: _this.onDevChange,
+            saveDev: _this.onSaveDev
+          });
+          break;
+        case mode == 'search':
+          var mydevs = _this.state.devices;
+          console.log(mydevs[0]);
+          var dog = mydevs.map(function (dev, i) {
+            return _react2.default.createElement(
+              'li',
+              { key: i, onClick: _this.editDevice.bind(_this, i) },
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.devid
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.address
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.location
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.timezone
+              ),
+              _react2.default.createElement('br', null),
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.server
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.apps
+              ),
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                dev.owner
+              )
+            );
+          }, _this);
+          console.log(dog[0]);
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+              'h5',
+              null,
+              'searching'
+            ),
+            _react2.default.createElement(
+              'ul',
+              null,
+              dog
+            )
+          );
+          break;
+        default:
+          return _react2.default.createElement(
+            'h5',
+            null,
+            'hey dog'
+          );
+      }
     };
 
     var equery = props.responsive.page.params.query;
     if (equery != "") {
       var newDev = JSON.parse(decodeURIComponent(equery.split("=")[1]));
       //console.log(newDev)
-      _this.state = newDev;
+      _this.state = { adev: newDev };
     } else {
-      _this.state = device;
+      _this.state = { adev: device };
     }
+    _this.state = _extends({}, _this.state, { mode: 'new' });
     return _this;
   }
 
@@ -35767,17 +35889,9 @@ var Super = function (_React$Component) {
             'button',
             { onClick: this.searchDevices },
             'search devices'
-          ),
-          _react2.default.createElement(
-            'button',
-            { onClick: this.editDevice },
-            'edit device'
           )
         ),
-        _react2.default.createElement(_DeviceForm.DeviceForm, { device: this.state,
-          devChanged: this.onDevChange,
-          saveDev: this.onSaveDev
-        })
+        this.displayWhich(this.state.mode)
       );
     }
   }]);
@@ -35998,7 +36112,7 @@ var mqtt = function mqtt(state, action) {
   //console.log(action)
   switch (action.type) {
     case 'GET_LS_CURRENT_APPS':
-      console.log(state.currentApps.id);
+      console.log(state.currentApps);
       if (state.currentApps.id != "no one") {
         return state;
       } else {
@@ -36017,10 +36131,12 @@ var mqtt = function mqtt(state, action) {
         deviceSaved: true
       });
     case 'APPS_LOADING':
+      console.log('APPS_LOADING');
       return _extends({}, state, {
         appsLoaded: false
       });
     case 'APPS_LOADED':
+      console.log('APPS_LOADED');
       return _extends({}, state, {
         currentApps: action.payload,
         appsLoaded: true

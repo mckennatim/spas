@@ -4,6 +4,8 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 22-admind-super-search-save
+save need not be part of the store, and should work for any searched device
 ### 21-admind-verify-super
 copies the device object to verify and then adds verified geocode timeone info and sends it back
 ### 20-admind-verify

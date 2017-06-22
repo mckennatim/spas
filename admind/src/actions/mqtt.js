@@ -87,6 +87,7 @@ const saveDevice = actionCreator((payload)=>{
 
 const getApps = actionCreator((payload)=>{
   var capps =ls.getApps()
+  console.log(capps)
   if(capps){
     LS2storeCurrentApps(capps)
   }
@@ -100,6 +101,7 @@ const getApps = actionCreator((payload)=>{
         'Authorization': 'Bearer ' + payload.token
       }
     }).map((xhr)=>{
+      console.log(xhr)
       console.log(xhr.response)
       var res = {id: payload.email, 
                 apps: xhr.response.apps, 

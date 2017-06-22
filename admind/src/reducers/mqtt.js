@@ -6,7 +6,7 @@ const mqtt=(state, action) =>{
   //console.log(action)
   switch (action.type) {
     case 'GET_LS_CURRENT_APPS':
-      console.log(state.currentApps.id)
+      console.log(state.currentApps)
       if (state.currentApps.id != "no one"){
         return state
       }else {
@@ -28,11 +28,13 @@ const mqtt=(state, action) =>{
         deviceSaved:true
       }  
     case 'APPS_LOADING':
+      console.log('APPS_LOADING')
       return {
         ...state,
         appsLoaded: false
       }
     case 'APPS_LOADED':
+      console.log('APPS_LOADED')
       return {
         ...state,
         currentApps: action.payload,

@@ -1,6 +1,9 @@
 import React from 'react'
 import {DeviceForm} from './DeviceForm.js'
 import {saveDevice} from '../actions'
+import {getCfg, ls} from '../utilities/getCfg'
+var cfg = getCfg()
+var baseURL=cfg.url.api
 
 
 
@@ -35,19 +38,34 @@ class Super extends React.Component{
     if(equery!=""){
       var newDev = JSON.parse(decodeURIComponent(equery.split("=")[1]))
       //console.log(newDev)
-      this.state = newDev
+      this.state = {adev:newDev}
     }else{
-      this.state = device
+      this.state = {adev:device}
     }
+    this.state = {...this.state, mode:'new'}
   }  
   setupNewDevice=()=>{
     console.log('setting up new device')
+    this.setState({...this.state, mode:'new'})
   }
   searchDevices=()=>{
     console.log('search devices')
+    var url=baseURL+'/dedata/dev'
+    fetch(url,{
+      headers: {
+        'Authorization': 'Bearer ' + ls.getCurrentToken().token
+      }
+    })
+      .then((response)=>response.json())
+      .then((json)=>{
+        this.setState({...this.state, mode:'search', devices:json})
+        console.log(json)
+      })
   }
-  editDevice=()=>{
-    console.log('editing device')
+  editDevice=(i)=>{
+    console.log('editing device ',i)
+    console.log(this.state)
+    this.setState({...this.state, adev:this.state.devices[i], mode:'new' })
   }
 
   onDevChange = (item)=>{
@@ -59,9 +77,60 @@ class Super extends React.Component{
   }
   onSaveDev=()=>{
     console.log('in super onSaveDev')
-    saveDevice(this.state)
+    console.log(this.state.adev)
+    saveDevice(this.state.adev)
+    // var url=baseURL+'/dedata/dev'
+    // fetch(url,{
+    //   method: 'POST',
+    //   body: this.state.adev,
+    //   responseType: 'json',
+    //   headers: {
+    //     'Authorization': 'Bearer ' + ls.getCurrentToken().token
+    //   }    
+    // })
+    //   .then((response)=>response.json())
+    //   .then((json)=>{
+    //     console.log(json)
+    //   })
   }
 
+  displayWhich=(mode)=>{
+    console.log('IN dispalwhich ',mode)
+    switch(true){
+      case mode=='new':
+        return(
+          <DeviceForm device={this.state.adev}
+                      devChanged={this.onDevChange}
+                      saveDev={this.onSaveDev}
+          />          
+        )
+        break
+      case mode=='search':
+        const mydevs = this.state.devices
+        console.log(mydevs[0])
+        const dog = mydevs.map((dev,i)=>{
+          return (<li key={i} onClick={this.editDevice.bind(this,i)}>
+              <span> {dev.devid}</span>
+              <span> {dev.address}</span>
+              <span> {dev.location}</span>
+              <span> {dev.timezone}</span><br/>
+              <span> {dev.server}</span>
+              <span> {dev.apps}</span>
+              <span> {dev.owner}</span>
+            </li>)
+        },this)
+        console.log(dog[0])      
+        return(
+          <div>
+          <h5>searching</h5>
+          <ul>{dog}</ul>
+          </div>
+        )
+        break  
+      default:
+        return(<h5>hey dog</h5>)  
+    } 
+  }
 
 
   render(){
@@ -71,12 +140,8 @@ class Super extends React.Component{
       	<span><strong>in doSuper {name} </strong></span><br/>
         <button onClick={this.setupNewDevice}>setup new device</button>
         <button onClick={this.searchDevices}>search devices</button>
-        <button onClick={this.editDevice}>edit device</button>
       </div>
-      <DeviceForm device={this.state}
-                  devChanged={this.onDevChange}
-                  saveDev={this.onSaveDev}
-      />
+      {this.displayWhich(this.state.mode)}
     </div>
     )
   }

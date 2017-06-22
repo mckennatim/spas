@@ -29,7 +29,7 @@ export default function DevicesList(props){
       	<h5>in DeviceAppList for {name}</h5>
       	<ul style={styles.ul}>
           {devices.map(function(dev){
-            return <li key={dev.bizid+dev.appid} style={styles.li}>
+            return <li key={dev.bizid+dev.appid+dev.devid} style={styles.li}>
                 <a onClick={handleNavigate(dev)}>
                   <span>  {dev.bizid}</span> 
                   <span>  {dev.appid}</span> 
