@@ -61,29 +61,6 @@ const LS2storeCurrentApps = actionCreator((payload) => {
     payload
   }
 });
-const saveDevice = actionCreator((payload)=>{
-  console.log(ls.getCurrentToken())
-  console.log(payload)
-  var url = baseURL+'/dedata/dev'
-  return {
-    type: 'SAVING_DEVICE',
-    payload: Observable.ajax({
-      url: url,
-      method: 'POST',
-      body: payload,
-      responseType: 'json',
-      headers: {
-        'Authorization': 'Bearer ' + ls.getCurrentToken().token
-      }
-    }).map((xhr)=>{
-      console.log(xhr.response)
-      return({
-        type: 'DEVICE_SAVED',
-        payload: xhr.response
-      })
-    })
-  }
-})
 
 const getApps = actionCreator((payload)=>{
   var capps =ls.getApps()
@@ -200,4 +177,4 @@ const grabFlagData = actionCreator((payload) => {
   }
 });
 
-export {LS2storeCurrentApps, copyStore, changeDevInfo, changeSenRel, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps, saveDevice}
+export {LS2storeCurrentApps, copyStore, changeDevInfo, changeSenRel, grabFlagData, grabSrstateData, grabSchedData, grabTimrData, disconnect, reconnect, getApps}

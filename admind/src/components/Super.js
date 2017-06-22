@@ -1,6 +1,7 @@
 import React from 'react'
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/observable/dom/ajax';
 import {DeviceForm} from './DeviceForm.js'
-import {saveDevice} from '../actions'
 import {getCfg, ls} from '../utilities/getCfg'
 var cfg = getCfg()
 var baseURL=cfg.url.api
@@ -69,29 +70,28 @@ class Super extends React.Component{
   }
 
   onDevChange = (item)=>{
-    var f={}
+    console.log(item)
+    var f=this.state.adev
     f[item.key]=item.val
     console.log(f)
+
     this.setState(f)
     console.log(this.state)
   }
   onSaveDev=()=>{
     console.log('in super onSaveDev')
-    console.log(this.state.adev)
-    saveDevice(this.state.adev)
-    // var url=baseURL+'/dedata/dev'
-    // fetch(url,{
-    //   method: 'POST',
-    //   body: this.state.adev,
-    //   responseType: 'json',
-    //   headers: {
-    //     'Authorization': 'Bearer ' + ls.getCurrentToken().token
-    //   }    
-    // })
-    //   .then((response)=>response.json())
-    //   .then((json)=>{
-    //     console.log(json)
-    //   })
+    var url=baseURL+'/dedata/dev'
+    Observable.ajax({
+      url: url,
+      method: 'POST',
+      body: this.state.adev,
+      responseType: 'json',
+      headers: {
+        'Authorization': 'Bearer ' + ls.getCurrentToken().token
+      }
+    }).subscribe((xhr)=>{
+      console.log(xhr.response)
+    })    
   }
 
   displayWhich=(mode)=>{

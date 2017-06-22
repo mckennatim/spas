@@ -5,7 +5,20 @@ http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
 ### 22-admind-super-search-save
-save need not be part of the store, and should work for any searched device
+save need not be part of the store, and should work for any searched device. So took saveDevice out of actions/mqtt and reducers/mqtt. Tried all forms of fetch for posting data to no avail. So am using rxjs style ajax, fuck promises
+
+    Observable.ajax({
+      url: url,
+      method: 'POST',
+      body: this.state.adev,
+      responseType: 'json',
+      headers: {
+        'Authorization': 'Bearer ' + ls.getCurrentToken().token
+      }
+    }).subscribe((xhr)=>{
+      console.log(xhr.response)
+    })
+
 ### 21-admind-verify-super
 copies the device object to verify and then adds verified geocode timeone info and sends it back
 ### 20-admind-verify

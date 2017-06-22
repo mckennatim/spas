@@ -17,16 +17,6 @@ const mqtt=(state, action) =>{
           currentApps: action.payload
         }
       }
-    case 'SAVING_DEVICE':
-      return{
-        ...state,
-        deviceSaved:false
-      }  
-    case 'DEVICE_SAVED':
-      return{
-        ...state,
-        deviceSaved:true
-      }  
     case 'APPS_LOADING':
       console.log('APPS_LOADING')
       return {
