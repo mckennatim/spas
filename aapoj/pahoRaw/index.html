@@ -6,8 +6,9 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 	<title>pahoRaw</title>
 	<script src="../mqttws31.js"></script>
-	<script src="../utility.js"></script>
+	<script src="../../node_modules/superagent/superagent.js"></script>
 	<script src="./env.js"></script>
+	<script src="../utility.js"></script>
 	<style type="text/css" media="screen">
 	#temp1,
 	#temp2 {
@@ -79,10 +80,12 @@
 		<span>Timer 3</span> timeleft: <span id="timr3">0</span> srstate: <span id="darr4"></span>
 		<br> program 4: <span id="prog4"></span>
 		<br>
+		<br>
+		day<input type="text" id="day" size=1 value=4>sensor<input type="text" id="senrel" size="1" value=1> 
+		<button onclick="saveProg()">save prog</button>
+		<br>prog<input type="text" id="dayprog" size=50 value="[[12,20,77,75]]">
 	</div>
 	<script>
-	var cfg=env.local
-	console.log(cfg)
 	var dmessage = document.getElementById("message")
 
 	var mess = "You need a token (and owner's OK) to access a device. Press Register to get a token "
@@ -105,6 +108,7 @@
 		}
 	}
 
+
 	var emtok = getToken(cfg.appid)
 	var userEmail=''
 	var userToken=''
@@ -126,6 +130,7 @@
 		window.location=url
 	}
 	var dev = document.getElementById("idev")
+	var deviceId =dev.value
 		//const deviceId ='CYURD002'
 	var tmr, progs, cmd, prg, set, req, trigtime, devtime, sched, client;
 	var oflags = {}
@@ -145,6 +150,9 @@
 	var prid = document.getElementById("prid")
 	var prarr = document.getElementById("prarr")
 	var dreq = document.getElementById("req")
+	const dday = document.getElementById("day")
+	const dsenrel = document.getElementById("senrel")
+	const ddayprog = document.getElementById("dayprog")
 	var crement = 10;
 
 	window.onfocus = ()=>{
@@ -308,7 +316,7 @@
 		} catch (err) {
 			console.log(err)
 		}
-		var deviceId = dev.value
+		deviceId = dev.value
 			//publish to device
 		prg = deviceId + '/prg'
 		cmd = deviceId + '/cmd'
@@ -439,6 +447,7 @@
 		publish(prg, thecmd4)
 	}
 	</script>
+
 </body>
 
 </html>

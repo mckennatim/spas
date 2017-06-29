@@ -4,6 +4,8 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 23-aapoj-pahoRaw-utility-saveProg
+Uses superagent instead of fetch 
 ### 22-admind-super-search-save
 save need not be part of the store, and should work for any searched device. So took saveDevice out of actions/mqtt and reducers/mqtt. Tried all forms of fetch for posting data to no avail. So am using rxjs style ajax, fuck promises
 

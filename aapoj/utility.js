@@ -1,3 +1,21 @@
+var cfg=env.local
+
+console.log(cfg)
+
+const saveProg=()=>{
+	console.log("in saveProg")
+	const sdata = `{"devid":"${deviceId}","dow":${dday.value},"senrel":${dsenrel.value},"sched":"${ddayprog.value}" }`
+	const pdata= JSON.parse(sdata)
+	var url=cfg.url.api+"/api/dedata/prg"
+	superagent.post(url)
+		.set('Authorization', 'Bearer ' + userToken)
+		.send(pdata)
+		.end(function(e, res) {
+			console.log(!!e ? e.status: 'no error')
+			console.log(res.body)
+		})	
+}
+
 const parseQuery = (query)=>{
 	var obj = {};
 	query.substr(1).split('&')

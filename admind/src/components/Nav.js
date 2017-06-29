@@ -5,7 +5,7 @@ var cfg = getCfg()
 //console.log(cfg)
 //import env from '../../env.json'
 //var cfg= env[process.env.NODE_ENV||'development']
-//console.log(cfg)
+console.log(cfg)
 
 const url = cfg.url.soauth+"/spa/"+cfg.appid+"?apiURL="+encodeURIComponent(cfg.url.api)+"&cbPath="+encodeURIComponent(cfg.cbPath)
 //console.log(url)
