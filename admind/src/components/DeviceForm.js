@@ -7,7 +7,7 @@ const style = {
 }
 pStyle.outer.background='#C4A265'
 
-function DeviceForm(props){
+function DeviceForm(props){//one of the optioons in super component
   //console.log(props)
   const {device, devChanged, saveDev} = props
 
@@ -49,8 +49,8 @@ function DeviceForm(props){
         <input type="text" id="location" name="location" value={device.location} onChange={handleOnChange} size="48"/><br/>
         <label htmlFor="timezone">timezone:</label>
         <input type="text" id="timezone" name="timezone" value={device.timezone} onChange={handleOnChange} size="40"/><br/>
-        <label htmlFor="server">server:</label>
-        <input type="text" id="server" name="server" value={device.server} onChange={handleOnChange} size="54"/><br/>
+        <label htmlFor="server">config:</label>
+        <input type="text" id="server" name="server" value={device.server} onChange={handleOnChange} size="60"/><br/>
         <label htmlFor="specs">specs:</label>
         <input type="text" id="specs" name="specs" value={device.specs} onChange={handleOnChange} size="54"/><br/>
         <label htmlFor="owner">owner:</label>

@@ -4,6 +4,9 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 24 
+tune up lightsoff
+admind/super/devinfo just replaces current device, setup new device has to create a new device 
 ### 23-aapoj-pahoRaw-utility-saveProg
 Uses superagent instead of fetch 
 ### 22-admind-super-search-save

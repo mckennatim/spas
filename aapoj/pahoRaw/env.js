@@ -16,9 +16,19 @@ var env={
 			"mqtt_server": "10.0.1.105",
 			"mqtt_port": 3333,
 			"soauth": "http://10.0.1.105:7080",
-			"api": "http://10.0.1.105:3332",
+			"api": "http://10.0.1.105:3332/api",
 			"spa": "http://10.0.1.105/spWemosIOT/auth/aclient/pahoRaw.html",
 			"base": "http://10.0.1.105/spWemosIOT/auth/aclient/pahoRaw.html"
+		}
+ 	},
+ 	"sb": {
+ 		"appid": "pahoRawSB",			
+ 		"cbPath": "",			
+		"url": {
+			"mqtt_server": "services.sitebuilt.net/iotb/wss",
+			"mqtt_port": 4333,
+			"soauth": "https://services.sitebuilt.net/soauth/",
+			"api": "https://services.sitebuilt.net/iotex/api"
 		}
  	},
  	"http": {
@@ -46,7 +56,7 @@ var env={
  		"cbPath": "#registered",			
 		"url": {
 			"soauth": "https://services.sitebuilt.net/soauth",
-			"api": "https://services.sitebuilt.net/geniot/api2",
+			"api": "https://services.sitebuilt.net/iotex/api",
 			"spa": "http://71.192.254.240/spas/admind/dist/#",
 			"base": "http://71.192.254.240/spas"
 		}

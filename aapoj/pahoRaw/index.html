@@ -4,10 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
-	<title>pahoRaw</title>
+	<title>paho2</title>
 	<script src="../mqttws31.js"></script>
 	<script src="../../node_modules/superagent/superagent.js"></script>
 	<script src="./env.js"></script>
+	<script src="./app.js"></script>
 	<script src="../utility.js"></script>
 	<style type="text/css" media="screen">
 	#temp1,
@@ -82,10 +83,14 @@
 		<br>
 		<br>
 		day<input type="text" id="day" size=1 value=4>sensor<input type="text" id="senrel" size="1" value=1> 
-		<button onclick="saveProg()">save prog</button>
+		<button onclick="recoStates()">record sensor</button>
+		<button onclick="noRecoStates()">stop recording sensor</button>
 		<br>prog<input type="text" id="dayprog" size=50 value="[[12,20,77,75]]">
+		<br>
+		<button onclick="saveProg()">save prog</button>
 	</div>
 	<script>
+	//var cfg=env.sb	
 	var dmessage = document.getElementById("message")
 
 	var mess = "You need a token (and owner's OK) to access a device. Press Register to get a token "
@@ -181,6 +186,7 @@
 	function connect() {
 		client.connect({
 			onSuccess: onConnect,
+			useSSL: true,
 			onFailure: function (message) {
 		    console.log("Connection failed: " + message.errorMessage);
 		    dmessage.innerHTML= "Connection failed: " + message.errorMessage;
@@ -314,7 +320,7 @@
 			console.log(client)
 			client.disconnect()
 		} catch (err) {
-			console.log(err)
+			console.log(err.message)
 		}
 		deviceId = dev.value
 			//publish to device
@@ -386,7 +392,8 @@
 		publish(trigtime, thecmd)
 	}
 	function resetConfig() {
-		var thecmd = '{"devid":"CYURD007", "owner":"tim@sitebuilt.net", "pwd":"geniot", "mqtt_server":"10.0.1.102", "mqtt_port":"1883", "sensor_type":""}'
+		//var thecmd = '{"devid":"CYURD007", "owner":"tim@sitebuilt.net", "pwd":"geniot", "mqtt_server":"10.0.1.102", "mqtt_port":"1883", "sensor_type":""}'
+		var thecmd = '{"devid":"CYURD001", "owner":"tim@sitebuilt.net", "pwd":"geniot", "mqtt_server":"sitebuilt.net", "mqtt_port":"1884", "sensor_type":""}'
 		//var thecmd = '{"devid":"CYURD007", "owner":"tim@sitebuilt.net", "pwd":"freddy", "mqtt_port":"1883"}'//, "mqtt_server":"10.0.1.102", "mqtt_port":"1883", "sensor_type":""}'
 		console.log(thecmd);
 		var cmdd='{"id":2,"req":"flags"}'

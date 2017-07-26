@@ -1,6 +1,33 @@
-var cfg=env.local
+/*-----------on saving sensor dataor not-----------------*/
 
-console.log(cfg)
+const recoStates=()=>{
+	console.log('in recoStates')
+	var url=cfg.url.api+"/dedata/rec"
+	var sdata=deviceId+':'+dsenrel.value
+	var pdata ={id:sdata}
+	superagent.post(url)
+		.set('Authorization', 'Bearer ' + userToken)
+		.send(pdata)
+		.end(function(e, res) {
+			console.log(!!e ? e.status: 'no error')
+			console.log(res.body)
+		})	
+}
+const noRecoStates=()=>{
+	console.log('in noRecoStates')
+	var url=cfg.url.api+"/dedata/rec"
+	var sdata=deviceId+':'+dsenrel.value
+	var pdata ={id:sdata}
+	superagent.delete(url)
+		.set('Authorization', 'Bearer ' + userToken)
+		.send(pdata)
+		.end(function(e, res) {
+			console.log(!!e ? e.status: 'no error')
+			console.log(res.body)
+		})	
+}
+
+/*----------save program for senrel to mysql/geniot/scheds */
 
 const saveProg=()=>{
 	console.log("in saveProg")
@@ -16,6 +43,7 @@ const saveProg=()=>{
 		})	
 }
 
+/*-----------utility functions-------------*/
 const parseQuery = (query)=>{
 	var obj = {};
 	query.substr(1).split('&')
@@ -42,6 +70,6 @@ const get=(path, props)=>{
 
 const getToken=(appid)=>{
 	var t = JSON.parse(localStorage.getItem(appid))
-	console.log(t)
+	//console.log(t)
 	return t
 }

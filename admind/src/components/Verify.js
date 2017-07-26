@@ -13,7 +13,7 @@ class Verify extends React.Component{
     const q = parseQuery(this.props.responsive.page.params.query)
     var dev = JSON.parse(decodeURIComponent(q.raw))
     var addr=dev.address.split(' ').join('+')
-    var url = `http://maps.googleapis.com/maps/api/geocode/json?address=${addr}`
+    var url = `https://maps.googleapis.com/maps/api/geocode/json?address=${addr}`
     console.log(url)
     fetch(url)
       .then((response)=>response.json())

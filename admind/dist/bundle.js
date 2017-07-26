@@ -33632,10 +33632,10 @@ module.exports = {
 		"appid": "tauth_lo",
 		"cbPath": "#registered",
 		"url": {
-			"soauth": "http://10.0.1.105:7080",
-			"api": "http://10.0.1.105:3332/api",
-			"spa": "http://10.0.1.105/spas/admind/dist/#",
-			"base": "http://10.0.1.105/spas"
+			"soauth": "http://10.0.1.102:7080",
+			"api": "http://10.0.1.102:3332/api",
+			"spa": "http://10.0.1.102/spas/admind/dist/#",
+			"base": "http://10.0.1.102/spas"
 		}
 	},
 	"http": {
@@ -33653,7 +33653,7 @@ module.exports = {
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "https://services.sitebuilt.net/soauth",
-			"api": "http://71.192.254.240:3332/api",
+			"api": "https://services.sitebuilt.net/iotex/api",
 			"spa": "http://71.192.254.240/spas/admind/dist/#",
 			"base": "http://71.192.254.240/spas"
 		}
@@ -33663,9 +33663,9 @@ module.exports = {
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "https://services.sitebuilt.net/soauth",
-			"api": "https://services.sitebuilt.net/geniot/api2",
-			"spa": "http://71.192.254.240/spas/admind/dist/#",
-			"base": "http://71.192.254.240/spas"
+			"api": "https://services.sitebuilt.net/iotex/api",
+			"spa": "https://iot.sitebuilt.net/admind/#",
+			"base": "https://iot.sitebuilt.net"
 		}
 	}
 };
@@ -33675,7 +33675,7 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports = {
-	"m": "local"
+	"m": "https"
 };
 
 /***/ }),
@@ -34496,6 +34496,7 @@ var style = _extends({}, _styles.pStyle, { outer: _extends({}, _styles.pStyle.ou
 _styles.pStyle.outer.background = '#C4A265';
 
 function DeviceForm(props) {
+  //one of the optioons in super component
   //console.log(props)
   var device = props.device,
       devChanged = props.devChanged,
@@ -34590,9 +34591,9 @@ function DeviceForm(props) {
       _react2.default.createElement(
         'label',
         { htmlFor: 'server' },
-        'server:'
+        'config:'
       ),
-      _react2.default.createElement('input', { type: 'text', id: 'server', name: 'server', value: device.server, onChange: handleOnChange, size: '54' }),
+      _react2.default.createElement('input', { type: 'text', id: 'server', name: 'server', value: device.server, onChange: handleOnChange, size: '60' }),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
         'label',
@@ -35669,7 +35670,7 @@ var device = {
   address: '12 Parley Vale, Jamaica Plain, MA 02130',
   location: '{"lat":42.315,"lng":-71.111}',
   timezone: 'America/New_York',
-  server: '{"url":"10.0.1.102","mqtt":1883,"express":3332}',
+  server: '{"mqtt_server":"sitebuilt.net","mqtt_port":"1884","sensor_type":"dht"}',
   specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}',
   owner: 'tim@sitebuilt.net',
   apps: '["admin", "user"]'
@@ -35939,7 +35940,7 @@ var Verify = function (_React$Component) {
       var q = (0, _utilities.parseQuery)(this.props.responsive.page.params.query);
       var dev = JSON.parse(decodeURIComponent(q.raw));
       var addr = dev.address.split(' ').join('+');
-      var url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + addr;
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr;
       console.log(url);
       fetch(url).then(function (response) {
         return response.json();

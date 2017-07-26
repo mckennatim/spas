@@ -14,8 +14,6 @@ const style = {
 }
 pStyle.outer.background='#C4A265'
 
-
-
 let device  =      {
       devid: 'CYURD007',
       devpwd: 'geniot',
@@ -24,7 +22,7 @@ let device  =      {
       address: '12 Parley Vale, Jamaica Plain, MA 02130',
       location: '{"lat":42.315,"lng":-71.111}',
       timezone: 'America/New_York',
-      server:'{"url":"10.0.1.102","mqtt":1883,"express":3332}', 
+      server:'{"mqtt_server":"sitebuilt.net","mqtt_port":"1884","sensor_type":"dht"}', 
       specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}',
       owner: 'tim@sitebuilt.net',
       apps: '["admin", "user"]'
