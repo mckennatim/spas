@@ -35827,7 +35827,7 @@ var Super = function (_React$Component) {
     var equery = props.responsive.page.params.query;
     if (equery != "") {
       var newDev = JSON.parse(decodeURIComponent(equery.split("=")[1]));
-      //console.log(newDev)
+      console.log(newDev);
       _this.state = { adev: newDev };
     } else {
       _this.state = { adev: device };

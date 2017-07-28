@@ -36,7 +36,7 @@ class Super extends React.Component{
     var equery = props.responsive.page.params.query
     if(equery!=""){
       var newDev = JSON.parse(decodeURIComponent(equery.split("=")[1]))
-      //console.log(newDev)
+      console.log(newDev)
       this.state = {adev:newDev}
     }else{
       this.state = {adev:device}

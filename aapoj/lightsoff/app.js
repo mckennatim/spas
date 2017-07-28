@@ -9,6 +9,8 @@ const cfg = {
 }
 
 var client = new Paho.MQTT.Client(cfg.mqtt_server, cfg.mqtt_port, cfg.appid+Math.random());
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
 
 var userEmail=''
 var userToken=''
@@ -18,6 +20,8 @@ var dmessage
 window.onload=function(){
 	//console.log('heelldl ')
 	dmessage = document.getElementById("message")
+	dgreentemp = document.getElementById("greentemp")
+	dgreenhumid = document.getElementById("greenhumid")
 
 	var emtok = getToken(cfg.appid)
 
@@ -99,6 +103,12 @@ function onConnect() {
 	publish(`${cfg.devices[1]}/req`,'{"id":1,"req":"progs"}')		
 }
 
+function onConnectionLost(responseObject) {
+		if (responseObject.errorCode !== 0) {
+			console.log('Connection Lost ' + responseObject.errorMessage);
+		}
+}	
+
 const register=()=>{
 	console.log(stripQuery())
 	window.history.pushState("object or string", "Title", "/"+stripQuery() );
@@ -135,3 +145,62 @@ function publish(topic, payload){
 	message.destinationName = topic;
 	client.send(message)
 }	
+
+function onMessageArrived(message) {
+	var topic = message.destinationName
+	var pls = message.payloadString
+	console.log(topic+ pls)
+	var plo = JSON.parse(pls)
+	//console.log(plo)
+	console.log('['+topic+'] '+pls)
+  var sp = topic.split("/")
+  var job = sp[1];
+  var dev =sp[0]
+  switch(job){
+  	case "srstate":
+			if (plo.id==0 && dev==cfg.devices[0]){
+				document.getElementById('outside').innerHTML=plo.darr[0]
+			}
+			if (plo.id==0 && dev==cfg.devices[1]){
+				dgreentemp.innerHTML=plo.darr[0]
+			}
+			if (plo.id==1 && dev==cfg.devices[1]){
+				dgreenhumid.innerHTML=plo.darr[0]
+			}							
+			if (plo.id==2 && dev==cfg.devices[1]){
+				document.getElementById('lstate').innerHTML=plo.darr[0]
+			}
+			break;
+		case "timr":
+					document.getElementById('greenTleft').innerHTML=Math.round(plo.tIMElEFT[2]/60)
+			break;
+		case "sched":
+			break;
+		case "flags":
+			oflags = plo;
+			//console.log(JSON.stringify(oflags))
+			break;
+  }				
+}	
+
+function kill(){
+	thecmd =`{\"id\":2,\"sra\":[0]}`
+	console.log(thecmd);
+	publish(`${cfg.devices[1]}/cmd`, thecmd)
+}
+function turnon(){
+	thecmd =`{\"id\":2,\"sra\":[1]}`
+	console.log(thecmd);
+	publish(`${cfg.devices[1]}/cmd`, thecmd)
+}
+function aprg(){
+	var id =2
+	var str = prarr.value
+	var arr = str.slice(1,-1).split(',').map(function(e){return parseInt(e)})
+	var thecmd =  `{\"id\":${id}`
+	var sl = str.length
+	thecmd+=`,\"pro\":[${str}]}`
+	console.log(str)
+	console.log(thecmd);
+	publish(`${cfg.devices[1]}/prg`, thecmd)
+}
