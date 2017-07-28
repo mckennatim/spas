@@ -9,7 +9,6 @@
     "pr": "node setenv production&& node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js",
     "wpw": "node ../node_modules/webpack/bin/webpack -w --config webpack.config.js",
     "wpp": "node ../node_modules/webpack/bin/webpack -w --config webpack.production.config.js"
-
   },
   "author": "Timothy S. McKenna <mckenna.tim@gmail.com> (http://mckennatim.github.io/mckennatim/)",
   "license": "MIT"

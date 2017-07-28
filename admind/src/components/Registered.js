@@ -19,6 +19,7 @@ function Registered(props){
 
   const query= props.responsive.page.params.query;
   var mobj = parseQuery(query)
+  console.log(mobj)
   
   console.log('RUNNING Registered')
   ls.addToSet(mobj)

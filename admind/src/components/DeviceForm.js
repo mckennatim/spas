@@ -56,7 +56,7 @@ function DeviceForm(props){//one of the optioons in super component
         <label htmlFor="owner">owner:</label>
         <input type="text" id="owner" name="owner" value={device.owner} onChange={handleOnChange} size="20"/><br/>
         <label htmlFor="apps">apps:</label>
-        <input type="text" id="apps" name="apps" value={device.apps} onChange={handleOnChange} size="20"/><br/>
+        <input type="text" id="apps" name="apps" value={device.apps} onChange={handleOnChange} size="70"/><br/>
         <button onClick={handleOnClick}>save</button>
       </div>
     </div>

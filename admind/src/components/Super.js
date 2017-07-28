@@ -22,7 +22,7 @@ let device  =      {
       address: '12 Parley Vale, Jamaica Plain, MA 02130',
       location: '{"lat":42.315,"lng":-71.111}',
       timezone: 'America/New_York',
-      server:'{"mqtt_server":"sitebuilt.net","mqtt_port":"1884","sensor_type":"dht"}', 
+      server:'{"mqtt_server":"sitebuilt.net","mqtt_port":"1884","sensor_type":""}', 
       specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}',
       owner: 'tim@sitebuilt.net',
       apps: '["admin", "user"]'

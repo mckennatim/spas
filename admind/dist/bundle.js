@@ -33619,7 +33619,7 @@ exports.initState = initState;
 
 module.exports = {
 	"portforward": {
-		"appid": "tauth_pf",
+		"appid": "admin",
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "http://71.192.254.240:7080",
@@ -33629,7 +33629,7 @@ module.exports = {
 		}
 	},
 	"local": {
-		"appid": "tauth_lo",
+		"appid": "admin",
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "http://10.0.1.102:7080",
@@ -33639,7 +33639,7 @@ module.exports = {
 		}
 	},
 	"http": {
-		"appid": "tauth_ht",
+		"appid": "admin",
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "http://162.217.250.109:7080",
@@ -33649,7 +33649,7 @@ module.exports = {
 		}
 	},
 	"https": {
-		"appid": "tauth_hs",
+		"appid": "admin",
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "https://services.sitebuilt.net/soauth",
@@ -33658,8 +33658,18 @@ module.exports = {
 			"base": "http://71.192.254.240/spas"
 		}
 	},
+	"soloapi": {
+		"appid": "admin",
+		"cbPath": "#registered",
+		"url": {
+			"soauth": "https://services.sitebuilt.net/soauth",
+			"api": "http://71.192.254.240:3332/api",
+			"spa": "http://71.192.254.240/spas/admind/dist/#",
+			"base": "http://71.192.254.240/spas"
+		}
+	},
 	"production": {
-		"appid": "tauth",
+		"appid": "admin",
 		"cbPath": "#registered",
 		"url": {
 			"soauth": "https://services.sitebuilt.net/soauth",
@@ -34614,7 +34624,7 @@ function DeviceForm(props) {
         { htmlFor: 'apps' },
         'apps:'
       ),
-      _react2.default.createElement('input', { type: 'text', id: 'apps', name: 'apps', value: device.apps, onChange: handleOnChange, size: '20' }),
+      _react2.default.createElement('input', { type: 'text', id: 'apps', name: 'apps', value: device.apps, onChange: handleOnChange, size: '70' }),
       _react2.default.createElement('br', null),
       _react2.default.createElement(
         'button',
@@ -35230,6 +35240,7 @@ function Registered(props) {
 
   var query = props.responsive.page.params.query;
   var mobj = (0, _utilities.parseQuery)(query);
+  console.log(mobj);
 
   console.log('RUNNING Registered');
   _getCfg.ls.addToSet(mobj);
@@ -35670,7 +35681,7 @@ var device = {
   address: '12 Parley Vale, Jamaica Plain, MA 02130',
   location: '{"lat":42.315,"lng":-71.111}',
   timezone: 'America/New_York',
-  server: '{"mqtt_server":"sitebuilt.net","mqtt_port":"1884","sensor_type":"dht"}',
+  server: '{"mqtt_server":"sitebuilt.net","mqtt_port":"1884","sensor_type":""}',
   specs: '{"HAStIMER":28,"notTimerTags":["temp","onoff","hilimit","lolimit"]}',
   owner: 'tim@sitebuilt.net',
   apps: '["admin", "user"]'
