@@ -11,4 +11,4 @@ const getCfg =()=>{
 const ls = storageLocal(cfg.appid)
 ls.deleteToken("tim2@sitebuilt.net")
 
-export{getCfg, ls}
+export{getCfg, ls, cfg}

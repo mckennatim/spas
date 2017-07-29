@@ -26,6 +26,7 @@ const routing = ()=>{
       	changeDevInfo(pro)
       },
 	  	'admin/:devid': (params)=>{
+        console.log('about to switch page')
       	switchPage({name: 'Admin', params: params})
       	//changeDevInfo(pro)
       },

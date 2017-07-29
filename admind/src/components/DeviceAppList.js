@@ -6,16 +6,7 @@ import { getCfg} from '../utilities/getCfg'
 
 const handleNavigate = (dev) => () =>{
 	console.log(dev)
-  if(dev.appid=='super'){
-    router.navigate('/'+ dev.appid +'/'+dev.devid);
-  }else{
-    if(dev.bizid && dev.appid){
-      var url = getCfg().url.base+'/'+dev.bizid+'/'+dev.appid+'/dist/#'
-      console.log(url)
-      window.location=url
-    }    
-  }
-  //window.location="http://10.0.1.102/spas/sbs/user/dist"
+  router.navigate('/'+ dev.appid +'/'+dev.devid);
 }
 
 export default function DevicesList(props){

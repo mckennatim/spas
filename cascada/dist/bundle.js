@@ -11567,7 +11567,7 @@ var Paho = __webpack_require__(159);
 
 
 //var cfg = getCfg()
-console.log(_utilities.cfg);
+//console.log(cfg)
 //import Auth from '../services/AuthService';
 
 var client = new Paho.Client(_utilities.cfg.mqtt_server, _utilities.cfg.mqtt_port, _utilities.cfg.appid + Math.random());

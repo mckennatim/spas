@@ -6,7 +6,7 @@ var Paho = require('paho.mqtt.js')
 import {cfg} from '../utilities'
 
 //var cfg = getCfg()
-console.log(cfg)
+//console.log(cfg)
 //import Auth from '../services/AuthService';
 
 var client = new Paho.Client(cfg.mqtt_server, cfg.mqtt_port, cfg.appid+Math.random());
