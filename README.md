@@ -4,6 +4,8 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 26-admind-addUsers
+but failed to get ligthsoff to restrict publishing for obs  and any (crashes mosca)
 ### 25-admind-admin-search
 ### 24-admind-lightsoff 
 tune up lightsoff and deploy for new api. admind is being prepared to add an admin route in addition to the super route. Then, owner (or super) can add users and roles (and apps) for devices 
