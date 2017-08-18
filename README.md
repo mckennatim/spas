@@ -4,6 +4,7 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 27-paho2-move2app.js
 ### 26-admind-addUsers
 but failed to get ligthsoff to restrict publishing for obs  and any (crashes mosca)
 ### 25-admind-admin-search

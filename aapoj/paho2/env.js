@@ -11,19 +11,21 @@ var env={
  	},
  	"local": {
  		"appid": "pahoRawLo",			
- 		"cbPath": "",			
+ 		"cbPath": "",
+ 		"ssl": false,			
 		"url": {
-			"mqtt_server": "10.0.1.102",
+			"mqtt_server": "10.0.1.100",
 			"mqtt_port": 3333,
-			"soauth": "http://10.0.1.102:7080",
-			"api": "http://10.0.1.102:3332/api",
-			"spa": "http://10.0.1.102/spWemosIOT/auth/aclient/pahoRaw.html",
-			"base": "http://10.0.1.102/spWemosIOT/auth/aclient/pahoRaw.html"
+			"soauth": "http://10.0.1.100:7080",
+			"api": "http://10.0.1.100:3332/api",
+			"spa": "http://10.0.1.100/spas/aapoj/paho2/index.html",
+			"base": "http://10.0.1.100/spas/aapoj/paho2/index.html"
 		}
  	},
  	"sb": {
  		"appid": "pahoRawSB",			
- 		"cbPath": "",			
+ 		"cbPath": "",
+ 		"ssl": true,			
 		"url": {
 			"mqtt_server": "services.sitebuilt.net/iotb/wss",
 			"mqtt_port": 4333,
