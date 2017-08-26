@@ -45,13 +45,7 @@ window.onload=function(){
 		userToken=emtok.token
 	}
 
-	const register=()=>{
-		console.log(stripQuery())
-		window.history.pushState("object or string", "Title", "/"+stripQuery() );
-		const url = cfg.url.soauth+"/spa/"+cfg.appid+"?apiURL="+encodeURIComponent(cfg.url.api)+"&cbPath="+encodeURIComponent(cfg.cbPath)
-		console.log(url)
-		window.location=url
-	}
+
 	dev = document.getElementById("idev")
 	deviceId =dev.value
 		//const deviceId ='CYURD002'
@@ -99,6 +93,13 @@ window.onload=function(){
 //         password: 'freddy'
 //     });
 // }
+function register(){
+	console.log(stripQuery())
+	window.history.pushState("object or string", "Title", "/"+stripQuery() );
+	const url = cfg.url.soauth+"/spa/"+cfg.appid+"?apiURL="+encodeURIComponent(cfg.url.api)+"&cbPath="+encodeURIComponent(cfg.cbPath)
+	console.log(url)
+	window.location=url
+}
 
 /*ws version*/
 function connect() {
@@ -276,8 +277,9 @@ function acmd() {
 	var thecmd = `{\"id\":${id}`
 	var sl = str.length
 	thecmd += `,\"sra\":${str}}`
-	console.log(str)
+	console.log(cmd)
 	console.log(thecmd);
+
 	publish(cmd, thecmd)
 }
 
