@@ -40,13 +40,15 @@ const getToken=(appid)=>{
 const ck4token=()=>{
 	var emtok = getToken(cfg.appid)
 	if(!get('emtok.token',emtok)){
-		mess="You need a token (and owner's OK) to access a device. Press Register to get a token "
+		mess="You need a token (and owner's OK) to control a device. Press Register to get a token "
 		console.log(mess)
 		//dmessage.innerHTML=mess
-		alert(mess)
+		//alert(mess)
+		return {email:'anybody', token:'', auth: false}
 	} else{
-		userEmail=emtok.email
-		userToken=emtok.token
+		return {...emtok, auth:true}
+		// userEmail=emtok.email
+		// userToken=emtok.token
 	}
 }
 
@@ -66,7 +68,9 @@ const ck4query=(cfg)=>{
 			//dmessage.innerHTML=mess
 			localStorage.removeItem(cfg.appid)
 		}
-	}	
+	}
+	//window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
+	
 }
 
 

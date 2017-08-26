@@ -1,6 +1,6 @@
 var React = require('react');
-var Pond = require('../components/Pond');
-var Spot = require('../components/Spot');
+var Pond = require('./Pond');
+var Spot = require('./Spot2');
 
 
 var Spots = React.createClass({
@@ -25,13 +25,12 @@ var Spots = React.createClass({
 		return (
 			<div className="sprklr"> 
 		   	<h1>Cascada</h1>
-		   	
 		   	<p style={{color:'red', fontSize: 18, textShadow: '1px 1px white'}}>{this.checkAuth()}</p>
-		   	{/*
+		   	{/* 			*/}
+
  				<Pond onUserInput={this.comingUserInput} spot={this.props.spots.pond} auth={this.props.auth}/>
  				<Spot onUserInput={this.comingUserInput} spot={this.props.spots.bridge} auth={this.props.auth}/>
 				<Spot onUserInput={this.comingUserInput} spot={this.props.spots.center} auth={this.props.auth}/>
-			*/}
 			</div>
 		);
 	}

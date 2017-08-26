@@ -1,6 +1,6 @@
 const cfg = {
-	"appid": "lightsoff",	
-	"devices": ["CYURD006", "CYURD004"],
+	"appid": "cascada",	
+	"devices": ["CYURD002"],
 	"cbPath": "",			
 	"mqtt_server": "services.sitebuilt.net/iotb/wss",
 	"mqtt_port": 4333,
@@ -12,7 +12,7 @@ var client = new Paho.MQTT.Client(cfg.mqtt_server, cfg.mqtt_port, cfg.appid+Math
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 
-var userEmail=''
+var userEmail='anybody'
 var userToken=''
 var mess
 var dmessage
@@ -98,9 +98,6 @@ function onConnect() {
 	publish(`${cfg.devices[0]}/req`,'{"id":2,"req":"flags"}')
 	publish(`${cfg.devices[0]}/req`,'{"id":0,"req":"srstates"}')
 	publish(`${cfg.devices[0]}/req`,'{"id":1,"req":"progs"}')				
-	publish(`${cfg.devices[1]}/req`,'{"id":2,"req":"flags"}')
-	publish(`${cfg.devices[1]}/req`,'{"id":0,"req":"srstates"}')
-	publish(`${cfg.devices[1]}/req`,'{"id":1,"req":"progs"}')		
 }
 
 function onConnectionLost(responseObject) {
@@ -120,17 +117,11 @@ const register=()=>{
 }
 
 function subscribe() {
-	console.log(client)
 	client.subscribe(`${cfg.devices[0]}/srstate` , {onFailure: subFailure}) 
 	client.subscribe(`${cfg.devices[0]}/devtime` , {onFailure: subFailure}) 
 	client.subscribe(`${cfg.devices[0]}/timr` , {onFailure: subFailure}) 
 	client.subscribe(`${cfg.devices[0]}/sched` , {onFailure: subFailure}) 
 	client.subscribe(`${cfg.devices[0]}/flags` , {onFailure: subFailure}) 
-	client.subscribe(`${cfg.devices[1]}/srstate` , {onFailure: subFailure}) 
-	client.subscribe(`${cfg.devices[1]}/devtime` , {onFailure: subFailure}) 
-	client.subscribe(`${cfg.devices[1]}/sched` , {onFailure: subFailure}) 
-	client.subscribe(`${cfg.devices[1]}/timr` , {onFailure: subFailure}) 
-	client.subscribe(`${cfg.devices[1]}/flags` , {onFailure: subFailure}) 
 }
 
 function subFailure(message){

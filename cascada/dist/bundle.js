@@ -7212,7 +7212,7 @@ var Butt = Radium(_class = function (_React$Component) {
 					but: {
 						cursor: 'pointer',
 						float: 'right',
-						borderRadius: '10',
+						borderRadius: 10,
 						height: 60,
 						width: 60,
 						backgroundColor: 'white',
@@ -7239,7 +7239,7 @@ var Butt = Radium(_class = function (_React$Component) {
 				null,
 				React.createElement(
 					'a',
-					{ ontouchstart: '', onClick: this.handleTimerButClick, onTouchStart: this.handleTouchStartA, onTouchEnd: this.handleTouchEndA },
+					{ onClick: this.handleTimerButClick, onTouchStart: this.handleTouchStartA, onTouchEnd: this.handleTouchEndA },
 					React.createElement(
 						'div',
 						{ key: 'but', style: [this.sbBut().def.but, this.state.abut, this.state.but] },
@@ -7272,6 +7272,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.ck4token = exports.cfg = exports.get = exports.ck4query = exports.stripQuery = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _envmy = __webpack_require__(112);
 
@@ -7320,13 +7322,15 @@ var getToken = function getToken(appid) {
 var ck4token = function ck4token() {
 	var emtok = getToken(cfg.appid);
 	if (!get('emtok.token', emtok)) {
-		mess = "You need a token (and owner's OK) to access a device. Press Register to get a token ";
+		mess = "You need a token (and owner's OK) to control a device. Press Register to get a token ";
 		console.log(mess);
 		//dmessage.innerHTML=mess
-		alert(mess);
+		//alert(mess)
+		return { email: 'anybody', token: '', auth: false };
 	} else {
-		userEmail = emtok.email;
-		userToken = emtok.token;
+		return _extends({}, emtok, { auth: true });
+		// userEmail=emtok.email
+		// userToken=emtok.token
 	}
 };
 
@@ -7347,6 +7351,7 @@ var ck4query = function ck4query(cfg) {
 			localStorage.removeItem(cfg.appid);
 		}
 	}
+	//window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
 };
 
 exports.stripQuery = stripQuery;
@@ -10956,14 +10961,13 @@ exports.isFunction = isFunction;
 "use strict";
 
 
+var _Yard = __webpack_require__(116);
+
 var _utilities = __webpack_require__(65);
 
 var React = __webpack_require__(7);
-var Yard = __webpack_require__(116);
+//var Yard = require('./Yard');
 
-
-(0, _utilities.ck4token)();
-(0, _utilities.ck4query)(_utilities.cfg);
 
 var imgurl = 'img/bkg-water.png';
 var mStyle = {
@@ -10976,11 +10980,15 @@ var mStyle = {
     color: 'yellow'
   },
   div: {
-    height: '900',
+    height: 900,
     background: 'green',
     backgroundImage: "url(" + imgurl + ")"
   }
 };
+
+//var user ={email:'anybody', token:''}
+(0, _utilities.ck4query)(_utilities.cfg);
+var user = (0, _utilities.ck4token)();
 
 var register = function register() {
   console.log('in register');
@@ -11022,29 +11030,10 @@ var Main = function Main() {
     React.createElement(
       'div',
       { className: 'container' },
-      React.createElement(Yard, null)
+      React.createElement(_Yard.Yard2, { user: user })
     )
   );
 };
-
-// var Main = React.createClass({
-//   register: function(){
-//     console.log('clicked register')
-//   },
-//   render: function(){
-//     return (
-//       <div style={mStyle.div}>
-//         <ul>
-//         <li style={mStyle.li}><span style={mStyle.span}> yard </span></li>
-//         <li style={mStyle.li} onClick={this.register()}><span style={mStyle.span}> register </span></li>
-//         </ul>
-//         <div className="container">
-//           <Yard/>
-//         </div>
-//       </div>
-//     )
-//   }
-// });
 
 module.exports = Main;
 
@@ -11219,7 +11208,10 @@ module.exports = {
 		"base": "http://71.192.254.240/spas"
 	},
 	"https": {
-		"appid": "cascada_hs",
+		"appid": "cascada",
+		"devices": [
+			"CYURD002"
+		],
 		"cbPath": "",
 		"mqtt_server": "services.sitebuilt.net/iotb/wss",
 		"mqtt_port": 4333,
@@ -11348,11 +11340,15 @@ module.exports = Pond;
 "use strict";
 
 
+var _reactRadioGroup = __webpack_require__(251);
+
 var React = __webpack_require__(7);
 var Butt = __webpack_require__(64);
-var RadioGroup = __webpack_require__(251);
+//var RadioGroup = require('react-radio-group');
 
-var Spot = new React.createClass({
+
+var Spot2 = new React.createClass({
+
 	waitSlide: false,
 	tval: -1,
 	imfo: {
@@ -11433,7 +11429,6 @@ var Spot = new React.createClass({
 		}
 	},
 	render: function render() {
-
 		return React.createElement(
 			'div',
 			null,
@@ -11446,36 +11441,34 @@ var Spot = new React.createClass({
 				'div',
 				{ className: 'radio-group' },
 				React.createElement(
-					RadioGroup,
+					_reactRadioGroup.RadioGroup,
 					{
 						ref: 'rg',
 						name: this.props.spot.spot,
 						selectedValue: this.radioLand().rbut,
 						onChange: this.handleRadio },
-					function (Radio) {
-						return React.createElement(
-							'div',
+					React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'label',
 							null,
-							React.createElement(
-								'label',
-								null,
-								React.createElement(Radio, { value: 'on' }),
-								'On'
-							),
-							React.createElement(
-								'label',
-								null,
-								React.createElement(Radio, { value: 'timed' }),
-								'Timed'
-							),
-							React.createElement(
-								'label',
-								null,
-								React.createElement(Radio, { value: 'off' }),
-								'Off'
-							)
-						);
-					}
+							React.createElement(_reactRadioGroup.Radio, { value: 'on' }),
+							'On'
+						),
+						React.createElement(
+							'label',
+							null,
+							React.createElement(_reactRadioGroup.Radio, { value: 'timed' }),
+							'Timed'
+						),
+						React.createElement(
+							'label',
+							null,
+							React.createElement(_reactRadioGroup.Radio, { value: 'off' }),
+							'Off'
+						)
+					)
 				)
 			),
 			React.createElement(
@@ -11497,7 +11490,7 @@ var Spot = new React.createClass({
 	}
 });
 
-module.exports = Spot;
+module.exports = Spot2;
 
 /***/ }),
 /* 115 */
@@ -11543,7 +11536,10 @@ var Spots = React.createClass({
 				'p',
 				{ style: { color: 'red', fontSize: 18, textShadow: '1px 1px white' } },
 				this.checkAuth()
-			)
+			),
+			React.createElement(Pond, { onUserInput: this.comingUserInput, spot: this.props.spots.pond, auth: this.props.auth }),
+			React.createElement(Spot, { onUserInput: this.comingUserInput, spot: this.props.spots.bridge, auth: this.props.auth }),
+			React.createElement(Spot, { onUserInput: this.comingUserInput, spot: this.props.spots.center, auth: this.props.auth })
 		);
 	}
 });
@@ -11557,318 +11553,229 @@ module.exports = Spots;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Yard2 = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _utilities = __webpack_require__(65);
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var React = __webpack_require__(7);
-//var Navigation = require('react-router').Navigation;
 var Spots = __webpack_require__(115);
-//var mqtt = require('mqtt')
 var Paho = __webpack_require__(159);
 
+var Yard2 = function (_React$Component) {
+	_inherits(Yard2, _React$Component);
 
-//var cfg = getCfg()
-//console.log(cfg)
-//import Auth from '../services/AuthService';
+	function Yard2(props) {
+		_classCallCheck(this, Yard2);
 
-var client = new Paho.Client(_utilities.cfg.mqtt_server, _utilities.cfg.mqtt_port, _utilities.cfg.appid + Math.random());
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
+		var _this = _possibleConstructorReturn(this, (Yard2.__proto__ || Object.getPrototypeOf(Yard2)).call(this, props));
 
-var url = '73.249.62.27';
-//var url = '10.0.1.155';
-var port = '8088';
-
-var socket, sse;
-var deviceId = 'CYURD002';
-var timr = deviceId + '/timr';
-var progs = deviceId + '/progs';
-var prg = deviceId + '/prg';
-var req = deviceId + '/req';
-var devt = deviceId + '/time';
-var devtim = deviceId + '/devtime';
-var sched = deviceId + '/sched';
-
-var Yard = React.createClass({
-	displayName: 'Yard',
-
-	//mixins: [Navigation],
-	getInitialState: function getInitialState() {
-		return { spots: { "pond": { "spot": "pond", "tleft": -99, "state": "off" }, "center": { "spot": "center", "tleft": -99, "state": "off" }, "bridge": { "spot": "bridge", "tleft": -99, "state": "off" } }, authorized: false };
-	},
-	handleUserInput: function handleUserInput(timerSet) {
-		console.log('handling user input ');
-		if (this.state.authorized) {
+		_this.handleUserInput = function (timerSet) {
+			console.log('handleing user input');
 			console.log(timerSet);
-			this.sendProg(timerSet);
-		} else {
-			console.log('yo not authorized');
-		}
-	},
-
-	calcStartNow: function calcStartNow(til) {
-		var da = new Date();
-		var sh = da.getHours();
-		var sm = da.getMinutes();
-		var m0 = til * 1 + sm * 1;
-		var m = m0 % 60;
-		var mm = (90 + 16) % 60;
-		var h = (m0 - m) / 60 + sh;
-		var ret = [[sh, sm, 1], [h, m, 0]];
-		return ret;
-	},
-
-	sendProg: function sendProg(timerset) {
-		var sten, id, ev, numdata, pro;
-		if (timerset.til > 0) {
-			sten = this.calcStartNow(timerset.til);
-			ev = 2;
-		} else {
-			var onoff = 0;
-			if (timerset.state == "on") {
-				onoff = 1;
+			if (_this.state.authorized) {
+				console.log(timerSet);
+				_this.sendProg(timerSet);
+			} else {
+				console.log('yo not authorized');
 			}
-			sten = [[0, 0, onoff]];
-			ev = 1;
-		}
-		pro = JSON.stringify(sten);
-		switch (timerset.spot) {
-			case "pond":
-				id = 4;break;
-			case "bridge":
-				id = 3;break;
-			case "center":
-				id = 2;break;
-		}
-		numdata = 1;
-		var thecmd = '{"id":' + id + ',"ev":' + ev + ',"numdata":' + numdata + ',"pro":' + pro + '}';
-		console.log(thecmd);
-		this.client.publish(prg, thecmd);
-	},
+		};
 
-	convertTleft: function convertTleft(tleft) {
-		var ans = Math.floor(tleft / 60) + ":" + tleft % 60;
-		return ans;
-	},
+		_this.sendProg = function (timerset) {
+			var prg = _utilities.cfg.devices[0] + '/prg';
+			var sten, id, ev, numdata, pro;
+			if (timerset.til > 0) {
+				sten = _this.calcStartNow(timerset.til);
+				ev = 2;
+			} else {
+				var onoff = 0;
+				if (timerset.state == "on") {
+					onoff = 1;
+				}
+				sten = [[0, 0, onoff]];
+				ev = 1;
+			}
+			pro = JSON.stringify(sten);
+			switch (timerset.spot) {
+				case "pond":
+					id = 4;break;
+				case "bridge":
+					id = 3;break;
+				case "center":
+					id = 2;break;
+			}
+			numdata = 1;
+			var thecmd = '{"id":' + id + ',"pro":' + pro + '}';
+			console.log(thecmd);
+			_this.publish(prg, thecmd);
+		};
 
-	componentDidMount: function componentDidMount() {
-		console.log('yard mounted');
-		//Auth.esbuenToken(this.tokenCallback);
-		var that = this;
-		client.connect();
-		//this.client = mqtt.connect('wss://services.sitebuilt.net/geniot/ws:3333');
-		// this.client = new Paho.MQTT.Client(cfg.mqtt_server, cfg.mqtt_port, cfg.appid+Math.random());
-		// this.client.onConnectionLost = onConnectionLost;
-		// this.client.onMessageArrived = onMessageArrived;
-		// this.client.connect()
-		// this.client.on('connect', function(){
-		// 	console.log('maybe connected')
-		// 	this.client.subscribe(devtim)
-		// 	this.client.subscribe(timr) 
-		// 	this.client.subscribe(progs)
-		// 	this.client.on('message', function(topic, payload) {
-		// 		var pls = payload.toString()
-		// 		var plo = JSON.parse(pls)
-		// 		//console.log(plo)
-		// 		//console.log('['+topic+'] '+payload.toString())
-		//     var sp = topic.split("/")
-		//     var job = sp[1];	
-		//     var newstate = Object.assign({}, this.state)
-		//     switch(job){
-		// 			case "timr":
-		// 				var tleft4 = plo.tIMElEFT[4]
-		// 				if(tleft4>0){
-		// 					newstate.spots.pond.tleft = this.convertTleft(tleft4);
-		// 					newstate.spots.pond.state = "timer"
-		// 				}else{
-		// 					newstate.spots.pond.tleft = -1;
-		// 					newstate.spots.pond.state = "off"
-		// 				}
-		// 				var tleft2 = plo.tIMElEFT[3]
-		// 				if(tleft2>0){
-		// 					newstate.spots.bridge.tleft = this.convertTleft(tleft2);
-		// 					newstate.spots.bridge.state = "timer"
-		// 				}else{
-		// 					newstate.spots.bridge.tleft = -1;
-		// 					if((plo.ISrELAYoN & 8) == 8){
-		// 						newstate.spots.bridge.state = "on"
-		// 					}else {
-		// 						newstate.spots.bridge.state = "off"
-		// 					}
-		// 				}
-		// 				var tleft3 = plo.tIMElEFT[2]
-		// 				if(tleft3>0){
-		// 					newstate.spots.center.tleft = this.convertTleft(tleft3);
-		// 					newstate.spots.center.state = "timer"
-		// 				}else{
-		// 					newstate.spots.center.tleft = -1;
-		// 					if((plo.ISrELAYoN & 4) == 4){
-		// 						newstate.spots.center.state = "on"
-		// 					}else {
-		// 						newstate.spots.center.state = "off"
-		// 					}
-		// 				}
-		// 				break;
-		//     };			
-		// 		this.setState({spots: newstate.spots})
-		// 		//console.log(this.state)
-		// 	}.bind(this));	
-		// 	this.client.publish('presence', 'Web Client is alive.. Test Ping! ');
-		// 	this.client.publish(req, `{"id":3,"req":"timr"}`)
-		// }.bind(this));		
-	},
+		_this.calcStartNow = function (til) {
+			var da = new Date();
+			var sh = da.getHours();
+			var sm = da.getMinutes();
+			var m0 = til * 1 + sm * 1;
+			var m = m0 % 60;
+			var mm = (90 + 16) % 60;
+			var h = (m0 - m) / 60 + sh;
+			var ret = [[sh, sm, 1], [h, m, 0]];
+			return ret;
+		};
 
-	tokenCallback: function tokenCallback(tf) {
-		this.setState({ authorized: tf });
-		console.log(tf);
-	},
+		_this.connect = function () {
+			//check ls or use default
+			_this.client.connect({
+				onSuccess: _this.onConnect,
+				onFailure: function onFailure(message) {
+					console.log("Connection failed: " + message.errorMessage);
+					//dmessage.innerHTML= "Connection failed: " + message.errorMessage;
+				},
+				useSSL: true,
+				userName: _this.props.user.email,
+				password: _this.props.user.token
+			});
+		};
 
-	componentWillUnmount: function componentWillUnmount() {
-		console.log('yard unmountd');
-		this.client.publish('presence', 'Help, wants to close! ');
-		this.client.end();
-	},
+		_this.onConnect = function () {
+			var cmess = 'Connected to ' + _utilities.cfg.mqtt_server + ' on port ' + _utilities.cfg.mqtt_port + ' ';
+			console.log(cmess);
+			_this.publish('presence', 'Web Client is alive.. Test Ping! ');
+			_this.subscribe();
+			var topic = _utilities.cfg.devices[0] + '/req';
+			_this.publish(topic, '{"id":3,"req":"timr"}');
+		};
 
-	render: function render() {
-		return React.createElement(
-			'div',
-			null,
-			React.createElement(Spots, { spots: this.state.spots, relayUserInput: this.handleUserInput, auth: this.state.authorized })
-		);
+		_this.publish = function (topic, payload) {
+			var message = new Paho.Message(payload);
+			message.destinationName = topic;
+			_this.client.send(message);
+		};
+
+		_this.subscribe = function () {
+			console.log(_utilities.cfg.devices[0]);
+			//client.subscribe('CYURD002/srstate' , {onFailure: subFailure}) 
+			_this.client.subscribe(_utilities.cfg.devices[0] + '/devtime', { onFailure: _this.subFailure });
+			_this.client.subscribe(_utilities.cfg.devices[0] + '/timr', { onFailure: _this.subFailure });
+			_this.client.subscribe(_utilities.cfg.devices[0] + '/sched', { onFailure: _this.subFailure });
+			_this.client.subscribe(_utilities.cfg.devices[0] + '/flags', { onFailure: _this.subFailure });
+		};
+
+		_this.subFailure = function (message) {
+			console.log('subscribe failure', message);
+		};
+
+		_this.onMessageArrived = function (message) {
+			var topic = message.destinationName;
+			var pls = message.payloadString;
+			//console.log(topic+ pls)
+			var plo = JSON.parse(pls);
+			//console.log(plo)
+			console.log('[' + topic + '] ' + pls);
+			var sp = topic.split("/");
+			var job = sp[1];
+			var dev = sp[0];
+			var newstate = Object.assign({}, _this.state);
+			switch (job) {
+				case "timr":
+					var tleft4 = plo.tIMElEFT[4];
+					if (tleft4 > 0) {
+						newstate.spots.pond.tleft = _this.convertTleft(tleft4);
+						newstate.spots.pond.state = "timer";
+					} else {
+						newstate.spots.pond.tleft = -1;
+						newstate.spots.pond.state = "off";
+					}
+					var tleft2 = plo.tIMElEFT[3];
+					if (tleft2 > 0) {
+						newstate.spots.bridge.tleft = _this.convertTleft(tleft2);
+						newstate.spots.bridge.state = "timer";
+					} else {
+						newstate.spots.bridge.tleft = -1;
+						if ((plo.ISrELAYoN & 8) == 8) {
+							newstate.spots.bridge.state = "on";
+						} else {
+							newstate.spots.bridge.state = "off";
+						}
+					}
+					var tleft3 = plo.tIMElEFT[2];
+					if (tleft3 > 0) {
+						newstate.spots.center.tleft = _this.convertTleft(tleft3);
+						newstate.spots.center.state = "timer";
+					} else {
+						newstate.spots.center.tleft = -1;
+						if ((plo.ISrELAYoN & 4) == 4) {
+							newstate.spots.center.state = "on";
+						} else {
+							newstate.spots.center.state = "off";
+						}
+					}
+					break;
+			};
+			_this.setState({ spots: newstate.spots });
+		};
+
+		_this.convertTleft = function (tleft) {
+			var ans = Math.floor(tleft / 60) + ":" + tleft % 60;
+			return ans;
+		};
+
+		_this.onConnectionLost = function (responseObject) {
+			if (responseObject.errorCode !== 0) {
+				console.log('Connection Lost ' + responseObject.errorMessage);
+			}
+		};
+
+		_this.componentDidMount = function () {
+			console.log('yard mounted');
+			_this.connect();
+		};
+
+		console.log(props.user);
+		_this.state = { spots: { "pond": { "spot": "pond", "tleft": -99, "state": "off" }, "center": { "spot": "center", "tleft": -99, "state": "off" }, "bridge": { "spot": "bridge", "tleft": -99, "state": "off" } }, authorized: props.user.auth };
+		_this.client = new Paho.Client(_utilities.cfg.mqtt_server, _utilities.cfg.mqtt_port, _utilities.cfg.appid + Math.random());
+		_this.client.onConnectionLost = _this.onConnectionLost;
+		_this.client.onMessageArrived = _this.onMessageArrived;
+		window.onfocus = function () {
+			console.log('focused');
+			_this.connect();
+		};
+
+		window.onblur = function () {
+			console.log('unfocused');
+			try {
+				_this.client.disconnect();
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		return _this;
 	}
-});
 
-module.exports = Yard;
+	_createClass(Yard2, [{
+		key: 'render',
+		value: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(Spots, { spots: this.state.spots, relayUserInput: this.handleUserInput, auth: this.state.authorized })
+			);
+		}
+	}]);
 
-function connect() {
-	client.connect({
-		onSuccess: onConnect,
-		onFailure: function onFailure(message) {
-			console.log("Connection failed: " + message.errorMessage);
-			dmessage.innerHTML = "Connection failed: " + message.errorMessage;
-		},
-		useSSL: true,
-		userName: userEmail,
-		password: userToken
-	});
-}
+	return Yard2;
+}(React.Component);
 
-function onConnect() {
-	var cmess = 'Connected to ' + _utilities.cfg.mqtt_server + ' on port ' + _utilities.cfg.mqtt_port + ' ';
-	console.log(cmess);
-	// dmessage.innerHTML=cmess;
-	// subscribe()
-	// publish('presence', 'Web Client is alive.. Test Ping! ');
-	// publish(`${cfg.devices[0]}/req`,'{"id":2,"req":"flags"}')
-	// publish(`${cfg.devices[0]}/req`,'{"id":0,"req":"srstates"}')
-	// publish(`${cfg.devices[0]}/req`,'{"id":1,"req":"progs"}')				
-	// publish(`${cfg.devices[1]}/req`,'{"id":2,"req":"flags"}')
-	// publish(`${cfg.devices[1]}/req`,'{"id":0,"req":"srstates"}')
-	// publish(`${cfg.devices[1]}/req`,'{"id":1,"req":"progs"}')		
-}
-
-function onConnectionLost(responseObject) {
-	if (responseObject.errorCode !== 0) {
-		console.log('Connection Lost ' + responseObject.errorMessage);
-	}
-}
-
-var register = function register() {
-	console.log(stripQuery());
-	window.history.pushState("object or string", "Title", "/" + stripQuery());
-	console.log(_utilities.cfg.soauth);
-	console.log(encodeURIComponent(_utilities.cfg.soauth));
-	var url = _utilities.cfg.soauth + "/spa/" + _utilities.cfg.appid + "?apiURL=" + encodeURIComponent(_utilities.cfg.api) + "&cbPath=" + encodeURIComponent(_utilities.cfg.cbPath);
-	console.log(url);
-	window.location = url;
-};
-
-function subscribe() {
-	client.subscribe(_utilities.cfg.devices[0] + '/srstate', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[0] + '/devtime', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[0] + '/timr', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[0] + '/sched', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[0] + '/flags', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[1] + '/srstate', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[1] + '/devtime', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[1] + '/sched', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[1] + '/timr', { onFailure: subFailure });
-	client.subscribe(_utilities.cfg.devices[1] + '/flags', { onFailure: subFailure });
-}
-
-function subFailure(message) {
-	console.log(message);
-}
-
-function subSuccess(message) {
-	console.log(message.grantedQos[0]);
-}
-
-function publish(topic, payload) {
-	message = new Paho.MQTT.Message(payload);
-	message.destinationName = topic;
-	client.send(message);
-}
-
-function onMessageArrived(message) {
-	var topic = message.destinationName;
-	var pls = message.payloadString;
-	console.log(topic + pls);
-	var plo = JSON.parse(pls);
-	//console.log(plo)
-	console.log('[' + topic + '] ' + pls);
-	var sp = topic.split("/");
-	var job = sp[1];
-	var dev = sp[0];
-	// switch(job){
-	// 	case "srstate":
-	// 	if (plo.id==0 && dev==cfg.devices[0]){
-	// 		document.getElementById('outside').innerHTML=plo.darr[0]
-	// 	}
-	// 	if (plo.id==0 && dev==cfg.devices[1]){
-	// 		dgreentemp.innerHTML=plo.darr[0]
-	// 	}
-	// 	if (plo.id==1 && dev==cfg.devices[1]){
-	// 		dgreenhumid.innerHTML=plo.darr[0]
-	// 	}							
-	// 	if (plo.id==2 && dev==cfg.devices[1]){
-	// 		document.getElementById('lstate').innerHTML=plo.darr[0]
-	// 	}
-	// 	break;
-	// case "timr":
-	// 			document.getElementById('greenTleft').innerHTML=Math.round(plo.tIMElEFT[2]/60)
-	// 	break;
-	// case "sched":
-	// 	break;
-	// case "flags":
-	// 	oflags = plo;
-	// 	//console.log(JSON.stringify(oflags))
-	// 	break;
-	// }				
-}
-
-function kill() {
-	thecmd = '{"id":2,"sra":[0]}';
-	console.log(thecmd);
-	publish(_utilities.cfg.devices[1] + '/cmd', thecmd);
-}
-function turnon() {
-	thecmd = '{"id":2,"sra":[1]}';
-	console.log(thecmd);
-	publish(_utilities.cfg.devices[1] + '/cmd', thecmd);
-}
-function aprg() {
-	var id = 2;
-	var str = prarr.value;
-	var arr = str.slice(1, -1).split(',').map(function (e) {
-		return parseInt(e);
-	});
-	var thecmd = '{"id":' + id;
-	var sl = str.length;
-	thecmd += ',"pro":[' + str + ']}';
-	console.log(str);
-	console.log(thecmd);
-	publish(_utilities.cfg.devices[1] + '/prg', thecmd);
-}
+exports.Yard2 = Yard2;
 
 /***/ }),
 /* 117 */
@@ -30745,17 +30652,6 @@ var _Observable = __webpack_require__(110);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Main = __webpack_require__(108);
-
-window.onblur = function () {
-	console.log('in Main disconnect');
-	//disconnect()
-};
-
-window.onfocus = function () {
-	console.log('window on focus');
-	//console.log(window.location.hash)
-	//reconnect(window.location.hash)
-};
 
 var container = document.getElementById('app');
 _reactDom2.default.render(_react2.default.createElement(Main, null), container);

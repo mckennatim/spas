@@ -1,9 +1,11 @@
 var React = require('react');
 var Butt = require('../components/Butt');
-var RadioGroup = require('react-radio-group');
+//var RadioGroup = require('react-radio-group');
+import {RadioGroup, Radio} from 'react-radio-group'
+
+var Spot2 = new React.createClass({
 
 
-var Spot = new React.createClass({
 	waitSlide: false,
 	tval: -1,
 	imfo: {
@@ -84,35 +86,34 @@ var Spot = new React.createClass({
 		}		
 	},
 	render: function() {
-
 		return (
 			<div> 
 				<h4 style={{color: "yellow"}}>{this.props.spot.spot}</h4>
 				<div className="radio-group">
-			        <RadioGroup
-			        	ref="rg"
-			          	name={this.props.spot.spot}
-			          	selectedValue={this.radioLand().rbut}
-			          	onChange={this.handleRadio}>
-								{Radio => (
-								<div>
-								  <label><Radio value="on" />On</label>
-								  <label><Radio value="timed" />Timed</label>
-								  <label><Radio value="off" />Off</label>
-								</div>
-								)}
-			        </RadioGroup>
-		        </div>
-		        <Butt imginfo={this.radioLand().ima} imfo={this.imfo} onButClick={this.handleTimerButClick}>{this.tval}</Butt>
+	        <RadioGroup
+	        	ref="rg"
+          	name={this.props.spot.spot}
+          	selectedValue={this.radioLand().rbut}
+          	onChange={this.handleRadio}>
+						
+						<div>
+						  <label><Radio value="on" />On</label>
+						  <label><Radio value="timed" />Timed</label>
+						  <label><Radio value="off" />Off</label>
+						</div>
+
+	        </RadioGroup>
+		    </div>
+		    <Butt imginfo={this.radioLand().ima} imfo={this.imfo} onButClick={this.handleTimerButClick}>{this.tval}</Butt>
 				<br/>
 				<div>
 					<br/><br/><br/>
 					<input  type="range" min="1" max="120" step="1" value={this.state.value} onChange={this.handleRangeChange}></input>
 				</div>
-				<br/>
+				<br/>				
 			</div>
-		);
-	}
+		)
+	}	
 })
 
-module.exports = Spot;
+module.exports = Spot2;

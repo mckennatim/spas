@@ -4,6 +4,10 @@ A shared node_moodules for SPA's. Requires webpack 2 due to the style of the con
 http://www.eclipse.org/paho/files/jsdoc/index.html
 https://github.com/eclipse/paho.mqtt.javascript
 ## tags
+### 28=cascada-yard2
+yard2 puts the Paho client, window.onfocus and window.onblur in the class constructor. All the supporting functions are defined as class methods. So now arriving messages can be set to state. and passesd to spots
+
+
 ### 27-paho2-move2app.js
 ### 26-admind-addUsers
 but failed to get ligthsoff to restrict publishing for obs  and any (crashes mosca)

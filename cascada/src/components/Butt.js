@@ -60,7 +60,7 @@ class Butt extends React.Component{
 				but: {
 					cursor: 'pointer',
 					float: 'right',
-					borderRadius: '10',
+					borderRadius: 10,
 					height: 60,
 					width: 60,
 					backgroundColor: 'white',
@@ -84,7 +84,7 @@ class Butt extends React.Component{
 		return (
 
 			<div>
-			<a ontouchstart="" onClick={this.handleTimerButClick} onTouchStart={this.handleTouchStartA} onTouchEnd={this.handleTouchEndA}>
+			<a onClick={this.handleTimerButClick} onTouchStart={this.handleTouchStartA} onTouchEnd={this.handleTouchEndA}>
 		      	<div key="but" style={[
 		      		this.sbBut().def.but,
 		      		this.state.abut,

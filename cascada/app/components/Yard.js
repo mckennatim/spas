@@ -2,6 +2,7 @@ var React = require('react');
 var Navigation = require('react-router').Navigation;
 var Spots = require('../components/Spots');
 var mqtt = require('mqtt')
+
 import Auth from '../services/AuthService';
 
 var url = '73.249.62.27';
