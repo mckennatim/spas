@@ -65,10 +65,12 @@ var Pond = new React.createClass({
 		}
 	},
 	render: function() {
-
+		//console.log(this.props.spot.pro)
 		return (
 			<div> 
-				<h4 style={{color: "yellow"}}>pond</h4>
+				<h4 style={{color: "yellow"}}>pond 
+				<span style={{fontSize:"50%", color:"black"}}>{JSON.stringify(this.props.spot.pro)}</span></h4>
+
 				<Butt imginfo={this.turnwhat().imginfo} imfo={this.imfo} onButClick={this.handleClick} > {this.turnwhat().message} </Butt>
 				<br/>
 				<input  type="range" min="1" max="120" step="1" value={this.state.value} onChange={this.handleChange}></input><br/>

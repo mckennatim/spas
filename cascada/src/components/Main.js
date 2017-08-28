@@ -33,6 +33,8 @@ const register = ()=>{
   console.log(encodeURIComponent(cfg.soauth))
   const url = cfg.soauth+"/spa/"+cfg.appid+"?apiURL="+encodeURIComponent(cfg.api)+"&cbPath="+encodeURIComponent(cfg.cbPath)
   console.log(url)
+  var amess= 'The owner of the device may add you as a user. If they do, when you click to authenticate, you will be able to control these devices'
+  alert(amess)
   window.location=url  
 }
 

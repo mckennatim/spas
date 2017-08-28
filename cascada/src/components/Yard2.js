@@ -9,8 +9,8 @@ import {cfg} from '../utilities'
 class Yard2 extends React.Component{
   constructor(props) {
     super(props);
-    console.log(props.user)
-    this.state={spots: {"pond": {"spot": "pond", "tleft": -99, "state": "off"}, "center": {"spot": "center", "tleft": -99, "state": "off"}, "bridge": {"spot": "bridge", "tleft": -99, "state": "off"}}, authorized:props.user.auth};
+    console.log(props.user.email)
+    this.state={spots: {"pond": {"spot": "pond", "tleft": -99, "state": "off", "pro":[]}, "center": {"spot": "center", "tleft": -99, "state": "off"}, "bridge": {"spot": "bridge", "tleft": -99, "state": "off"}}, authorized:props.user.auth};
 		this.client = new Paho.Client(cfg.mqtt_server, cfg.mqtt_port, cfg.appid+Math.random());
 		this.client.onConnectionLost =this.onConnectionLost;
 		this.client.onMessageArrived = this.onMessageArrived;    
@@ -93,8 +93,13 @@ class Yard2 extends React.Component{
 		console.log(cmess);	
 		this.publish('presence', 'Web Client is alive.. Test Ping! ');
 		this.subscribe()
-		var topic = `${cfg.devices[0]}/req`
-		this.publish(topic, '{"id":3,"req":"timr"}')
+		var req = `${cfg.devices[0]}/req`
+		var user = `${cfg.devices[0]}/user`
+		var umess= `{"user":"${this.props.user.email}","appId":"${cfg.appid}"}`
+		console.log(user, umess)
+		this.publish(user, umess)
+		this.publish(req, '{"id":3,"req":"timr"}')
+		this.publish(req, '{"id":1,"req":"progs"}')
 	}
 
 	publish=(topic, payload)=>{
@@ -104,12 +109,11 @@ class Yard2 extends React.Component{
 	}	
 
 	subscribe=()=> {
-		console.log(cfg.devices[0])
-		//client.subscribe('CYURD002/srstate' , {onFailure: subFailure}) 
 		this.client.subscribe(`${cfg.devices[0]}/devtime` , {onFailure: this.subFailure}) 
 		this.client.subscribe(`${cfg.devices[0]}/timr` , {onFailure: this.subFailure}) 
 		this.client.subscribe(`${cfg.devices[0]}/sched` , {onFailure: this.subFailure}) 
 		this.client.subscribe(`${cfg.devices[0]}/flags` , {onFailure: this.subFailure}) 
+		this.client.subscribe(`${cfg.devices[0]}/userInf` , {onFailure: this.subFailure}) 
 	}
 
 	subFailure=(message)=>{
@@ -162,8 +166,17 @@ class Yard2 extends React.Component{
 					}
 				}
 				break;
+			case "sched":
+				//console.log(plo)
+				if (plo.id==4){
+					newstate.spots.pond.pro = plo.pro
+				}
+				break	
+			case "userInf":
+				newstate.authorized = plo.canPublish
+				break					
     };			
-		this.setState({spots: newstate.spots})	
+		this.setState(newstate)	
 	}
 
 	convertTleft= (tleft)=>{
@@ -185,7 +198,7 @@ class Yard2 extends React.Component{
 	render(){
 	  return(  
 	  	<div>
-				<Spots spots={this.state.spots} relayUserInput={this.handleUserInput} auth={this.state.authorized}/>	  		
+				<Spots spots={this.state.spots} relayUserInput={this.handleUserInput} auth={this.state.authorized} user={this.props.user.email}/>	  		
 	  	</div>
 	  )
 	}

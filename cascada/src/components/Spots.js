@@ -24,7 +24,8 @@ var Spots = React.createClass({
 	render: function() {
 		return (
 			<div className="sprklr"> 
-		   	<h1>Cascada</h1>
+		   	<h1>Cascada </h1>
+		   	{this.props.user}
 		   	<p style={{color:'red', fontSize: 18, textShadow: '1px 1px white'}}>{this.checkAuth()}</p>
 		   	{/* 			*/}
 

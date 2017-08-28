@@ -10998,6 +10998,8 @@ var register = function register() {
   console.log(encodeURIComponent(_utilities.cfg.soauth));
   var url = _utilities.cfg.soauth + "/spa/" + _utilities.cfg.appid + "?apiURL=" + encodeURIComponent(_utilities.cfg.api) + "&cbPath=" + encodeURIComponent(_utilities.cfg.cbPath);
   console.log(url);
+  var amess = 'The owner of the device may add you as a user. If they do, when you click to authenticate, you will be able to control these devices';
+  alert(amess);
   window.location = url;
 };
 
@@ -11307,14 +11309,19 @@ var Pond = new React.createClass({
 		}
 	},
 	render: function render() {
-
+		//console.log(this.props.spot.pro)
 		return React.createElement(
 			'div',
 			null,
 			React.createElement(
 				'h4',
 				{ style: { color: "yellow" } },
-				'pond'
+				'pond',
+				React.createElement(
+					'span',
+					{ style: { fontSize: "50%", color: "black" } },
+					JSON.stringify(this.props.spot.pro)
+				)
 			),
 			React.createElement(
 				Butt,
@@ -11530,8 +11537,9 @@ var Spots = React.createClass({
 			React.createElement(
 				'h1',
 				null,
-				'Cascada'
+				'Cascada '
 			),
+			this.props.user,
 			React.createElement(
 				'p',
 				{ style: { color: 'red', fontSize: 18, textShadow: '1px 1px white' } },
@@ -11651,8 +11659,13 @@ var Yard2 = function (_React$Component) {
 			console.log(cmess);
 			_this.publish('presence', 'Web Client is alive.. Test Ping! ');
 			_this.subscribe();
-			var topic = _utilities.cfg.devices[0] + '/req';
-			_this.publish(topic, '{"id":3,"req":"timr"}');
+			var req = _utilities.cfg.devices[0] + '/req';
+			var user = _utilities.cfg.devices[0] + '/user';
+			var umess = '{"user":"' + _this.props.user.email + '","appId":"' + _utilities.cfg.appid + '"}';
+			console.log(user, umess);
+			_this.publish(user, umess);
+			_this.publish(req, '{"id":3,"req":"timr"}');
+			_this.publish(req, '{"id":1,"req":"progs"}');
 		};
 
 		_this.publish = function (topic, payload) {
@@ -11662,12 +11675,11 @@ var Yard2 = function (_React$Component) {
 		};
 
 		_this.subscribe = function () {
-			console.log(_utilities.cfg.devices[0]);
-			//client.subscribe('CYURD002/srstate' , {onFailure: subFailure}) 
 			_this.client.subscribe(_utilities.cfg.devices[0] + '/devtime', { onFailure: _this.subFailure });
 			_this.client.subscribe(_utilities.cfg.devices[0] + '/timr', { onFailure: _this.subFailure });
 			_this.client.subscribe(_utilities.cfg.devices[0] + '/sched', { onFailure: _this.subFailure });
 			_this.client.subscribe(_utilities.cfg.devices[0] + '/flags', { onFailure: _this.subFailure });
+			_this.client.subscribe(_utilities.cfg.devices[0] + '/userInf', { onFailure: _this.subFailure });
 		};
 
 		_this.subFailure = function (message) {
@@ -11720,8 +11732,17 @@ var Yard2 = function (_React$Component) {
 						}
 					}
 					break;
+				case "sched":
+					//console.log(plo)
+					if (plo.id == 4) {
+						newstate.spots.pond.pro = plo.pro;
+					}
+					break;
+				case "userInf":
+					newstate.authorized = plo.canPublish;
+					break;
 			};
-			_this.setState({ spots: newstate.spots });
+			_this.setState(newstate);
 		};
 
 		_this.convertTleft = function (tleft) {
@@ -11740,8 +11761,8 @@ var Yard2 = function (_React$Component) {
 			_this.connect();
 		};
 
-		console.log(props.user);
-		_this.state = { spots: { "pond": { "spot": "pond", "tleft": -99, "state": "off" }, "center": { "spot": "center", "tleft": -99, "state": "off" }, "bridge": { "spot": "bridge", "tleft": -99, "state": "off" } }, authorized: props.user.auth };
+		console.log(props.user.email);
+		_this.state = { spots: { "pond": { "spot": "pond", "tleft": -99, "state": "off", "pro": [] }, "center": { "spot": "center", "tleft": -99, "state": "off" }, "bridge": { "spot": "bridge", "tleft": -99, "state": "off" } }, authorized: props.user.auth };
 		_this.client = new Paho.Client(_utilities.cfg.mqtt_server, _utilities.cfg.mqtt_port, _utilities.cfg.appid + Math.random());
 		_this.client.onConnectionLost = _this.onConnectionLost;
 		_this.client.onMessageArrived = _this.onMessageArrived;
@@ -11767,7 +11788,7 @@ var Yard2 = function (_React$Component) {
 			return React.createElement(
 				'div',
 				null,
-				React.createElement(Spots, { spots: this.state.spots, relayUserInput: this.handleUserInput, auth: this.state.authorized })
+				React.createElement(Spots, { spots: this.state.spots, relayUserInput: this.handleUserInput, auth: this.state.authorized, user: this.props.user.email })
 			);
 		}
 	}]);

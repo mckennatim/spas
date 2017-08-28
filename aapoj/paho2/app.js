@@ -122,6 +122,12 @@ function subscribe() {
 	    dmessage.innerHTML= tmess;
 	  }
 	}) 
+	client.subscribe(userInf, {
+		onFailure: function (message) {
+			tmess = cfg.url.mqtt_server+" subsrciption failed: "
+	    dmessage.innerHTML= tmess;
+	  }
+	}) 
 	client.subscribe(srstate, {
 		onFailure: function (message) {
 			tmess = cfg.url.mqtt_server+" subsrciption failed: "
@@ -169,7 +175,7 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
 	var topic = message.destinationName
 	var pls = message.payloadString
-	console.log(topic + pls)
+	console.log(topic, pls)
 	var plo = JSON.parse(pls)
 	console.log(plo)
 	console.log('[' + topic + '] ' + pls)
@@ -224,8 +230,17 @@ function onMessageArrived(message) {
 			oflags = plo;
 			//console.log(JSON.stringify(oflags))
 			break;
+		case "userInf":
+			console.log('got user stuff back')
+			break;
+		default:
+			console.log('in default')
+			break;	
+
 	}
 }
+
+
 
 function devChanged() {
 	try {
@@ -240,8 +255,10 @@ function devChanged() {
 	cmd = deviceId + '/cmd'
 	req = deviceId + '/req'
 		//publish to server
+	user = 	deviceId + '/user'
 	trigtime = deviceId + '/time'
 		//subscribe
+	userInf = 	deviceId + '/userInf'
 	devtime = deviceId + '/devtime'
 	srstate = deviceId + '/srstate'
 	sched = deviceId + '/sched'
@@ -252,7 +269,11 @@ function devChanged() {
 		// progs = deviceId+'/progs'
 	connect()
 }
-
+function getUserInfo() {
+	var messu = `{"user":"${userEmail}","appId":"${cfg.appid}"}`
+	console.log(user,messu)
+	publish(user, messu)
+}
 
 function selChanged() {
 	var id = dreq.options[dreq.selectedIndex].value;
