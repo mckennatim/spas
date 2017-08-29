@@ -33,7 +33,7 @@ const saveProg=()=>{
 	console.log("in saveProg")
 	const sdata = `{"devid":"${deviceId}","dow":${dday.value},"senrel":${dsenrel.value},"sched":"${ddayprog.value}" }`
 	const pdata= JSON.parse(sdata)
-	var url=cfg.url.api+"/api/dedata/prg"
+	var url=cfg.url.api+"/dedata/prg"
 	superagent.post(url)
 		.set('Authorization', 'Bearer ' + userToken)
 		.send(pdata)
