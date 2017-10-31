@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1"> 
+  <title></title>
+  <link rel="stylesheet" href="">
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script> 
+</head>
+
+<body>
+<span id="mes">dog</span>  
+<span id="mes1"></span>  
+<div>
+  <svg id="svg" width="702" height="602" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <rect x="1" y="1" width="700" height="600"fill="none" stroke="blue" stroke-width="1" />  
+    <circle cx="200" cy="200" r="100" fill="none" stroke="blue" stroke-width="1"/>  
+    <path id="inner" class="sm" d="M100,200, A100,100 0 0,1 200,100" fill="none" stroke="orange" stroke-width="2"/> 
+    <path id="outer" d="M80,200, A120,120 0 0,1 200,80" fill="none" stroke="green" stroke-width="2"/> 
+    <path id="outer" d="M80,200, A120,120 0 0,0 200,320" fill="none" stroke="red" stroke-width="2"/> 
+  </svg>
+</div>
+<style>
+  .sm {
+    position:relative; 
+  }
+  .sm:after {
+    content:'';
+    position:absolute;
+    top:-20px; bottom:-20px; 
+    left:-20px; right:-20px;  
+  }
+</style>  
+<script>
+  var inner = document.getElementById('inner');
+  var mes = document.getElementById('mes');
+  var mes1 = document.getElementById('mes1');
+  inner.addEventListener("touchstart", handleStart, false);
+  inner.addEventListener("touchend", handleEnd, false);
+  inner.addEventListener("touchcancel", handleCancel, false);
+  inner.addEventListener("touchmove", handleMove, false);    
+  mes.addEventListener("touchstart", handleStart, false);
+  mes.addEventListener("touchend", handleEnd, false);
+  mes.addEventListener("touchcancel", handleCancel, false);
+  mes.addEventListener("touchmove", handleMove, false);    
+
+  function handleStart(e){
+    e.preventDefault();
+    mes.innerHTML = JSON.stringify(e.touches[0].clientX)
+    console.log("handleStart",e)
+  }
+  function handleEnd(e){
+    e.preventDefault();
+    console.log("handleEnd")
+  }
+  function handleCancel(e){
+    e.preventDefault();
+    console.log("handleCancel")
+  }
+  function handleMove(e){
+    e.preventDefault();
+    mes1.innerHTML = JSON.stringify(e.touches[0].clientX)
+    console.log("handleMove")
+  }
+
+</script>
+</body>
+</html>
