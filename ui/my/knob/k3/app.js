@@ -1,3 +1,5 @@
+import {coord2rad, drawRadio, mydog} from './utility.js'
+
 var cx=200;
 var cy=200;
 var r=100
@@ -34,6 +36,8 @@ function detectInputType(e){
 function handleStart(e){
   console.log("in handle start")
   e.preventDefault();
+  console.log(e.target.id)
+  console.log(e.type)
   bx = Math.round(smcircle.getAttribute("cx"))
   by = Math.round(smcircle.getAttribute("cy"))
   console.log('center '+bx+','+by)
@@ -154,6 +158,7 @@ function appendDecan(el, ang, rfrom, rto, hrs){
   var leg2d = `M${etx} ${ety} L${eox} ${eoy} `
   var mid = `M${sox} ${soy} A${rto}, ${rto} 0 0,0 ${eox}, ${eoy} `
   console.log('nang',nang,'legid',leg1d)
+  mydog()
   //insert into DOM
   var svgURI = 'http://www.w3.org/2000/svg';
   var g1 = document.createElementNS( svgURI, 'g' );
