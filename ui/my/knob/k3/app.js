@@ -133,6 +133,7 @@ function handleMove(ev){
   dx = tx-cx
   dy = ty-cy
   mrad = calcAng(dy,dx) 
+  console.log(mrad)
   nx =  (r*Math.cos(mrad)+cx).toFixed(1)
   ny = (r*Math.sin(mrad)+cy).toFixed(1)
   mes1.innerHTML = (24-mrad*3.819719).toFixed(1)

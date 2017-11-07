@@ -15,13 +15,20 @@ const calcRad=(dy,dx)=>{
 }
 
 const polar2cart=(r, rad, ctr)=>{
-	return {x:(r*Math.cos(rad)+ctr.x), y: (r*Math.sin(rad)+ctr.y)}
+	return {x:(r*Math.cos(rad)+ctr.x), y: (-r*Math.sin(rad)+ctr.y)}
 }
 
 const getDist=(st, end)=>{
 	var dist = Math.sqrt(Math.pow(st.x-end.x,2)+Math.pow(st.y-end.y,2))
 	//console.log(st, end, dist)
 	return dist
+}
+
+const rad2time=(rad)=>{
+	var hrs = rad/(2*Math.PI)*24
+	var hr = Math.floor(hrs)
+	var min = Math.round((hrs-hr)*60)
+	return {hr: hr, min: min}
 }
 
 const drawSegment= (el, st, end, attr)=>{
@@ -71,8 +78,10 @@ const zxc=()=>{
 			zx.els.itpo.setAttribute('r', zx.param.tpsz*1.4)
 			zx.els.rect.setAttribute("fill", "yellow")
 		  var dx = x-ctr.x
-		  var dy = y-ctr.y
-		  var rad = calcRad(dy,dx) 			
+		  var dy = ctr.y-y
+		  var rad = calcRad(dy,dx)
+		  console.log(rad2time(rad)) 
+		  console.log(rad)			
 			zx.stpt = {x:x, y:y, rad:rad}
 		},
 		handleItpoMove: (ev)=>{
@@ -88,10 +97,11 @@ const zxc=()=>{
 		  // var ax= e.clientX
 		  // var ay= e.clientY
 		  var dx = ax-ctr.x
-		  var dy = ay-ctr.y
+		  var dy = ctr.y-ay
 		  var mrad = calcRad(dy,dx) 
+		  zx.els.mes.innerHTML = JSON.stringify(rad2time(mrad))
 		  var cart = polar2cart(rlo, mrad, ctr)
-		  //console.log('cart', cart, "touch", {x:ax, y:ay}, "ctr", ctr, "rlo", rlo)
+		  console.log('rad',mrad, 'cart', cart, "touch", {x:ax, y:ay})
 		  // console.log(zx.els.svg.getBoundingClientRect())
 		  // console.log(zx.els.bb)
 			zx.els.itpo.setAttribute('cx', cart.x)
@@ -112,7 +122,7 @@ const zxc=()=>{
 		  zx.els.rect.setAttribute("fill", "none")
 		  zx.endpt ={x:e.clientX - zx.els.bb.x, y:e.clientY - zx.els.bb.y-40}
 		  var dex = zx.endpt.x-ctr.x
-		  var dey = zx.endpt.y-ctr.y
+		  var dey = ctr.y - zx.endpt.y
 		  var dist = getDist(zx.endpt, zx.ctr)
 		  var far = getDist(zx.endpt, zx.stpt)
 		  zx.endpt.rad = calcRad(dey,dex)

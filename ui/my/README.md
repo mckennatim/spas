@@ -45,8 +45,8 @@ derivedParams {
 
 rad = coord2rad({x,y})
 {x,y} = rad2coord(rad,r)
-{hr,min} = rad2time(rad)
-rad = time2rad({hr,min})
+{hr:min} = rad2time(rad)
+rad = time2rad({{hr,min})
 setval = rlen2setval(rlen)
 rlen = setval2rlen(setval)
 moveTouchPt(el, rad, rlen)
