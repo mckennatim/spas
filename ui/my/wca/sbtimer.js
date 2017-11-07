@@ -18,31 +18,30 @@ const polar2cart=(r, rad, ctr)=>{
 	return {x:(r*Math.cos(rad)+ctr.x), y: (r*Math.sin(rad)+ctr.y)}
 }
 
+const getDist=(st, end)=>{
+	var dist = Math.sqrt(Math.pow(st.x-end.x,2)+Math.pow(st.y-end.y,2))
+	//console.log(st, end, dist)
+	return dist
+}
+
 const drawSegment= (el, st, end, attr)=>{
-	console.log("in draw segment")
 	var d = `M${st.x} ${st.y} L${end.x} ${end.y}`
 	var seg1 = document.createElementNS( svgURI, 'path' );
 	seg1.setAttribute( 'd', d)
-	// seg1.setAttribute( 'stroke-width', "5")
-  // seg1.setAttribute( 'stroke', "firebrick")
   Object.keys(attr).forEach((key=>{
-  	console.log(key, attr[key])
   	seg1.setAttribute( key, attr[key])
   }))
-	console.log("in draw segment", d)
-	console.log(el)
 	el.appendChild(seg1)
 }
 
-const drawRadius= (el, ctr, rad, dist)=>{
-	console.log("in draw radius")
+const drawRadius= (el, ctr, rad, dist, attr)=>{
+	var end = polar2cart(dist, rad, ctr)
 	var d = `M${ctr.x} ${ctr.y} L${end.x} ${end.y}`
 	var seg1 = document.createElementNS( svgURI, 'path' );
 	seg1.setAttribute( 'd', d)
-	seg1.setAttribute( 'stroke-width', "2")
-  seg1.setAttribute( 'stroke', "firebrick")
-	console.log("in draw segment", d)
-	console.log(el)
+  Object.keys(attr).forEach((key=>{
+  	seg1.setAttribute( key, attr[key])
+  }))
 	el.appendChild(seg1)	
 }
 
@@ -52,7 +51,7 @@ const zxc=()=>{
   var ctr= {x: size.w/2, y: size.h/2}
   var rlo= ctr.x*.6
   var rhi= rlo*1.4
-  var tp=20  
+  var param = {tpsz: 12, radiff: .35, far: 30}
 	return {
 		stpt: {},
 		endpt: {},
@@ -61,13 +60,20 @@ const zxc=()=>{
 		ctr: ctr,
 		rlo: rlo,
 		rhi: rhi,
+		param: param,
 		els: {
 			itpo: {}
 		},
 		handleItpoStart: (e)=>{
 			e.preventDefault()
-			zx.els.itpo.setAttribute('r', 15)
-			zx.stpt = {x:zx.els.itpo.getAttribute("cx"), y:zx.els.itpo.getAttribute("cy")}
+			var x= zx.els.itpo.getAttribute("cx")
+			var y= zx.els.itpo.getAttribute("cy")
+			zx.els.itpo.setAttribute('r', zx.param.tpsz*1.4)
+			zx.els.rect.setAttribute("fill", "yellow")
+		  var dx = x-ctr.x
+		  var dy = y-ctr.y
+		  var rad = calcRad(dy,dx) 			
+			zx.stpt = {x:x, y:y, rad:rad}
 		},
 		handleItpoMove: (ev)=>{
 		  ev.preventDefault();
@@ -93,58 +99,40 @@ const zxc=()=>{
 		},
 		handleItpoEnd: (ev)=>{
 		  ev.preventDefault();
+		  // console.log('handleipPo end')
 		  var e
 		  if(pointerType=="mouse"){
 		  	zx.els.svg.removeEventListener("mousemove", zx.handleItpoMove, false);
 		    e= ev
 		  }else{
 		    e=ev.changedTouches[0]
+		    // console.log(e)
 		  }
+		  zx.els.itpo.setAttribute('r', zx.param.tpsz)
+		  zx.els.rect.setAttribute("fill", "none")
 		  zx.endpt ={x:e.clientX - zx.els.bb.x, y:e.clientY - zx.els.bb.y-40}
 		  var dex = zx.endpt.x-ctr.x
 		  var dey = zx.endpt.y-ctr.y
-		  var dist = (Math.sqrt(Math.pow(zx.stpt.x-zx.endpt.x,2)+Math.pow(zx.stpt.x-zx.endpt.y,2)))
-		  var mrad = calcRad(dey,dex)
-		  drawSegment(zx.els.svg, zx.stpt, zx.endpt, {"stroke-width": 5, "stroke": "cadetblue"})
-		  drawSegment(zx.els.svg, zx.ctr, zx.endpt, {"stroke-width": 2, "stroke": "darkolivegreen"})
+		  var dist = getDist(zx.endpt, zx.ctr)
+		  var far = getDist(zx.endpt, zx.stpt)
+		  zx.endpt.rad = calcRad(dey,dex)
+		  if(Math.abs(zx.endpt.rad-zx.stpt.rad)<zx.param.radiff && far>zx.param.far){
+		  // drawSegment(zx.els.svg, zx.stpt, zx.endpt, {"stroke-width": 5, "stroke": "cadetblue"})
+		  // drawSegment(zx.els.svg, zx.ctr, zx.endpt, {"stroke-width": 2, "stroke": "darkolivegreen"})
+		  	drawRadius(zx.els.svg, zx.ctr, zx.stpt.rad, dist, {"stroke-width": 2, "stroke": "red"})
 		  //drawRadius(zx.els.svg, zx.ctr, mrad, dist)
-		  console.log(dey, dex,dist, mrad, zx.endpt)
+		  // console.log(dey, dex,dist, mrad, zx.endpt)
+			}
 		}
 	}
 }
 const zx = zxc()
 
-
-// const handleItpoStart=(e)=>{
-// 	e.preventDefault()
-// 	console.log('in it ', e.type)
-// 	itpo.setAttribute('r', 15)
-// }
-
-// const handleItpoMove=(ev)=>{
-//   ev.preventDefault();
-//   var e
-//   if(pointerType=="mouse"){
-//     e= ev
-//   }else{
-//     e=ev.touches[0]
-//   }
-//   var dx = e.clientX-cx
-//   var dy = e.clientY-cy
-//   mrad = calcRad(dy,dx) 
-// }
-
 class SbTimer extends HTMLElement{
   constructor() {
     super();
     this.shadow = this.createShadowRoot();
-    this.size={w:342,h:342}
-    this.ctr={x:this.size.w/2, y:this.size.h/2}
-    this.rlo=this.ctr.x*.6
-    this.rhi=this.rlo*1.4
-    this.tp=20   
   }
-
 
   connectedCallback() {
 		window.addEventListener("pointerdown", detectInputType, false);
@@ -157,24 +145,32 @@ class SbTimer extends HTMLElement{
 	   	 	zx.els.svg.addEventListener("mouseup", zx.handleItpoEnd, false);		  
 	    } else{
 	    	zx.els.itpo.addEventListener("touchstart", zx.handleItpoStart, false);
-	    	zx.els.itpo.addEventListener("touchmove", zx.handleItpoMove, false);		  
+	    	zx.els.itpo.addEventListener("touchmove", zx.handleItpoMove, false);	
+	    	zx.els.itpo.addEventListener("touchend", zx.handleItpoEnd, false);		  
 	    }
 		}
     var template = `
       <div >
       	<h4>sb-timer</h4>
         <div >
-        	<svg id="svg" width=${this.size.w} height=${this.size.h} xmlns="http://www.w3.org/2000/svg" version="1.1" >
-    				<rect id ="rect" x="1" y="1" width=${this.size.w-2}  height=${this.size.h-2} fill="none" stroke="blue" stroke-width="1" />
-    				<circle id="circle" cx=${this.ctr.x} cy=${this.ctr.y} r=${this.rlo} fill="none" stroke="blue" stroke-width="3"/>
-    				<circle id="itpo" cx=${this.ctr.x+this.rlo} cy=${this.ctr.y} r=${this.tp/2} fill="lightgrey" stroke="lightgrey" stroke-width="1"/>
+        	<svg id="svg" width=${zx.size.w} height=${zx.size.h} xmlns="http://www.w3.org/2000/svg" version="1.1" >
+    				<rect id ="rect" x="1" y="1" width=${zx.size.w-2}  height=${zx.size.h-2} fill="none" stroke="blue" stroke-width="1" />
+    				<circle id="circle" cx=${zx.ctr.x} cy=${zx.ctr.y} r=${zx.rlo} fill="none" stroke="blue" stroke-width="3"/>
+    				<circle id="itpo" cx=${zx.ctr.x+zx.rlo} cy=${zx.ctr.y} r=${zx.param.tpsz} fill="lightgrey" stroke="lightgrey" stroke-width="1"/>
     			</svg>
         </div>
       </div>
+			<style>
+			  h4 {
+			    touch-action:none;
+			    user-select: none;
+			  }      
+		  </style>
     `;
     this.shadow.innerHTML = template;
     zx.els.itpo = this.shadow.getElementById('itpo')
     zx.els.svg = this.shadow.getElementById('svg')
+    zx.els.rect = this.shadow.getElementById('rect')
     //console.log(zx.els.svg.getBoundingClientRect())
     var x = zx.els.svg.getBoundingClientRect().left
     var y = zx.els.svg.getBoundingClientRect().top
