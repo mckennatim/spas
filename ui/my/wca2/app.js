@@ -20,5 +20,7 @@ observer.observe(sbt, config);
 const sendSched=()=>{
 	console.log('schedule sent')
 	sbt.setAttribute("sched", '[[0,0,45], [9,10,68]]')
+	sbt.asched = [[0,0,45], [9,10,68]]
 	console.log(sbt.getAttribute("sched"))
+	console.log('sbt.asched is ', sbt.asched)
 }

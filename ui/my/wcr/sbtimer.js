@@ -73,7 +73,6 @@ const zxc=()=>{
 		gs: [],
 
 		handleItpoStart: (e)=>{
-			console.log('in start')
 			e.preventDefault()
 			var x= zx.els.itpo.getAttribute("cx")
 			var y= zx.els.itpo.getAttribute("cy")

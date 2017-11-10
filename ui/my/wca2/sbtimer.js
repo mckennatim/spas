@@ -68,7 +68,8 @@ const zxc=()=>{
 		rhi: rhi,
 		param: param,
 		els: {
-			itpo: {}
+			itpo: {},
+			but: {}
 		},
 		gs: [],
 
@@ -105,7 +106,7 @@ const zxc=()=>{
 		handleItpoEnd: (ev)=>{
 		  ev.preventDefault();
 		  console.log(sbt.getAttribute("sched"))
-		  console.log(sbt.sched)
+		  console.log(sbt.asched)
 		  var e
 		  if(pointerType=="mouse"){
 		  	zx.els.svg.removeEventListener("mousemove", zx.handleItpoMove, false);
@@ -129,6 +130,12 @@ const zxc=()=>{
 		  // console.log(dey, dex,dist, mrad, zx.endpt)
 			}
 		},
+	  handleSave: ()=>{
+	  	zx.els.svg.removeEventListener("mousemove", zx.handleItpoMove, false);
+	   	zx.els.svg.removeEventListener("mouseup", zx.handleItpoEnd, false);		  
+
+	  	console.log('handleing save')
+	  },		
 		appendDecan: (when, lopt, hipt, forhrs)=>{
 			/*
 			check if it will overlap, if so move others out of the way or replace
@@ -157,19 +164,28 @@ class SbTimer extends HTMLElement{
     this.shadow = this.createShadowRoot();
   }
 
+  handelSave() {
+  	console.log('inside class hand save')
+  }
+
   connectedCallback() {
 		window.addEventListener("pointerdown", detectInputType, false);
 		//pointerType="touch"
+		var that = this
+
 		function detectInputType(e){
+			//console.log(zx.els.but)
 		  pointerType=e.pointerType
 	    if(pointerType=='mouse'){
 	    	zx.els.itpo.addEventListener("mousedown", zx.handleItpoStart, false);
 	   	 	zx.els.svg.addEventListener("mousemove", zx.handleItpoMove, false);		  
 	   	 	zx.els.svg.addEventListener("mouseup", zx.handleItpoEnd, false);		  
+	   	 	zx.els.but.addEventListener("mousedown", zx.handleSave, false);		  
 	    } else{
 	    	zx.els.itpo.addEventListener("touchstart", zx.handleItpoStart, false);
 	    	zx.els.itpo.addEventListener("touchmove", zx.handleItpoMove, false);	
 	    	zx.els.itpo.addEventListener("touchend", zx.handleItpoEnd, false);		  
+	   	 	zx.els.but.addEventListener("touchstart", zx.handleSave, false);
 	    }
 		}
     var template = `
@@ -180,6 +196,7 @@ class SbTimer extends HTMLElement{
     				<rect id ="rect" x="1" y="1" width=${zx.size.w-2}  height=${zx.size.h-2} fill="none" stroke="blue" stroke-width="1" />
     				<circle id="circle" cx=${zx.ctr.x} cy=${zx.ctr.y} r=${zx.rlo} fill="none" stroke="blue" stroke-width="3"/>
     				<circle id="itpo" cx=${zx.ctr.x+zx.rlo} cy=${zx.ctr.y} r=${zx.param.tpsz} fill="lightgrey" stroke="lightgrey" stroke-width="1"/>
+    				<circle id="but" cx=15 cy=20 r=${zx.param.tpsz} fill="lightgrey" stroke="lightgrey" stroke-width="1"/>
     			</svg>
         </div>
       </div>
@@ -192,6 +209,7 @@ class SbTimer extends HTMLElement{
     `;
     this.shadow.innerHTML = template;
     zx.els.itpo = this.shadow.getElementById('itpo')
+    zx.els.but = this.shadow.getElementById('but')
     zx.els.svg = this.shadow.getElementById('svg')
     zx.els.rect = this.shadow.getElementById('rect')
     //console.log(zx.els.svg.getBoundingClientRect())
@@ -207,6 +225,8 @@ class SbTimer extends HTMLElement{
   attributeChangedCallback(attrName, oldVal, newVal) {
   	console.log('attribute changed', attrName, oldVal, newVal)
   }
+
+
  
 }
 window.customElements.define('sb-timer', SbTimer);  	

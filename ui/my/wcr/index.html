@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>wca</title>
+	<title>wcr</title>
 	<link rel="stylesheet" href="">
 	<style>
     body {
@@ -16,13 +16,13 @@
 	  }    
   </style>
 
-  <script src="sbtimer.js"></script>
+  <script src="sbTimer2.js"></script>
 </head>
 <body>
   <h1>wca</h1>
   <span id="mes"></span><br>
-	<button onclick="sendSched()">sendSched</button>
-  <sb-timer id="sbt" sched = "[[0,0,56]]"></sb-timer>	
+	<button onclick="sendSched(event)" >sendSched</button>
+  <sb-timer id="sbt" sched="[[0,0,56]]" bointer="mouse"></sb-timer>	
   <script src="app.js"></script>
 </body>
 </html>

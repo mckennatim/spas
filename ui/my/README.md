@@ -54,7 +54,7 @@ appendDecan(rad, rlo, rhi, hrs)
     idx = getIndex()  //outside tracker
     ptarr = [[],[],[],[]] = makeDecarr(rad, rlo, rhi, hrs, )
     ds = {leg1: ,leg2: , arc:, corner:} makeDs(ptarr, idx)
-    //g ={gname: 'g'+idx, idx: idx}
+    //g ={gname: 'g'+idx, idx: idx, g: el}
     var g
     makeGs(ds, g, idx){
         g = document.createElementNS( svgURI, 'g' );
@@ -91,6 +91,9 @@ posOnArc = {x,y}= followArc(ev, el, rad)
 moveTouchPt(el, {x,y})
 redrawDecan(g, {x,y})
 
+appendDecan(athrs, lo, hi, forhrs){
+    
+}
 
 
 
